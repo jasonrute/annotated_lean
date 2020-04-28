@@ -1,9 +1,0 @@
-- [ ] License file: Use apache 2.0
-- [ ] README
-  - [x] Create
-  - [ ] Quirks
-  - [ ] Other TODOs
-- [ ] Git init and git ignore
-- [ ] index.md
-  - [ ] Draft idea
-  - [ ] index generation script  (follow signature in README)
