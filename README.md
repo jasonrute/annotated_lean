@@ -67,10 +67,18 @@ Github won't render HTML files, so use [https://htmlpreview.github.io/?](https:/
   
 ## Quirks
 
-One can readily see various quirks in the Lean language server.  Here are a few:
+There are two types of quirks.  The first are quirks with my extraction method.  Some files, such as [topology/metric/space/gromov_hausdorff_realized](https://htmlpreview.github.io/?https://github.com/jasonrute/annotated_lean/blob/master/html/topology__metric_space__gromov_hausdorff_realized.html) are missing a lot of the annotations.  Improvements to the extraction code, using the new [Lean client for Python](https://github.com/leanprover-community/lean-client-python) should hopefully clear up these issues.
 
-- In some cases, 
-#TODO: Fill in
+The second are quirks with the Lean server itself.  Here are a few of many
+
+- It is not always true that every character in a continuous string of letters has the same information.  For example, in [algebra/archimedean.lean](https://htmlpreview.github.io/?https://github.com/jasonrute/annotated_lean/blob/master/html/algebra__archimedean.html) notice that the projection notation `.imp` doesn't get information for the final `p`.  I assume this is a small bug in the Lean server.  
+    ```
+    145    (H (x / y)).imp $ λ n h, le_of_lt $
+    id      ┴  ┴ ┴ ┴  └─┘      ┴ ┴  └──────┘
+    src          ┴    └─┘           └──────┘
+    typ     ┴  ┴ ┴ ┴  └─┘      ┴ ┴  └──────┘
+    ``` 
+- Also, if one browses these files one can quickly see that it isn't clearly obvious how to extract information (such as, say, finding all tactic instances and their goal states).  There are a lot of quirks, especially when one starts including `by` blocks inside `begin...end` blocks in term mode inside another `begin...end` block, say.
 
 ## Script
 
