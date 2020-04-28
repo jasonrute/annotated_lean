@@ -30,7 +30,7 @@ def main():
     assert len(sys.argv) == 5
     data_directory = sys.argv[1]
     assert os.path.isdir(data_directory)
-    git_repo = sys.argv[2]         # e.g. jasonrute/annotated_lean
+    git_repo = sys.argv[2]         # e.g. https://github.com/jasonrute/annotated_lean
     html_directory = sys.argv[3]   # e.g. html/
     assert os.path.isdir(html_directory)
     output_file = sys.argv[4]
@@ -73,13 +73,13 @@ def main():
 
         f.write(f"## [Lean library files](https://github.com/leanprover-community/lean) ([v{lean_version}](https://github.com/leanprover-community/lean/tree/v{lean_version}))\n")
         for lean_file, filename in lean_library_files:
-            f.write(f"*  [{lean_file}](https://htmlpreview.github.io/?{git_repo}/{html_directory}{filename})\n")
+            f.write(f"*  [{lean_file}](https://htmlpreview.github.io/?{git_repo}/blob/master/{html_directory}{filename})\n")
 
         f.write("")
 
         f.write(f"## [mathlib files](https://github.com/leanprover-community/mathlib) ([{mathlib_commit[:7]}](https://github.com/leanprover-community/mathlib/commit/{mathlib_commit}))\n")
         for lean_file, filename in mathlib_files:
-            f.write(f"*  [{lean_file}](https://htmlpreview.github.io/?{git_repo}/{html_directory}{filename})\n")
+            f.write(f"*  [{lean_file}](https://htmlpreview.github.io/?{git_repo}/blob/master/{html_directory}{filename})\n")
 
 if __name__ == "__main__":
     main()

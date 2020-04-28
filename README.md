@@ -2,7 +2,7 @@
 
 ## [Click here to see annotated Lean files](index.md)
 
-,,, or read below for more about this project.
+... or read below for more about this project.
 
 ## What is this?
 
@@ -78,5 +78,5 @@ I've provided some Python scripts for creating these files.  They require data g
 ```bash
 python3 scripts/generate_html.py /the/path/to/the/scraped/data/files/ /the/path/to/mathlib/src/ /the/path/to/lean/library/ html/
 
-python3 scripts/generate_index.py /the/path/to/the/scraped/data/files/ github_account/thisrepo html/ index.md
+python3 scripts/generate_index.py /the/path/to/the/scraped/data/files/ https://github.com/jasonrute/annotated_lean html/ index.md
 ```
