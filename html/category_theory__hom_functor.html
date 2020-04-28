@@ -1,0 +1,50 @@
+<head>
+<meta charset="UTF-8">
+<link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro&display=swap" rel="stylesheet">
+</head>
+
+<body>
+<pre>
+<code style='font-family: menlo, "Source Code Pro", monospace;'>  1  /-</code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'>  2  Copyright (c) 2018 Reid Barton. All rights reserved.</code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'>  3  Released under Apache 2.0 license as described in the file LICENSE.</code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'>  4  Authors: Reid Barton, Scott Morrison</code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'>  5  -/</code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'>  6  import category_theory.opposites</code>
+<font color='grey'><a title='source'><code style='font-family: menlo, "Source Code Pro", monospace;'>src  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>       </code><font color='red'><a title='{&#x27;file&#x27;: &#x27;/home/ec2-user/lean_info_scrapper/_target/deps/mathlib/src/category_theory/opposites.lean&#x27;, &#x27;line&#x27;: 1, &#x27;column&#x27;: 0}'><code style='font-family: menlo, "Source Code Pro", monospace;'>└───────────────────────┘</code></a></font>
+<code style='font-family: menlo, "Source Code Pro", monospace;'>  7  import category_theory.products.basic</code>
+<font color='grey'><a title='source'><code style='font-family: menlo, "Source Code Pro", monospace;'>src  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>       </code><font color='red'><a title='{&#x27;file&#x27;: &#x27;/home/ec2-user/lean_info_scrapper/_target/deps/mathlib/src/category_theory/products/basic.lean&#x27;, &#x27;line&#x27;: 1, &#x27;column&#x27;: 0}'><code style='font-family: menlo, "Source Code Pro", monospace;'>└────────────────────────────┘</code></a></font>
+<code style='font-family: menlo, "Source Code Pro", monospace;'>  8  </code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'>  9  /-!</code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 10  The hom functor, sending `(X, Y)` to the type `X ⟶ Y`.</code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 11  -/</code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 12  </code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 13  universes v u</code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 14  </code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 15  open opposite</code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 16  open category_theory</code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 17  </code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 18  namespace category_theory.functor</code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 19  </code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 20  variables (C : Type u) [𝒞 : category.{v} C]</code>
+<font color='grey'><a title='full-id'><code style='font-family: menlo, "Source Code Pro", monospace;'>id   </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>                            </code><font color='blue'><a title='category_theory.category'><code style='font-family: menlo, "Source Code Pro", monospace;'>└──────┘</code></a></font>
+<font color='grey'><a title='source'><code style='font-family: menlo, "Source Code Pro", monospace;'>src  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>                            </code><font color='red'><a title='{&#x27;file&#x27;: &#x27;/home/ec2-user/lean_info_scrapper/_target/deps/mathlib/src/category_theory/category/default.lean&#x27;, &#x27;line&#x27;: 61, &#x27;column&#x27;: 6}'><code style='font-family: menlo, "Source Code Pro", monospace;'>└──────┘</code></a></font>
+<font color='grey'><a title='type'><code style='font-family: menlo, "Source Code Pro", monospace;'>typ  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>                            </code><font color='green'><a title='Type u → Type (max u (v+1))'><code style='font-family: menlo, "Source Code Pro", monospace;'>└──────┘</code></a></font>
+<font color='grey'><a title='doc'><code style='font-family: menlo, "Source Code Pro", monospace;'>doc  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>                            </code><font color='orange'><a title='The typeclass `category C` describes morphisms associated to objects of type `C`.
+The universe levels of the objects and morphisms are unconstrained, and will often need to be
+specified explicitly, as `category.{v} C`. (See also `large_category` and `small_category`.)'><code style='font-family: menlo, "Source Code Pro", monospace;'>└──────┘</code></a></font>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 21  include 𝒞</code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 22  </code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 23  /-- `functor.hom` is the hom-pairing, sending (X,Y) to X → Y, contravariant in X and covariant in Y. -/</code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 24  definition hom : Cᵒᵖ × C ⥤ Type v :=</code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 25  { obj       := λ p, unop p.1 ⟶ p.2,</code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 26    map       := λ X Y f, λ h, f.1.unop ≫ h ≫ f.2 }</code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 27  </code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 28  @[simp] lemma hom_obj (X : Cᵒᵖ × C) : (hom C).obj X = (unop X.1 ⟶ X.2) := rfl</code>
+<font color='grey'><a title='doc'><code style='font-family: menlo, "Source Code Pro", monospace;'>doc  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>  </code><font color='orange'><a title='simplification lemma'><code style='font-family: menlo, "Source Code Pro", monospace;'>└──┘</code></a></font>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 29  @[simp] lemma hom_pairing_map {X Y : Cᵒᵖ × C} (f : X ⟶ Y) :</code>
+<font color='grey'><a title='doc'><code style='font-family: menlo, "Source Code Pro", monospace;'>doc  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>  </code><font color='orange'><a title='simplification lemma'><code style='font-family: menlo, "Source Code Pro", monospace;'>└──┘</code></a></font>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 30    (hom C).map f = λ h, f.1.unop ≫ h ≫ f.2 := rfl</code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 31  </code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 32  end category_theory.functor</code></pre>
+</body>

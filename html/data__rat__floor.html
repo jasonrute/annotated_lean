@@ -1,0 +1,671 @@
+<head>
+<meta charset="UTF-8">
+<link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro&display=swap" rel="stylesheet">
+</head>
+
+<body>
+<pre>
+<code style='font-family: menlo, "Source Code Pro", monospace;'>  1  /-</code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'>  2  Copyright (c) 2019 Johannes Hölzl. All rights reserved.</code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'>  3  Released under Apache 2.0 license as described in the file LICENSE.</code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'>  4  Authors: Johannes Hölzl, Mario Carneiro, Kevin Kappelmann</code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'>  5  -/</code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'>  6  import data.rat.order</code>
+<font color='grey'><a title='source'><code style='font-family: menlo, "Source Code Pro", monospace;'>src  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>       </code><font color='red'><a title='{&#x27;file&#x27;: &#x27;/home/ec2-user/lean_info_scrapper/_target/deps/mathlib/src/data/rat/order.lean&#x27;, &#x27;line&#x27;: 1, &#x27;column&#x27;: 0}'><code style='font-family: menlo, "Source Code Pro", monospace;'>└────────────┘</code></a></font>
+<code style='font-family: menlo, "Source Code Pro", monospace;'>  7  import data.rat.cast</code>
+<font color='grey'><a title='source'><code style='font-family: menlo, "Source Code Pro", monospace;'>src  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>       </code><font color='red'><a title='{&#x27;file&#x27;: &#x27;/home/ec2-user/lean_info_scrapper/_target/deps/mathlib/src/data/rat/cast.lean&#x27;, &#x27;line&#x27;: 1, &#x27;column&#x27;: 0}'><code style='font-family: menlo, "Source Code Pro", monospace;'>└───────────┘</code></a></font>
+<code style='font-family: menlo, "Source Code Pro", monospace;'>  8  import algebra.floor</code>
+<font color='grey'><a title='source'><code style='font-family: menlo, "Source Code Pro", monospace;'>src  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>       </code><font color='red'><a title='{&#x27;file&#x27;: &#x27;/home/ec2-user/lean_info_scrapper/_target/deps/mathlib/src/algebra/floor.lean&#x27;, &#x27;line&#x27;: 1, &#x27;column&#x27;: 0}'><code style='font-family: menlo, "Source Code Pro", monospace;'>└───────────┘</code></a></font>
+<code style='font-family: menlo, "Source Code Pro", monospace;'>  9  /-!</code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 10  # Floor Function for Rational Numbers</code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 11  </code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 12  ## Summary</code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 13  </code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 14  We define the `floor` function and the `floor_ring` instance on `ℚ`.</code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 15  </code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 16  ## Tags</code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 17  </code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 18  rat, rationals, ℚ, floor</code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 19  -/</code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 20  </code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 21  namespace rat</code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 22  </code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 23  /-- `floor q` is the largest integer `z` such that `z ≤ q` -/</code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 24  protected def floor : ℚ → ℤ</code>
+<font color='grey'><a title='full-id'><code style='font-family: menlo, "Source Code Pro", monospace;'>id   </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>                      </code><font color='blue'><a title='rat'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'> </code><font color='blue'><a title='floor'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'> </code><font color='blue'><a title='int'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font>
+<font color='grey'><a title='source'><code style='font-family: menlo, "Source Code Pro", monospace;'>src  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>                      </code><font color='red'><a title='{&#x27;file&#x27;: &#x27;/home/ec2-user/lean_info_scrapper/_target/deps/mathlib/src/data/rat/basic.lean&#x27;, &#x27;line&#x27;: 46, &#x27;column&#x27;: 10}'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'> </code><font color='red'><a title='{&#x27;file&#x27;: &#x27;/home/ec2-user/lean_info_scrapper/_target/deps/mathlib/src/algebra/floor.lean&#x27;, &#x27;line&#x27;: 48, &#x27;column&#x27;: 4}'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'> </code><font color='red'><a title='{&#x27;file&#x27;: &#x27;/home/ec2-user/.elan/toolchains/3.4.2/lib/lean/library/init/data/int/basic.lean&#x27;, &#x27;line&#x27;: 15, &#x27;column&#x27;: 10}'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font>
+<font color='grey'><a title='type'><code style='font-family: menlo, "Source Code Pro", monospace;'>typ  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>                      </code><font color='green'><a title='Type'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'> </code><font color='green'><a title='rat → int'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'> </code><font color='green'><a title='Type'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font>
+<font color='grey'><a title='doc'><code style='font-family: menlo, "Source Code Pro", monospace;'>doc  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>                      </code><font color='orange'><a title='`rat`, or `ℚ`, is the type of rational numbers. It is defined
+ as the set of pairs ⟨n, d⟩ of integers such that `d` is positive and `n` and
+ `d` are coprime. This representation is preferred to the quotient
+ because without periodic reduction, the numerator and denominator can grow
+ exponentially (for example, adding 1/2 to itself repeatedly).'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'> </code><font color='orange'><a title='`floor x` is the greatest integer `z` such that `z ≤ x`'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 25  | ⟨n, d, h, c⟩ := n / d</code>
+<font color='grey'><a title='full-id'><code style='font-family: menlo, "Source Code Pro", monospace;'>id   </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>   </code><font color='blue'><a title='n'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>  </code><font color='blue'><a title='d'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>             </code><font color='blue'><a title='has_div.div'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font>
+<font color='grey'><a title='source'><code style='font-family: menlo, "Source Code Pro", monospace;'>src  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>                    </code><font color='red'><a title='{&#x27;file&#x27;: &#x27;/home/ec2-user/.elan/toolchains/3.4.2/lib/lean/library/init/core.lean&#x27;, &#x27;line&#x27;: 316, &#x27;column&#x27;: 6}'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font>
+<font color='grey'><a title='type'><code style='font-family: menlo, "Source Code Pro", monospace;'>typ  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>   </code><font color='green'><a title='int'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>  </code><font color='green'><a title='nat'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>             </code><font color='green'><a title='Π {α : Type} [c : has_div.{0} α], α → α → α'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 26  </code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 27  protected theorem le_floor {z : ℤ} : ∀ {r : ℚ}, z ≤ rat.floor r ↔ (z : ℚ) ≤ r</code>
+<font color='grey'><a title='full-id'><code style='font-family: menlo, "Source Code Pro", monospace;'>id   </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>                                </code><font color='blue'><a title='int'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>      </code><font color='blue'><a title='le_floor'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>    </code><font color='blue'><a title='rat'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>   </code><font color='blue'><a title='z'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'> </code><font color='blue'><a title='has_le.le'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'> </code><font color='blue'><a title='rat.floor'><code style='font-family: menlo, "Source Code Pro", monospace;'>└───────┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'> </code><font color='blue'><a title='r'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'> </code><font color='blue'><a title='iff'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>  </code><font color='blue'><a title='z'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>   </code><font color='blue'><a title='rat'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>  </code><font color='blue'><a title='has_le.le'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'> </code><font color='blue'><a title='r'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font>
+<font color='grey'><a title='source'><code style='font-family: menlo, "Source Code Pro", monospace;'>src  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>                                </code><font color='red'><a title='{&#x27;file&#x27;: &#x27;/home/ec2-user/.elan/toolchains/3.4.2/lib/lean/library/init/data/int/basic.lean&#x27;, &#x27;line&#x27;: 15, &#x27;column&#x27;: 10}'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>      </code><font color='red'><a title='{&#x27;file&#x27;: &#x27;/home/ec2-user/lean_info_scrapper/_target/deps/mathlib/src/algebra/floor.lean&#x27;, &#x27;line&#x27;: 52, &#x27;column&#x27;: 8}'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>    </code><font color='red'><a title='{&#x27;file&#x27;: &#x27;/home/ec2-user/lean_info_scrapper/_target/deps/mathlib/src/data/rat/basic.lean&#x27;, &#x27;line&#x27;: 46, &#x27;column&#x27;: 10}'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>     </code><font color='red'><a title='{&#x27;file&#x27;: &#x27;/home/ec2-user/.elan/toolchains/3.4.2/lib/lean/library/init/core.lean&#x27;, &#x27;line&#x27;: 319, &#x27;column&#x27;: 6}'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'> </code><font color='red'><a title='{&#x27;line&#x27;: 24, &#x27;column&#x27;: 14}'><code style='font-family: menlo, "Source Code Pro", monospace;'>└───────┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>   </code><font color='red'><a title='{&#x27;file&#x27;: &#x27;/home/ec2-user/.elan/toolchains/3.4.2/lib/lean/library/init/logic.lean&#x27;, &#x27;line&#x27;: 223, &#x27;column&#x27;: 10}'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>      </code><font color='red'><a title='{&#x27;file&#x27;: &#x27;/home/ec2-user/lean_info_scrapper/_target/deps/mathlib/src/data/rat/basic.lean&#x27;, &#x27;line&#x27;: 46, &#x27;column&#x27;: 10}'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>  </code><font color='red'><a title='{&#x27;file&#x27;: &#x27;/home/ec2-user/.elan/toolchains/3.4.2/lib/lean/library/init/core.lean&#x27;, &#x27;line&#x27;: 319, &#x27;column&#x27;: 6}'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font>
+<font color='grey'><a title='type'><code style='font-family: menlo, "Source Code Pro", monospace;'>typ  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>                                </code><font color='green'><a title='Type'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>      </code><font color='green'><a title='∀ {r : rat}, iff (@has_le.le.{0} int int.has_le z (rat.floor r)) (@has_le.le.{0} rat rat.has_le (@coe.{1 1} int rat (@coe_to_lift.{1 1} int rat (@coe_base.{1 1} int rat (@int.cast_coe.{0} rat rat.has_neg rat.has_zero rat.has_one rat.has_add))) z) r)'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>    </code><font color='green'><a title='Type'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>   </code><font color='green'><a title='int'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'> </code><font color='green'><a title='Π {α : Type} [c : has_le.{0} α], α → α → Prop'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'> </code><font color='green'><a title='rat → int'><code style='font-family: menlo, "Source Code Pro", monospace;'>└───────┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'> </code><font color='green'><a title='rat'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'> </code><font color='green'><a title='Prop → Prop → Prop'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>  </code><font color='green'><a title='int'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>   </code><font color='green'><a title='Type'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>  </code><font color='green'><a title='Π {α : Type} [c : has_le.{0} α], α → α → Prop'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'> </code><font color='green'><a title='rat'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font>
+<font color='grey'><a title='doc'><code style='font-family: menlo, "Source Code Pro", monospace;'>doc  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>                                            </code><font color='orange'><a title='`rat`, or `ℚ`, is the type of rational numbers. It is defined
+ as the set of pairs ⟨n, d⟩ of integers such that `d` is positive and `n` and
+ `d` are coprime. This representation is preferred to the quotient
+ because without periodic reduction, the numerator and denominator can grow
+ exponentially (for example, adding 1/2 to itself repeatedly).'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>       </code><font color='orange'><a title='`floor q` is the largest integer `z` such that `z ≤ q`'><code style='font-family: menlo, "Source Code Pro", monospace;'>└───────┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>          </code><font color='orange'><a title='`rat`, or `ℚ`, is the type of rational numbers. It is defined
+ as the set of pairs ⟨n, d⟩ of integers such that `d` is positive and `n` and
+ `d` are coprime. This representation is preferred to the quotient
+ because without periodic reduction, the numerator and denominator can grow
+ exponentially (for example, adding 1/2 to itself repeatedly).'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 28  | ⟨n, d, h, c⟩ := begin</code>
+<font color='grey'><a title='state'><code style='font-family: menlo, "Source Code Pro", monospace;'>st   </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>                  </code><font color='lime'><a title='z : int,
+le_floor :
+  ∀ {r : rat},
+    iff (@has_le.le.{0} int int.has_le z (rat.floor r))
+      (@has_le.le.{0} rat rat.has_le
+         (@coe.{1 1} int rat
+            (@coe_to_lift.{1 1} int rat
+               (@coe_base.{1 1} int rat (@int.cast_coe.{0} rat rat.has_neg rat.has_zero rat.has_one rat.has_add)))
+            z)
+         r),
+n : int,
+d : nat,
+h : @has_lt.lt.{0} nat nat.has_lt (@has_zero.zero.{0} nat nat.has_zero) d,
+c : nat.coprime (int.nat_abs n) d
+⊢ iff (@has_le.le.{0} int int.has_le z (rat.floor {num := n, denom := d, pos := h, cop := c}))
+    (@has_le.le.{0} rat rat.has_le
+       (@coe.{1 1} int rat
+          (@coe_to_lift.{1 1} int rat
+             (@coe_base.{1 1} int rat (@int.cast_coe.{0} rat rat.has_neg rat.has_zero rat.has_one rat.has_add)))
+          z)
+       {num := n, denom := d, pos := h, cop := c})'><code style='font-family: menlo, "Source Code Pro", monospace;'>└─────</code></a></font>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 29    simp [rat.floor],</code>
+<font color='grey'><a title='full-id'><code style='font-family: menlo, "Source Code Pro", monospace;'>id   </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>        </code><font color='blue'><a title='rat.floor'><code style='font-family: menlo, "Source Code Pro", monospace;'>└───────┘</code></a></font>
+<font color='grey'><a title='source'><code style='font-family: menlo, "Source Code Pro", monospace;'>src  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>  </code><font color='red'><a title='{&#x27;file&#x27;: &#x27;/home/ec2-user/.elan/toolchains/3.4.2/lib/lean/library/init/meta/interactive.lean&#x27;, &#x27;line&#x27;: 1209, &#x27;column&#x27;: 9}'><code style='font-family: menlo, "Source Code Pro", monospace;'>└────┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'></code><font color='red'><a title='{&#x27;line&#x27;: 24, &#x27;column&#x27;: 14}'><code style='font-family: menlo, "Source Code Pro", monospace;'>└───────┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'></code><font color='red'><a title='{&#x27;file&#x27;: &#x27;/home/ec2-user/.elan/toolchains/3.4.2/lib/lean/library/init/meta/interactive.lean&#x27;, &#x27;line&#x27;: 1209, &#x27;column&#x27;: 9}'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font>
+<font color='grey'><a title='type'><code style='font-family: menlo, "Source Code Pro", monospace;'>typ  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>  </code><font color='green'><a title='@interactive.parse (option.{0} unit) (λ (a : option.{0} unit), @option.has_reflect unit (λ (a : unit), punit.reflect a) `(unit) a) (@optional.{0 0} lean.parser.{0} lean.parser.alternative unit (lean.parser.tk (string.str string.empty (char.of_nat (@bit1.{0} nat nat.has_one nat.has_add (@bit0.{0} nat nat.has_add (@bit0.{0} nat nat.has_add (@bit0.{0} nat nat.has_add (@bit0.{0} nat nat.has_add (@has_one.one.{0} nat nat.has_one)))))))))) → @interactive.parse bool (λ (a : bool), bool.has_reflect a) interactive.types.only_flag → @interactive.parse (list.{0} tactic.simp_arg_type) (λ (a : list.{0} tactic.simp_arg_type), @list.reflect tactic.simp_arg_type (λ (a : tactic.simp_arg_type), tactic.simp_arg_type.has_reflect a) `(tactic.simp_arg_type) a) tactic.simp_arg_list → @interactive.parse (list.{0} name) (λ (a : list.{0} name), @list.reflect name (λ (a : name), name.reflect a) `(name) a) interactive.types.with_ident_list → @interactive.parse interactive.loc (λ (a : interactive.loc), interactive.loc.has_reflect a) interactive.types.location → opt_param.{1} tactic.simp_config_ext {to_simp_config := {max_steps := simp.default_max_steps, contextual := bool.ff, lift_eq := bool.tt, canonize_instances := bool.tt, canonize_proofs := bool.ff, use_axioms := bool.tt, zeta := bool.tt, beta := bool.tt, eta := bool.tt, proj := bool.tt, iota := bool.tt, iota_eqn := bool.ff, constructor_eq := bool.tt, single_pass := bool.ff, fail_if_unchanged := bool.tt, memoize := bool.tt}, discharger := @tactic.failed unit} → tactic.{0} unit'><code style='font-family: menlo, "Source Code Pro", monospace;'>└────┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'></code><font color='green'><a title='rat → int'><code style='font-family: menlo, "Source Code Pro", monospace;'>└───────┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'></code><font color='green'><a title='@interactive.parse (option.{0} unit) (λ (a : option.{0} unit), @option.has_reflect unit (λ (a : unit), punit.reflect a) `(unit) a) (@optional.{0 0} lean.parser.{0} lean.parser.alternative unit (lean.parser.tk (string.str string.empty (char.of_nat (@bit1.{0} nat nat.has_one nat.has_add (@bit0.{0} nat nat.has_add (@bit0.{0} nat nat.has_add (@bit0.{0} nat nat.has_add (@bit0.{0} nat nat.has_add (@has_one.one.{0} nat nat.has_one)))))))))) → @interactive.parse bool (λ (a : bool), bool.has_reflect a) interactive.types.only_flag → @interactive.parse (list.{0} tactic.simp_arg_type) (λ (a : list.{0} tactic.simp_arg_type), @list.reflect tactic.simp_arg_type (λ (a : tactic.simp_arg_type), tactic.simp_arg_type.has_reflect a) `(tactic.simp_arg_type) a) tactic.simp_arg_list → @interactive.parse (list.{0} name) (λ (a : list.{0} name), @list.reflect name (λ (a : name), name.reflect a) `(name) a) interactive.types.with_ident_list → @interactive.parse interactive.loc (λ (a : interactive.loc), interactive.loc.has_reflect a) interactive.types.location → opt_param.{1} tactic.simp_config_ext {to_simp_config := {max_steps := simp.default_max_steps, contextual := bool.ff, lift_eq := bool.tt, canonize_instances := bool.tt, canonize_proofs := bool.ff, use_axioms := bool.tt, zeta := bool.tt, beta := bool.tt, eta := bool.tt, proj := bool.tt, iota := bool.tt, iota_eqn := bool.ff, constructor_eq := bool.tt, single_pass := bool.ff, fail_if_unchanged := bool.tt, memoize := bool.tt}, discharger := @tactic.failed unit} → tactic.{0} unit'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font>
+<font color='grey'><a title='doc'><code style='font-family: menlo, "Source Code Pro", monospace;'>doc  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>  </code><font color='orange'><a title='The `simp` tactic uses lemmas and hypotheses to simplify the main goal target or non-dependent hypotheses. It has many variants.
+
+`simp` simplifies the main goal target using lemmas tagged with the attribute `[simp]`.
+
+`simp [h₁ h₂ ... hₙ]` simplifies the main goal target using the lemmas tagged with the attribute `[simp]` and the given `hᵢ`&#x27;s, where the `hᵢ`&#x27;s are expressions. If an `hᵢ` is a defined constant `f`, then the equational lemmas associated with `f` are used. This provides a convenient way to unfold `f`.
+
+`simp [*]` simplifies the main goal target using the lemmas tagged with the attribute `[simp]` and all hypotheses.
+
+`simp *` is a shorthand for `simp [*]`.
+
+`simp only [h₁ h₂ ... hₙ]` is like `simp [h₁ h₂ ... hₙ]` but does not use `[simp]` lemmas
+
+`simp [-id_1, ... -id_n]` simplifies the main goal target using the lemmas tagged with the attribute `[simp]`, but removes the ones named `idᵢ`.
+
+`simp at h₁ h₂ ... hₙ` simplifies the non-dependent hypotheses `h₁ : T₁` ... `hₙ : Tₙ`. The tactic fails if the target or another hypothesis depends on one of them. The token `⊢` or `|-` can be added to the list to include the target.
+
+`simp at *` simplifies all the hypotheses and the target.
+
+`simp * at *` simplifies target and all (non-dependent propositional) hypotheses using the other hypotheses.
+
+`simp with attr₁ ... attrₙ` simplifies the main goal target using the lemmas tagged with any of the attributes `[attr₁]`, ..., `[attrₙ]` or `[simp]`.'><code style='font-family: menlo, "Source Code Pro", monospace;'>└────┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'></code><font color='orange'><a title='`floor q` is the largest integer `z` such that `z ≤ q`'><code style='font-family: menlo, "Source Code Pro", monospace;'>└───────┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'></code><font color='orange'><a title='The `simp` tactic uses lemmas and hypotheses to simplify the main goal target or non-dependent hypotheses. It has many variants.
+
+`simp` simplifies the main goal target using lemmas tagged with the attribute `[simp]`.
+
+`simp [h₁ h₂ ... hₙ]` simplifies the main goal target using the lemmas tagged with the attribute `[simp]` and the given `hᵢ`&#x27;s, where the `hᵢ`&#x27;s are expressions. If an `hᵢ` is a defined constant `f`, then the equational lemmas associated with `f` are used. This provides a convenient way to unfold `f`.
+
+`simp [*]` simplifies the main goal target using the lemmas tagged with the attribute `[simp]` and all hypotheses.
+
+`simp *` is a shorthand for `simp [*]`.
+
+`simp only [h₁ h₂ ... hₙ]` is like `simp [h₁ h₂ ... hₙ]` but does not use `[simp]` lemmas
+
+`simp [-id_1, ... -id_n]` simplifies the main goal target using the lemmas tagged with the attribute `[simp]`, but removes the ones named `idᵢ`.
+
+`simp at h₁ h₂ ... hₙ` simplifies the non-dependent hypotheses `h₁ : T₁` ... `hₙ : Tₙ`. The tactic fails if the target or another hypothesis depends on one of them. The token `⊢` or `|-` can be added to the list to include the target.
+
+`simp at *` simplifies all the hypotheses and the target.
+
+`simp * at *` simplifies target and all (non-dependent propositional) hypotheses using the other hypotheses.
+
+`simp with attr₁ ... attrₙ` simplifies the main goal target using the lemmas tagged with any of the attributes `[attr₁]`, ..., `[attrₙ]` or `[simp]`.'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font>
+<font color='grey'><a title='text'><code style='font-family: menlo, "Source Code Pro", monospace;'>txt  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>  </code><font color='teal'><a title='simp'><code style='font-family: menlo, "Source Code Pro", monospace;'>└────┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>         </code><font color='teal'><a title='simp'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font>
+<font color='grey'><a title='tactic_params'><code style='font-family: menlo, "Source Code Pro", monospace;'>par  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>  </code><font color='grey'><a title='[&#x27;!?&#x27;, &#x27;only?&#x27;, &#x27;(* | [(* | (- id | expr)), ...]?)&#x27;, &#x27;(with id*)?&#x27;, &#x27;(at (* | (⊢ | id)*))?&#x27;, &#x27;tactic.simp_config_ext?&#x27;]'><code style='font-family: menlo, "Source Code Pro", monospace;'>└────┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>         </code><font color='grey'><a title='[&#x27;!?&#x27;, &#x27;only?&#x27;, &#x27;(* | [(* | (- id | expr)), ...]?)&#x27;, &#x27;(with id*)?&#x27;, &#x27;(at (* | (⊢ | id)*))?&#x27;, &#x27;tactic.simp_config_ext?&#x27;]'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font>
+<font color='grey'><a title='tactic_param_idx'><code style='font-family: menlo, "Source Code Pro", monospace;'>pid  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>      </code><font color='maroon'><a title='0'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'></code><font color='maroon'><a title='2'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>         </code><font color='maroon'><a title='2'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font>
+<font color='grey'><a title='state'><code style='font-family: menlo, "Source Code Pro", monospace;'>st   </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'></code><font color='lime'><a title='z : int,
+le_floor :
+  ∀ {r : rat},
+    iff (@has_le.le.{0} int int.has_le z (rat.floor r))
+      (@has_le.le.{0} rat rat.has_le
+         (@coe.{1 1} int rat
+            (@coe_to_lift.{1 1} int rat
+               (@coe_base.{1 1} int rat (@int.cast_coe.{0} rat rat.has_neg rat.has_zero rat.has_one rat.has_add)))
+            z)
+         r),
+n : int,
+d : nat,
+h : @has_lt.lt.{0} nat nat.has_lt (@has_zero.zero.{0} nat nat.has_zero) d,
+c : nat.coprime (int.nat_abs n) d
+⊢ iff (@has_le.le.{0} int int.has_le z (rat.floor {num := n, denom := d, pos := h, cop := c}))
+    (@has_le.le.{0} rat rat.has_le
+       (@coe.{1 1} int rat
+          (@coe_to_lift.{1 1} int rat
+             (@coe_base.{1 1} int rat (@int.cast_coe.{0} rat rat.has_neg rat.has_zero rat.has_one rat.has_add)))
+          z)
+       {num := n, denom := d, pos := h, cop := c})'><code style='font-family: menlo, "Source Code Pro", monospace;'>─────────────────┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'></code><font color='lime'><a title='z : int,
+le_floor :
+  ∀ {r : rat},
+    iff (@has_le.le.{0} int int.has_le z (rat.floor r))
+      (@has_le.le.{0} rat rat.has_le
+         (@coe.{1 1} int rat
+            (@coe_to_lift.{1 1} int rat
+               (@coe_base.{1 1} int rat (@int.cast_coe.{0} rat rat.has_neg rat.has_zero rat.has_one rat.has_add)))
+            z)
+         r),
+n : int,
+d : nat,
+h : @has_lt.lt.{0} nat nat.has_lt (@has_zero.zero.{0} nat nat.has_zero) d,
+c : nat.coprime (int.nat_abs n) d
+⊢ iff
+    (@has_le.le.{0} int int.has_le z
+       (@has_div.div.{0} int int.has_div n
+          (@coe.{1 1} nat int (@coe_to_lift.{1 1} nat int (@coe_base.{1 1} nat int int.has_coe)) d)))
+    (@has_le.le.{0} rat rat.has_le
+       (@coe.{1 1} int rat
+          (@coe_to_lift.{1 1} int rat
+             (@coe_base.{1 1} int rat (@int.cast_coe.{0} rat rat.has_neg rat.has_zero rat.has_one rat.has_add)))
+          z)
+       {num := n, denom := d, pos := h, cop := c})'><code style='font-family: menlo, "Source Code Pro", monospace;'>└─</code></a></font>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 30    rw [num_denom&#x27;],</code>
+<font color='grey'><a title='full-id'><code style='font-family: menlo, "Source Code Pro", monospace;'>id   </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>      </code><font color='blue'><a title='rat.num_denom&#x27;'><code style='font-family: menlo, "Source Code Pro", monospace;'>└────────┘</code></a></font>
+<font color='grey'><a title='source'><code style='font-family: menlo, "Source Code Pro", monospace;'>src  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>  </code><font color='red'><a title='{&#x27;file&#x27;: &#x27;/home/ec2-user/.elan/toolchains/3.4.2/lib/lean/library/init/meta/interactive.lean&#x27;, &#x27;line&#x27;: 385, &#x27;column&#x27;: 9}'><code style='font-family: menlo, "Source Code Pro", monospace;'>└──┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'></code><font color='red'><a title='{&#x27;file&#x27;: &#x27;/home/ec2-user/lean_info_scrapper/_target/deps/mathlib/src/data/rat/basic.lean&#x27;, &#x27;line&#x27;: 220, &#x27;column&#x27;: 8}'><code style='font-family: menlo, "Source Code Pro", monospace;'>└────────┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'></code><font color='red'><a title='{&#x27;file&#x27;: &#x27;/home/ec2-user/.elan/toolchains/3.4.2/lib/lean/library/init/meta/interactive.lean&#x27;, &#x27;line&#x27;: 385, &#x27;column&#x27;: 9}'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font>
+<font color='grey'><a title='type'><code style='font-family: menlo, "Source Code Pro", monospace;'>typ  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>  </code><font color='green'><a title='@interactive.parse tactic.interactive.rw_rules_t (λ (a : tactic.interactive.rw_rules_t), tactic.interactive.rw_rules_t.has_reflect a) tactic.interactive.rw_rules → @interactive.parse interactive.loc (λ (a : interactive.loc), interactive.loc.has_reflect a) interactive.types.location → opt_param.{1} tactic.rewrite_cfg {to_apply_cfg := {md := tactic.transparency.reducible, approx := bool.tt, new_goals := tactic.new_goals.non_dep_first, instances := bool.tt, auto_param := bool.tt, opt_param := bool.tt, unify := bool.tt}, symm := bool.ff, occs := occurrences.all} → tactic.{0} unit'><code style='font-family: menlo, "Source Code Pro", monospace;'>└──┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'></code><font color='green'><a title='∀ {n : int} {d : nat} {h : @has_lt.lt.{0} nat nat.has_lt (@has_zero.zero.{0} nat nat.has_zero) d} {c : nat.coprime (int.nat_abs n) d}, @eq.{1} rat {num := n, denom := d, pos := h, cop := c} (rat.mk n (@coe.{1 1} nat int (@coe_to_lift.{1 1} nat int (@coe_base.{1 1} nat int int.has_coe)) d))'><code style='font-family: menlo, "Source Code Pro", monospace;'>└────────┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'></code><font color='green'><a title='@interactive.parse tactic.interactive.rw_rules_t (λ (a : tactic.interactive.rw_rules_t), tactic.interactive.rw_rules_t.has_reflect a) tactic.interactive.rw_rules → @interactive.parse interactive.loc (λ (a : interactive.loc), interactive.loc.has_reflect a) interactive.types.location → opt_param.{1} tactic.rewrite_cfg {to_apply_cfg := {md := tactic.transparency.reducible, approx := bool.tt, new_goals := tactic.new_goals.non_dep_first, instances := bool.tt, auto_param := bool.tt, opt_param := bool.tt, unify := bool.tt}, symm := bool.ff, occs := occurrences.all} → tactic.{0} unit'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font>
+<font color='grey'><a title='doc'><code style='font-family: menlo, "Source Code Pro", monospace;'>doc  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>  </code><font color='orange'><a title='An abbreviation for `rewrite`.'><code style='font-family: menlo, "Source Code Pro", monospace;'>└──┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>          </code><font color='orange'><a title='An abbreviation for `rewrite`.'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font>
+<font color='grey'><a title='text'><code style='font-family: menlo, "Source Code Pro", monospace;'>txt  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>  </code><font color='teal'><a title='rw'><code style='font-family: menlo, "Source Code Pro", monospace;'>└──┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>          </code><font color='teal'><a title='rw'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font>
+<font color='grey'><a title='tactic_params'><code style='font-family: menlo, "Source Code Pro", monospace;'>par  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>  </code><font color='grey'><a title='[&#x27;([ (←? expr), ... ] | ←? expr)&#x27;, &#x27;(at (* | (⊢ | id)*))?&#x27;, &#x27;tactic.rewrite_cfg?&#x27;]'><code style='font-family: menlo, "Source Code Pro", monospace;'>└──┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>          </code><font color='grey'><a title='[&#x27;([ (←? expr), ... ] | ←? expr)&#x27;, &#x27;(at (* | (⊢ | id)*))?&#x27;, &#x27;tactic.rewrite_cfg?&#x27;]'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font>
+<font color='grey'><a title='tactic_param_idx'><code style='font-family: menlo, "Source Code Pro", monospace;'>pid  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>    </code><font color='maroon'><a title='0'><code style='font-family: menlo, "Source Code Pro", monospace;'>└┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>          </code><font color='maroon'><a title='0'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font>
+<font color='grey'><a title='state'><code style='font-family: menlo, "Source Code Pro", monospace;'>st   </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'></code><font color='lime'><a title='z : int,
+le_floor :
+  ∀ {r : rat},
+    iff (@has_le.le.{0} int int.has_le z (rat.floor r))
+      (@has_le.le.{0} rat rat.has_le
+         (@coe.{1 1} int rat
+            (@coe_to_lift.{1 1} int rat
+               (@coe_base.{1 1} int rat (@int.cast_coe.{0} rat rat.has_neg rat.has_zero rat.has_one rat.has_add)))
+            z)
+         r),
+n : int,
+d : nat,
+h : @has_lt.lt.{0} nat nat.has_lt (@has_zero.zero.{0} nat nat.has_zero) d,
+c : nat.coprime (int.nat_abs n) d
+⊢ iff
+    (@has_le.le.{0} int int.has_le z
+       (@has_div.div.{0} int int.has_div n
+          (@coe.{1 1} nat int (@coe_to_lift.{1 1} nat int (@coe_base.{1 1} nat int int.has_coe)) d)))
+    (@has_le.le.{0} rat rat.has_le
+       (@coe.{1 1} int rat
+          (@coe_to_lift.{1 1} int rat
+             (@coe_base.{1 1} int rat (@int.cast_coe.{0} rat rat.has_neg rat.has_zero rat.has_one rat.has_add)))
+          z)
+       {num := n, denom := d, pos := h, cop := c})'><code style='font-family: menlo, "Source Code Pro", monospace;'>───────────────┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'></code><font color='lime'><a title='z : int,
+le_floor :
+  ∀ {r : rat},
+    iff (@has_le.le.{0} int int.has_le z (rat.floor r))
+      (@has_le.le.{0} rat rat.has_le
+         (@coe.{1 1} int rat
+            (@coe_to_lift.{1 1} int rat
+               (@coe_base.{1 1} int rat (@int.cast_coe.{0} rat rat.has_neg rat.has_zero rat.has_one rat.has_add)))
+            z)
+         r),
+n : int,
+d : nat,
+h : @has_lt.lt.{0} nat nat.has_lt (@has_zero.zero.{0} nat nat.has_zero) d,
+c : nat.coprime (int.nat_abs n) d
+⊢ iff
+    (@has_le.le.{0} int int.has_le z
+       (@has_div.div.{0} int int.has_div n
+          (@coe.{1 1} nat int (@coe_to_lift.{1 1} nat int (@coe_base.{1 1} nat int int.has_coe)) d)))
+    (@has_le.le.{0} rat rat.has_le
+       (@coe.{1 1} int rat
+          (@coe_to_lift.{1 1} int rat
+             (@coe_base.{1 1} int rat (@int.cast_coe.{0} rat rat.has_neg rat.has_zero rat.has_one rat.has_add)))
+          z)
+       (rat.mk n (@coe.{1 1} nat int (@coe_to_lift.{1 1} nat int (@coe_base.{1 1} nat int int.has_coe)) d)))'><code style='font-family: menlo, "Source Code Pro", monospace;'>└──</code></a></font>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 31    have h&#x27; := int.coe_nat_lt.2 h,</code>
+<font color='grey'><a title='full-id'><code style='font-family: menlo, "Source Code Pro", monospace;'>id   </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>             </code><font color='blue'><a title='int.coe_nat_lt'><code style='font-family: menlo, "Source Code Pro", monospace;'>└────────────┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>   </code><font color='blue'><a title='h'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font>
+<font color='grey'><a title='source'><code style='font-family: menlo, "Source Code Pro", monospace;'>src  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>  </code><font color='red'><a title='{&#x27;file&#x27;: &#x27;/home/ec2-user/.elan/toolchains/3.4.2/lib/lean/library/init/meta/interactive.lean&#x27;, &#x27;line&#x27;: 917, &#x27;column&#x27;: 9}'><code style='font-family: menlo, "Source Code Pro", monospace;'>└─────────┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'></code><font color='red'><a title='{&#x27;file&#x27;: &#x27;/home/ec2-user/lean_info_scrapper/_target/deps/mathlib/src/data/int/basic.lean&#x27;, &#x27;line&#x27;: 32, &#x27;column&#x27;: 27}'><code style='font-family: menlo, "Source Code Pro", monospace;'>└────────────┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'></code><font color='red'><a title='{&#x27;file&#x27;: &#x27;/home/ec2-user/.elan/toolchains/3.4.2/lib/lean/library/init/meta/interactive.lean&#x27;, &#x27;line&#x27;: 917, &#x27;column&#x27;: 9}'><code style='font-family: menlo, "Source Code Pro", monospace;'>└─┘</code></a></font>
+<font color='grey'><a title='type'><code style='font-family: menlo, "Source Code Pro", monospace;'>typ  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>  </code><font color='green'><a title='@interactive.parse (option.{0} name) (λ (a : option.{0} name), @option.has_reflect name (λ (a : name), name.reflect a) `(name) a) (@optional.{0 0} lean.parser.{0} lean.parser.alternative name lean.parser.ident) → @interactive.parse (option.{0} pexpr) (λ (a : option.{0} pexpr), @option.has_reflect pexpr (λ (a : pexpr), @expr.reflect bool.ff a) `(pexpr) a) (@optional.{0 0} lean.parser.{0} lean.parser.alternative pexpr (@has_seq_right.seq_right.{0 0} lean.parser.{0} (@applicative.to_has_seq_right.{0 0} lean.parser.{0} (@alternative.to_applicative.{0 0} lean.parser.{0} lean.parser.alternative)) unit pexpr (lean.parser.tk (string.str string.empty (char.of_nat (@bit0.{0} nat nat.has_add (@bit1.{0} nat nat.has_one nat.has_add (@bit0.{0} nat nat.has_add (@bit1.{0} nat nat.has_one nat.has_add (@bit1.{0} nat nat.has_one nat.has_add (@has_one.one.{0} nat nat.has_one))))))))) interactive.types.texpr)) → @interactive.parse (option.{0} pexpr) (λ (a : option.{0} pexpr), @option.has_reflect pexpr (λ (a : pexpr), @expr.reflect bool.ff a) `(pexpr) a) (@optional.{0 0} lean.parser.{0} lean.parser.alternative pexpr (@has_seq_right.seq_right.{0 0} lean.parser.{0} (@applicative.to_has_seq_right.{0 0} lean.parser.{0} (@alternative.to_applicative.{0 0} lean.parser.{0} lean.parser.alternative)) unit pexpr (lean.parser.tk (string.str (string.str string.empty (char.of_nat (@bit0.{0} nat nat.has_add (@bit1.{0} nat nat.has_one nat.has_add (@bit0.{0} nat nat.has_add (@bit1.{0} nat nat.has_one nat.has_add (@bit1.{0} nat nat.has_one nat.has_add (@has_one.one.{0} nat nat.has_one)))))))) (char.of_nat (@bit1.{0} nat nat.has_one nat.has_add (@bit0.{0} nat nat.has_add (@bit1.{0} nat nat.has_one nat.has_add (@bit1.{0} nat nat.has_one nat.has_add (@bit1.{0} nat nat.has_one nat.has_add (@has_one.one.{0} nat nat.has_one))))))))) interactive.types.texpr)) → tactic.{0} unit'><code style='font-family: menlo, "Source Code Pro", monospace;'>└─────────┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'></code><font color='green'><a title='∀ {m n : nat}, iff (@has_lt.lt.{0} int int.has_lt (@coe.{1 1} nat int (@coe_to_lift.{1 1} nat int (@coe_base.{1 1} nat int int.has_coe)) m) (@coe.{1 1} nat int (@coe_to_lift.{1 1} nat int (@coe_base.{1 1} nat int int.has_coe)) n)) (@has_lt.lt.{0} nat nat.has_lt m n)'><code style='font-family: menlo, "Source Code Pro", monospace;'>└────────────┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'></code><font color='green'><a title='@interactive.parse (option.{0} name) (λ (a : option.{0} name), @option.has_reflect name (λ (a : name), name.reflect a) `(name) a) (@optional.{0 0} lean.parser.{0} lean.parser.alternative name lean.parser.ident) → @interactive.parse (option.{0} pexpr) (λ (a : option.{0} pexpr), @option.has_reflect pexpr (λ (a : pexpr), @expr.reflect bool.ff a) `(pexpr) a) (@optional.{0 0} lean.parser.{0} lean.parser.alternative pexpr (@has_seq_right.seq_right.{0 0} lean.parser.{0} (@applicative.to_has_seq_right.{0 0} lean.parser.{0} (@alternative.to_applicative.{0 0} lean.parser.{0} lean.parser.alternative)) unit pexpr (lean.parser.tk (string.str string.empty (char.of_nat (@bit0.{0} nat nat.has_add (@bit1.{0} nat nat.has_one nat.has_add (@bit0.{0} nat nat.has_add (@bit1.{0} nat nat.has_one nat.has_add (@bit1.{0} nat nat.has_one nat.has_add (@has_one.one.{0} nat nat.has_one))))))))) interactive.types.texpr)) → @interactive.parse (option.{0} pexpr) (λ (a : option.{0} pexpr), @option.has_reflect pexpr (λ (a : pexpr), @expr.reflect bool.ff a) `(pexpr) a) (@optional.{0 0} lean.parser.{0} lean.parser.alternative pexpr (@has_seq_right.seq_right.{0 0} lean.parser.{0} (@applicative.to_has_seq_right.{0 0} lean.parser.{0} (@alternative.to_applicative.{0 0} lean.parser.{0} lean.parser.alternative)) unit pexpr (lean.parser.tk (string.str (string.str string.empty (char.of_nat (@bit0.{0} nat nat.has_add (@bit1.{0} nat nat.has_one nat.has_add (@bit0.{0} nat nat.has_add (@bit1.{0} nat nat.has_one nat.has_add (@bit1.{0} nat nat.has_one nat.has_add (@has_one.one.{0} nat nat.has_one)))))))) (char.of_nat (@bit1.{0} nat nat.has_one nat.has_add (@bit0.{0} nat nat.has_add (@bit1.{0} nat nat.has_one nat.has_add (@bit1.{0} nat nat.has_one nat.has_add (@bit1.{0} nat nat.has_one nat.has_add (@has_one.one.{0} nat nat.has_one))))))))) interactive.types.texpr)) → tactic.{0} unit'><code style='font-family: menlo, "Source Code Pro", monospace;'>└─┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'></code><font color='green'><a title='@has_lt.lt.{0} nat nat.has_lt (@has_zero.zero.{0} nat nat.has_zero) d'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font>
+<font color='grey'><a title='doc'><code style='font-family: menlo, "Source Code Pro", monospace;'>doc  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>  </code><font color='orange'><a title='`have h : t := p` adds the hypothesis `h : t` to the current goal if `p` a term of type `t`. If `t` is omitted, it will be inferred.
+
+`have h : t` adds the hypothesis `h : t` to the current goal and opens a new subgoal with target `t`. The new subgoal becomes the main goal. If `t` is omitted, it will be replaced by a fresh metavariable.
+
+If `h` is omitted, the name `this` is used.'><code style='font-family: menlo, "Source Code Pro", monospace;'>└─────────┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>              </code><font color='orange'><a title='`have h : t := p` adds the hypothesis `h : t` to the current goal if `p` a term of type `t`. If `t` is omitted, it will be inferred.
+
+`have h : t` adds the hypothesis `h : t` to the current goal and opens a new subgoal with target `t`. The new subgoal becomes the main goal. If `t` is omitted, it will be replaced by a fresh metavariable.
+
+If `h` is omitted, the name `this` is used.'><code style='font-family: menlo, "Source Code Pro", monospace;'>└─┘</code></a></font>
+<font color='grey'><a title='text'><code style='font-family: menlo, "Source Code Pro", monospace;'>txt  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>  </code><font color='teal'><a title='have'><code style='font-family: menlo, "Source Code Pro", monospace;'>└─────────┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>              </code><font color='teal'><a title='have'><code style='font-family: menlo, "Source Code Pro", monospace;'>└─┘</code></a></font>
+<font color='grey'><a title='tactic_params'><code style='font-family: menlo, "Source Code Pro", monospace;'>par  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>  </code><font color='grey'><a title='[&#x27;id?&#x27;, &#x27;(: expr)?&#x27;, &#x27;(:= expr)?&#x27;]'><code style='font-family: menlo, "Source Code Pro", monospace;'>└─────────┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>              </code><font color='grey'><a title='[&#x27;id?&#x27;, &#x27;(: expr)?&#x27;, &#x27;(:= expr)?&#x27;]'><code style='font-family: menlo, "Source Code Pro", monospace;'>└─┘</code></a></font>
+<font color='grey'><a title='tactic_param_idx'><code style='font-family: menlo, "Source Code Pro", monospace;'>pid  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>  </code><font color='maroon'><a title='0'><code style='font-family: menlo, "Source Code Pro", monospace;'>└─────┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'></code><font color='maroon'><a title='1'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'></code><font color='maroon'><a title='2'><code style='font-family: menlo, "Source Code Pro", monospace;'>└─┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>              </code><font color='maroon'><a title='2'><code style='font-family: menlo, "Source Code Pro", monospace;'>└─┘</code></a></font>
+<font color='grey'><a title='state'><code style='font-family: menlo, "Source Code Pro", monospace;'>st   </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'></code><font color='lime'><a title='z : int,
+le_floor :
+  ∀ {r : rat},
+    iff (@has_le.le.{0} int int.has_le z (rat.floor r))
+      (@has_le.le.{0} rat rat.has_le
+         (@coe.{1 1} int rat
+            (@coe_to_lift.{1 1} int rat
+               (@coe_base.{1 1} int rat (@int.cast_coe.{0} rat rat.has_neg rat.has_zero rat.has_one rat.has_add)))
+            z)
+         r),
+n : int,
+d : nat,
+h : @has_lt.lt.{0} nat nat.has_lt (@has_zero.zero.{0} nat nat.has_zero) d,
+c : nat.coprime (int.nat_abs n) d
+⊢ iff
+    (@has_le.le.{0} int int.has_le z
+       (@has_div.div.{0} int int.has_div n
+          (@coe.{1 1} nat int (@coe_to_lift.{1 1} nat int (@coe_base.{1 1} nat int int.has_coe)) d)))
+    (@has_le.le.{0} rat rat.has_le
+       (@coe.{1 1} int rat
+          (@coe_to_lift.{1 1} int rat
+             (@coe_base.{1 1} int rat (@int.cast_coe.{0} rat rat.has_neg rat.has_zero rat.has_one rat.has_add)))
+          z)
+       (rat.mk n (@coe.{1 1} nat int (@coe_to_lift.{1 1} nat int (@coe_base.{1 1} nat int int.has_coe)) d)))'><code style='font-family: menlo, "Source Code Pro", monospace;'>──────────────────────────────┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'></code><font color='lime'><a title='z : int,
+le_floor :
+  ∀ {r : rat},
+    iff (@has_le.le.{0} int int.has_le z (rat.floor r))
+      (@has_le.le.{0} rat rat.has_le
+         (@coe.{1 1} int rat
+            (@coe_to_lift.{1 1} int rat
+               (@coe_base.{1 1} int rat (@int.cast_coe.{0} rat rat.has_neg rat.has_zero rat.has_one rat.has_add)))
+            z)
+         r),
+n : int,
+d : nat,
+h : @has_lt.lt.{0} nat nat.has_lt (@has_zero.zero.{0} nat nat.has_zero) d,
+c : nat.coprime (int.nat_abs n) d,
+h&#x27; :
+  @has_lt.lt.{0} int int.has_lt
+    (@coe.{1 1} nat int (@coe_to_lift.{1 1} nat int (@coe_base.{1 1} nat int int.has_coe))
+       (@has_zero.zero.{0} nat nat.has_zero))
+    (@coe.{1 1} nat int (@coe_to_lift.{1 1} nat int (@coe_base.{1 1} nat int int.has_coe)) d)
+⊢ iff
+    (@has_le.le.{0} int int.has_le z
+       (@has_div.div.{0} int int.has_div n
+          (@coe.{1 1} nat int (@coe_to_lift.{1 1} nat int (@coe_base.{1 1} nat int int.has_coe)) d)))
+    (@has_le.le.{0} rat rat.has_le
+       (@coe.{1 1} int rat
+          (@coe_to_lift.{1 1} int rat
+             (@coe_base.{1 1} int rat (@int.cast_coe.{0} rat rat.has_neg rat.has_zero rat.has_one rat.has_add)))
+          z)
+       (rat.mk n (@coe.{1 1} nat int (@coe_to_lift.{1 1} nat int (@coe_base.{1 1} nat int int.has_coe)) d)))'><code style='font-family: menlo, "Source Code Pro", monospace;'>└─</code></a></font>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 32    conv { to_rhs,</code>
+<font color='grey'><a title='source'><code style='font-family: menlo, "Source Code Pro", monospace;'>src  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>  </code><font color='red'><a title='{&#x27;file&#x27;: &#x27;/home/ec2-user/.elan/toolchains/3.4.2/lib/lean/library/init/meta/converter/interactive.lean&#x27;, &#x27;line&#x27;: 174, &#x27;column&#x27;: 9}'><code style='font-family: menlo, "Source Code Pro", monospace;'>└─────┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'></code><font color='red'><a title='{&#x27;file&#x27;: &#x27;/home/ec2-user/.elan/toolchains/3.4.2/lib/lean/library/init/meta/converter/interactive.lean&#x27;, &#x27;line&#x27;: 68, &#x27;column&#x27;: 9}'><code style='font-family: menlo, "Source Code Pro", monospace;'>└────┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'></code><font color='red'><a title='{&#x27;file&#x27;: &#x27;/home/ec2-user/.elan/toolchains/3.4.2/lib/lean/library/init/meta/converter/interactive.lean&#x27;, &#x27;line&#x27;: 174, &#x27;column&#x27;: 9}'><code style='font-family: menlo, "Source Code Pro", monospace;'>└─</code></a></font>
+<font color='grey'><a title='type'><code style='font-family: menlo, "Source Code Pro", monospace;'>typ  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>  </code><font color='green'><a title='@interactive.parse (option.{0} name) (λ (a : option.{0} name), @option.has_reflect name (λ (a : name), name.reflect a) `(name) a) (@optional.{0 0} lean.parser.{0} lean.parser.alternative name (@has_seq_right.seq_right.{0 0} lean.parser.{0} (@applicative.to_has_seq_right.{0 0} lean.parser.{0} (@alternative.to_applicative.{0 0} lean.parser.{0} lean.parser.alternative)) unit name (lean.parser.tk (string.str (string.str string.empty (char.of_nat (@bit1.{0} nat nat.has_one nat.has_add (@bit0.{0} nat nat.has_add (@bit0.{0} nat nat.has_add (@bit0.{0} nat nat.has_add (@bit0.{0} nat nat.has_add (@bit1.{0} nat nat.has_one nat.has_add (@has_one.one.{0} nat nat.has_one))))))))) (char.of_nat (@bit0.{0} nat nat.has_add (@bit0.{0} nat nat.has_add (@bit1.{0} nat nat.has_one nat.has_add (@bit0.{0} nat nat.has_add (@bit1.{0} nat nat.has_one nat.has_add (@bit1.{0} nat nat.has_one nat.has_add (@has_one.one.{0} nat nat.has_one)))))))))) lean.parser.ident)) → @interactive.parse (option.{0} pexpr) (λ (a : option.{0} pexpr), @option.has_reflect pexpr (λ (a : pexpr), @expr.reflect bool.ff a) `(pexpr) a) (@optional.{0 0} lean.parser.{0} lean.parser.alternative pexpr (@has_seq_right.seq_right.{0 0} lean.parser.{0} (@applicative.to_has_seq_right.{0 0} lean.parser.{0} (@alternative.to_applicative.{0 0} lean.parser.{0} lean.parser.alternative)) unit pexpr (lean.parser.tk (string.str (string.str string.empty (char.of_nat (@bit1.{0} nat nat.has_one nat.has_add (@bit0.{0} nat nat.has_add (@bit0.{0} nat nat.has_add (@bit1.{0} nat nat.has_one nat.has_add (@bit0.{0} nat nat.has_add (@bit1.{0} nat nat.has_one nat.has_add (@has_one.one.{0} nat nat.has_one))))))))) (char.of_nat (@bit0.{0} nat nat.has_add (@bit1.{0} nat nat.has_one nat.has_add (@bit1.{0} nat nat.has_one nat.has_add (@bit1.{0} nat nat.has_one nat.has_add (@bit0.{0} nat nat.has_add (@bit1.{0} nat nat.has_one nat.has_add (@has_one.one.{0} nat nat.has_one)))))))))) (lean.parser.pexpr std.prec.max))) → conv.interactive.itactic → tactic.{0} unit'><code style='font-family: menlo, "Source Code Pro", monospace;'>└─────┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'></code><font color='green'><a title='conv.{0} unit'><code style='font-family: menlo, "Source Code Pro", monospace;'>└────┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'></code><font color='green'><a title='@interactive.parse (option.{0} name) (λ (a : option.{0} name), @option.has_reflect name (λ (a : name), name.reflect a) `(name) a) (@optional.{0 0} lean.parser.{0} lean.parser.alternative name (@has_seq_right.seq_right.{0 0} lean.parser.{0} (@applicative.to_has_seq_right.{0 0} lean.parser.{0} (@alternative.to_applicative.{0 0} lean.parser.{0} lean.parser.alternative)) unit name (lean.parser.tk (string.str (string.str string.empty (char.of_nat (@bit1.{0} nat nat.has_one nat.has_add (@bit0.{0} nat nat.has_add (@bit0.{0} nat nat.has_add (@bit0.{0} nat nat.has_add (@bit0.{0} nat nat.has_add (@bit1.{0} nat nat.has_one nat.has_add (@has_one.one.{0} nat nat.has_one))))))))) (char.of_nat (@bit0.{0} nat nat.has_add (@bit0.{0} nat nat.has_add (@bit1.{0} nat nat.has_one nat.has_add (@bit0.{0} nat nat.has_add (@bit1.{0} nat nat.has_one nat.has_add (@bit1.{0} nat nat.has_one nat.has_add (@has_one.one.{0} nat nat.has_one)))))))))) lean.parser.ident)) → @interactive.parse (option.{0} pexpr) (λ (a : option.{0} pexpr), @option.has_reflect pexpr (λ (a : pexpr), @expr.reflect bool.ff a) `(pexpr) a) (@optional.{0 0} lean.parser.{0} lean.parser.alternative pexpr (@has_seq_right.seq_right.{0 0} lean.parser.{0} (@applicative.to_has_seq_right.{0 0} lean.parser.{0} (@alternative.to_applicative.{0 0} lean.parser.{0} lean.parser.alternative)) unit pexpr (lean.parser.tk (string.str (string.str string.empty (char.of_nat (@bit1.{0} nat nat.has_one nat.has_add (@bit0.{0} nat nat.has_add (@bit0.{0} nat nat.has_add (@bit1.{0} nat nat.has_one nat.has_add (@bit0.{0} nat nat.has_add (@bit1.{0} nat nat.has_one nat.has_add (@has_one.one.{0} nat nat.has_one))))))))) (char.of_nat (@bit0.{0} nat nat.has_add (@bit1.{0} nat nat.has_one nat.has_add (@bit1.{0} nat nat.has_one nat.has_add (@bit1.{0} nat nat.has_one nat.has_add (@bit0.{0} nat nat.has_add (@bit1.{0} nat nat.has_one nat.has_add (@has_one.one.{0} nat nat.has_one)))))))))) (lean.parser.pexpr std.prec.max))) → conv.interactive.itactic → tactic.{0} unit'><code style='font-family: menlo, "Source Code Pro", monospace;'>└─</code></a></font>
+<font color='grey'><a title='text'><code style='font-family: menlo, "Source Code Pro", monospace;'>txt  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>  </code><font color='teal'><a title='conv'><code style='font-family: menlo, "Source Code Pro", monospace;'>└─────┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'></code><font color='teal'><a title='to_rhs'><code style='font-family: menlo, "Source Code Pro", monospace;'>└────┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'></code><font color='teal'><a title='conv'><code style='font-family: menlo, "Source Code Pro", monospace;'>└─</code></a></font>
+<font color='grey'><a title='tactic_params'><code style='font-family: menlo, "Source Code Pro", monospace;'>par  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>  </code><font color='grey'><a title='[&#x27;(at id)?&#x27;, &#x27;(in expr)?&#x27;, &#x27;{ tactic }&#x27;]'><code style='font-family: menlo, "Source Code Pro", monospace;'>└─────┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'></code><font color='grey'><a title='[]'><code style='font-family: menlo, "Source Code Pro", monospace;'>└────┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'></code><font color='grey'><a title='[&#x27;(at id)?&#x27;, &#x27;(in expr)?&#x27;, &#x27;{ tactic }&#x27;]'><code style='font-family: menlo, "Source Code Pro", monospace;'>└─</code></a></font>
+<font color='grey'><a title='tactic_param_idx'><code style='font-family: menlo, "Source Code Pro", monospace;'>pid  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>      </code><font color='maroon'><a title='0'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'></code><font color='maroon'><a title='2'><code style='font-family: menlo, "Source Code Pro", monospace;'>└─────────</code></a></font>
+<font color='grey'><a title='state'><code style='font-family: menlo, "Source Code Pro", monospace;'>st   </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'></code><font color='lime'><a title='z : int,
+le_floor :
+  ∀ {r : rat},
+    iff (@has_le.le.{0} int int.has_le z (rat.floor r))
+      (@has_le.le.{0} rat rat.has_le
+         (@coe.{1 1} int rat
+            (@coe_to_lift.{1 1} int rat
+               (@coe_base.{1 1} int rat (@int.cast_coe.{0} rat rat.has_neg rat.has_zero rat.has_one rat.has_add)))
+            z)
+         r),
+n : int,
+d : nat,
+h : @has_lt.lt.{0} nat nat.has_lt (@has_zero.zero.{0} nat nat.has_zero) d,
+c : nat.coprime (int.nat_abs n) d,
+h&#x27; :
+  @has_lt.lt.{0} int int.has_lt
+    (@coe.{1 1} nat int (@coe_to_lift.{1 1} nat int (@coe_base.{1 1} nat int int.has_coe))
+       (@has_zero.zero.{0} nat nat.has_zero))
+    (@coe.{1 1} nat int (@coe_to_lift.{1 1} nat int (@coe_base.{1 1} nat int int.has_coe)) d)
+⊢ iff
+    (@has_le.le.{0} int int.has_le z
+       (@has_div.div.{0} int int.has_div n
+          (@coe.{1 1} nat int (@coe_to_lift.{1 1} nat int (@coe_base.{1 1} nat int int.has_coe)) d)))
+    (@has_le.le.{0} rat rat.has_le
+       (@coe.{1 1} int rat
+          (@coe_to_lift.{1 1} int rat
+             (@coe_base.{1 1} int rat (@int.cast_coe.{0} rat rat.has_neg rat.has_zero rat.has_one rat.has_add)))
+          z)
+       (rat.mk n (@coe.{1 1} nat int (@coe_to_lift.{1 1} nat int (@coe_base.{1 1} nat int int.has_coe)) d)))'><code style='font-family: menlo, "Source Code Pro", monospace;'>───────┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'></code><font color='lime'><a title='z : int,
+le_floor :
+  ∀ {r : rat},
+    iff (@has_le.le.{0} int int.has_le z (rat.floor r))
+      (@has_le.le.{0} rat rat.has_le
+         (@coe.{1 1} int rat
+            (@coe_to_lift.{1 1} int rat
+               (@coe_base.{1 1} int rat (@int.cast_coe.{0} rat rat.has_neg rat.has_zero rat.has_one rat.has_add)))
+            z)
+         r),
+n : int,
+d : nat,
+h : @has_lt.lt.{0} nat nat.has_lt (@has_zero.zero.{0} nat nat.has_zero) d,
+c : nat.coprime (int.nat_abs n) d,
+h&#x27; :
+  @has_lt.lt.{0} int int.has_lt
+    (@coe.{1 1} nat int (@coe_to_lift.{1 1} nat int (@coe_base.{1 1} nat int int.has_coe))
+       (@has_zero.zero.{0} nat nat.has_zero))
+    (@coe.{1 1} nat int (@coe_to_lift.{1 1} nat int (@coe_base.{1 1} nat int int.has_coe)) d)
+| iff
+    (@has_le.le.{0} int int.has_le z
+       (@has_div.div.{0} int int.has_div n
+          (@coe.{1 1} nat int (@coe_to_lift.{1 1} nat int (@coe_base.{1 1} nat int int.has_coe)) d)))
+    (@has_le.le.{0} rat rat.has_le
+       (@coe.{1 1} int rat
+          (@coe_to_lift.{1 1} int rat
+             (@coe_base.{1 1} int rat (@int.cast_coe.{0} rat rat.has_neg rat.has_zero rat.has_one rat.has_add)))
+          z)
+       (rat.mk n (@coe.{1 1} nat int (@coe_to_lift.{1 1} nat int (@coe_base.{1 1} nat int int.has_coe)) d)))'><code style='font-family: menlo, "Source Code Pro", monospace;'>└─────┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'></code><font color='lime'><a title='z : int,
+le_floor :
+  ∀ {r : rat},
+    iff (@has_le.le.{0} int int.has_le z (rat.floor r))
+      (@has_le.le.{0} rat rat.has_le
+         (@coe.{1 1} int rat
+            (@coe_to_lift.{1 1} int rat
+               (@coe_base.{1 1} int rat (@int.cast_coe.{0} rat rat.has_neg rat.has_zero rat.has_one rat.has_add)))
+            z)
+         r),
+n : int,
+d : nat,
+h : @has_lt.lt.{0} nat nat.has_lt (@has_zero.zero.{0} nat nat.has_zero) d,
+c : nat.coprime (int.nat_abs n) d,
+h&#x27; :
+  @has_lt.lt.{0} int int.has_lt
+    (@coe.{1 1} nat int (@coe_to_lift.{1 1} nat int (@coe_base.{1 1} nat int int.has_coe))
+       (@has_zero.zero.{0} nat nat.has_zero))
+    (@coe.{1 1} nat int (@coe_to_lift.{1 1} nat int (@coe_base.{1 1} nat int int.has_coe)) d)
+| @has_le.le.{0} rat rat.has_le
+    (@coe.{1 1} int rat
+       (@coe_to_lift.{1 1} int rat
+          (@coe_base.{1 1} int rat (@int.cast_coe.{0} rat rat.has_neg rat.has_zero rat.has_one rat.has_add)))
+       z)
+    (rat.mk n (@coe.{1 1} nat int (@coe_to_lift.{1 1} nat int (@coe_base.{1 1} nat int int.has_coe)) d))'><code style='font-family: menlo, "Source Code Pro", monospace;'>└─</code></a></font>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 33      rw [coe_int_eq_mk, rat.le_def zero_lt_one h&#x27;, mul_one] },</code>
+<font color='grey'><a title='full-id'><code style='font-family: menlo, "Source Code Pro", monospace;'>id   </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>        </code><font color='blue'><a title='rat.coe_int_eq_mk'><code style='font-family: menlo, "Source Code Pro", monospace;'>└───────────┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>  </code><font color='blue'><a title='rat.le_def'><code style='font-family: menlo, "Source Code Pro", monospace;'>└────────┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'> </code><font color='blue'><a title='zero_lt_one'><code style='font-family: menlo, "Source Code Pro", monospace;'>└─────────┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'> </code><font color='blue'><a title='h&#x27;'><code style='font-family: menlo, "Source Code Pro", monospace;'>└┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>  </code><font color='blue'><a title='mul_one'><code style='font-family: menlo, "Source Code Pro", monospace;'>└─────┘</code></a></font>
+<font color='grey'><a title='source'><code style='font-family: menlo, "Source Code Pro", monospace;'>src  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'></code><font color='red'><a title='{&#x27;file&#x27;: &#x27;/home/ec2-user/.elan/toolchains/3.4.2/lib/lean/library/init/meta/converter/interactive.lean&#x27;, &#x27;line&#x27;: 174, &#x27;column&#x27;: 9}'><code style='font-family: menlo, "Source Code Pro", monospace;'>───┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'></code><font color='red'><a title='{&#x27;file&#x27;: &#x27;/home/ec2-user/.elan/toolchains/3.4.2/lib/lean/library/init/meta/converter/interactive.lean&#x27;, &#x27;line&#x27;: 145, &#x27;column&#x27;: 9}'><code style='font-family: menlo, "Source Code Pro", monospace;'>└──┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'></code><font color='red'><a title='{&#x27;file&#x27;: &#x27;/home/ec2-user/lean_info_scrapper/_target/deps/mathlib/src/data/rat/basic.lean&#x27;, &#x27;line&#x27;: 576, &#x27;column&#x27;: 8}'><code style='font-family: menlo, "Source Code Pro", monospace;'>└───────────┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'></code><font color='red'><a title='{&#x27;file&#x27;: &#x27;/home/ec2-user/.elan/toolchains/3.4.2/lib/lean/library/init/meta/converter/interactive.lean&#x27;, &#x27;line&#x27;: 145, &#x27;column&#x27;: 9}'><code style='font-family: menlo, "Source Code Pro", monospace;'>└┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'></code><font color='red'><a title='{&#x27;file&#x27;: &#x27;/home/ec2-user/lean_info_scrapper/_target/deps/mathlib/src/data/rat/order.lean&#x27;, &#x27;line&#x27;: 87, &#x27;column&#x27;: 18}'><code style='font-family: menlo, "Source Code Pro", monospace;'>└────────┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'></code><font color='red'><a title='{&#x27;file&#x27;: &#x27;/home/ec2-user/.elan/toolchains/3.4.2/lib/lean/library/init/meta/converter/interactive.lean&#x27;, &#x27;line&#x27;: 145, &#x27;column&#x27;: 9}'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'></code><font color='red'><a title='{&#x27;file&#x27;: &#x27;/home/ec2-user/.elan/toolchains/3.4.2/lib/lean/library/init/algebra/ordered_ring.lean&#x27;, &#x27;line&#x27;: 95, &#x27;column&#x27;: 6}'><code style='font-family: menlo, "Source Code Pro", monospace;'>└─────────┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'></code><font color='red'><a title='{&#x27;file&#x27;: &#x27;/home/ec2-user/.elan/toolchains/3.4.2/lib/lean/library/init/meta/converter/interactive.lean&#x27;, &#x27;line&#x27;: 145, &#x27;column&#x27;: 9}'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>  </code><font color='red'><a title='{&#x27;file&#x27;: &#x27;/home/ec2-user/.elan/toolchains/3.4.2/lib/lean/library/init/meta/converter/interactive.lean&#x27;, &#x27;line&#x27;: 145, &#x27;column&#x27;: 9}'><code style='font-family: menlo, "Source Code Pro", monospace;'>└┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'></code><font color='red'><a title='{&#x27;file&#x27;: &#x27;/home/ec2-user/.elan/toolchains/3.4.2/lib/lean/library/init/algebra/group.lean&#x27;, &#x27;line&#x27;: 75, &#x27;column&#x27;: 14}'><code style='font-family: menlo, "Source Code Pro", monospace;'>└─────┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'></code><font color='red'><a title='{&#x27;file&#x27;: &#x27;/home/ec2-user/.elan/toolchains/3.4.2/lib/lean/library/init/meta/converter/interactive.lean&#x27;, &#x27;line&#x27;: 145, &#x27;column&#x27;: 9}'><code style='font-family: menlo, "Source Code Pro", monospace;'>└┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'></code><font color='red'><a title='{&#x27;file&#x27;: &#x27;/home/ec2-user/.elan/toolchains/3.4.2/lib/lean/library/init/meta/converter/interactive.lean&#x27;, &#x27;line&#x27;: 174, &#x27;column&#x27;: 9}'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font>
+<font color='grey'><a title='type'><code style='font-family: menlo, "Source Code Pro", monospace;'>typ  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'></code><font color='green'><a title='@interactive.parse (option.{0} name) (λ (a : option.{0} name), @option.has_reflect name (λ (a : name), name.reflect a) `(name) a) (@optional.{0 0} lean.parser.{0} lean.parser.alternative name (@has_seq_right.seq_right.{0 0} lean.parser.{0} (@applicative.to_has_seq_right.{0 0} lean.parser.{0} (@alternative.to_applicative.{0 0} lean.parser.{0} lean.parser.alternative)) unit name (lean.parser.tk (string.str (string.str string.empty (char.of_nat (@bit1.{0} nat nat.has_one nat.has_add (@bit0.{0} nat nat.has_add (@bit0.{0} nat nat.has_add (@bit0.{0} nat nat.has_add (@bit0.{0} nat nat.has_add (@bit1.{0} nat nat.has_one nat.has_add (@has_one.one.{0} nat nat.has_one))))))))) (char.of_nat (@bit0.{0} nat nat.has_add (@bit0.{0} nat nat.has_add (@bit1.{0} nat nat.has_one nat.has_add (@bit0.{0} nat nat.has_add (@bit1.{0} nat nat.has_one nat.has_add (@bit1.{0} nat nat.has_one nat.has_add (@has_one.one.{0} nat nat.has_one)))))))))) lean.parser.ident)) → @interactive.parse (option.{0} pexpr) (λ (a : option.{0} pexpr), @option.has_reflect pexpr (λ (a : pexpr), @expr.reflect bool.ff a) `(pexpr) a) (@optional.{0 0} lean.parser.{0} lean.parser.alternative pexpr (@has_seq_right.seq_right.{0 0} lean.parser.{0} (@applicative.to_has_seq_right.{0 0} lean.parser.{0} (@alternative.to_applicative.{0 0} lean.parser.{0} lean.parser.alternative)) unit pexpr (lean.parser.tk (string.str (string.str string.empty (char.of_nat (@bit1.{0} nat nat.has_one nat.has_add (@bit0.{0} nat nat.has_add (@bit0.{0} nat nat.has_add (@bit1.{0} nat nat.has_one nat.has_add (@bit0.{0} nat nat.has_add (@bit1.{0} nat nat.has_one nat.has_add (@has_one.one.{0} nat nat.has_one))))))))) (char.of_nat (@bit0.{0} nat nat.has_add (@bit1.{0} nat nat.has_one nat.has_add (@bit1.{0} nat nat.has_one nat.has_add (@bit1.{0} nat nat.has_one nat.has_add (@bit0.{0} nat nat.has_add (@bit1.{0} nat nat.has_one nat.has_add (@has_one.one.{0} nat nat.has_one)))))))))) (lean.parser.pexpr std.prec.max))) → conv.interactive.itactic → tactic.{0} unit'><code style='font-family: menlo, "Source Code Pro", monospace;'>───┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'></code><font color='green'><a title='@interactive.parse tactic.interactive.rw_rules_t (λ (a : tactic.interactive.rw_rules_t), tactic.interactive.rw_rules_t.has_reflect a) tactic.interactive.rw_rules → opt_param.{1} tactic.rewrite_cfg {to_apply_cfg := {md := tactic.transparency.reducible, approx := bool.tt, new_goals := tactic.new_goals.non_dep_first, instances := bool.tt, auto_param := bool.tt, opt_param := bool.tt, unify := bool.tt}, symm := bool.ff, occs := occurrences.all} → conv.{0} unit'><code style='font-family: menlo, "Source Code Pro", monospace;'>└──┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'></code><font color='green'><a title='∀ (z : int), @eq.{1} rat (@coe.{1 1} int rat (@coe_to_lift.{1 1} int rat (@coe_base.{1 1} int rat (@int.cast_coe.{0} rat rat.has_neg rat.has_zero rat.has_one rat.has_add))) z) (rat.mk z (@has_one.one.{0} int int.has_one))'><code style='font-family: menlo, "Source Code Pro", monospace;'>└───────────┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'></code><font color='green'><a title='@interactive.parse tactic.interactive.rw_rules_t (λ (a : tactic.interactive.rw_rules_t), tactic.interactive.rw_rules_t.has_reflect a) tactic.interactive.rw_rules → opt_param.{1} tactic.rewrite_cfg {to_apply_cfg := {md := tactic.transparency.reducible, approx := bool.tt, new_goals := tactic.new_goals.non_dep_first, instances := bool.tt, auto_param := bool.tt, opt_param := bool.tt, unify := bool.tt}, symm := bool.ff, occs := occurrences.all} → conv.{0} unit'><code style='font-family: menlo, "Source Code Pro", monospace;'>└┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'></code><font color='green'><a title='∀ {a b c d : int}, @has_lt.lt.{0} int int.has_lt (@has_zero.zero.{0} int int.has_zero) b → @has_lt.lt.{0} int int.has_lt (@has_zero.zero.{0} int int.has_zero) d → iff (@has_le.le.{0} rat rat.has_le (rat.mk a b) (rat.mk c d)) (@has_le.le.{0} int int.has_le (@has_mul.mul.{0} int int.has_mul a d) (@has_mul.mul.{0} int int.has_mul c b))'><code style='font-family: menlo, "Source Code Pro", monospace;'>└────────┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'></code><font color='green'><a title='@interactive.parse tactic.interactive.rw_rules_t (λ (a : tactic.interactive.rw_rules_t), tactic.interactive.rw_rules_t.has_reflect a) tactic.interactive.rw_rules → opt_param.{1} tactic.rewrite_cfg {to_apply_cfg := {md := tactic.transparency.reducible, approx := bool.tt, new_goals := tactic.new_goals.non_dep_first, instances := bool.tt, auto_param := bool.tt, opt_param := bool.tt, unify := bool.tt}, symm := bool.ff, occs := occurrences.all} → conv.{0} unit'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'></code><font color='green'><a title='∀ {α : Type} [_inst_1 : linear_ordered_semiring.{0} α], @has_lt.lt.{0} α (@preorder.to_has_lt.{0} α (@partial_order.to_preorder.{0} α (@ordered_cancel_comm_monoid.to_partial_order.{0} α (@ordered_semiring.to_ordered_cancel_comm_monoid.{0} α (@linear_ordered_semiring.to_ordered_semiring.{0} α _inst_1))))) (@has_zero.zero.{0} α (@mul_zero_class.to_has_zero.{0} α (@semiring.to_mul_zero_class.{0} α (@ordered_semiring.to_semiring.{0} α (@linear_ordered_semiring.to_ordered_semiring.{0} α _inst_1))))) (@has_one.one.{0} α (@monoid.to_has_one.{0} α (@semiring.to_monoid.{0} α (@ordered_semiring.to_semiring.{0} α (@linear_ordered_semiring.to_ordered_semiring.{0} α _inst_1)))))'><code style='font-family: menlo, "Source Code Pro", monospace;'>└─────────┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'></code><font color='green'><a title='@interactive.parse tactic.interactive.rw_rules_t (λ (a : tactic.interactive.rw_rules_t), tactic.interactive.rw_rules_t.has_reflect a) tactic.interactive.rw_rules → opt_param.{1} tactic.rewrite_cfg {to_apply_cfg := {md := tactic.transparency.reducible, approx := bool.tt, new_goals := tactic.new_goals.non_dep_first, instances := bool.tt, auto_param := bool.tt, opt_param := bool.tt, unify := bool.tt}, symm := bool.ff, occs := occurrences.all} → conv.{0} unit'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'></code><font color='green'><a title='@has_lt.lt.{0} int int.has_lt (@coe.{1 1} nat int (@coe_to_lift.{1 1} nat int (@coe_base.{1 1} nat int int.has_coe)) (@has_zero.zero.{0} nat nat.has_zero)) (@coe.{1 1} nat int (@coe_to_lift.{1 1} nat int (@coe_base.{1 1} nat int int.has_coe)) d)'><code style='font-family: menlo, "Source Code Pro", monospace;'>└┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'></code><font color='green'><a title='@interactive.parse tactic.interactive.rw_rules_t (λ (a : tactic.interactive.rw_rules_t), tactic.interactive.rw_rules_t.has_reflect a) tactic.interactive.rw_rules → opt_param.{1} tactic.rewrite_cfg {to_apply_cfg := {md := tactic.transparency.reducible, approx := bool.tt, new_goals := tactic.new_goals.non_dep_first, instances := bool.tt, auto_param := bool.tt, opt_param := bool.tt, unify := bool.tt}, symm := bool.ff, occs := occurrences.all} → conv.{0} unit'><code style='font-family: menlo, "Source Code Pro", monospace;'>└┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'></code><font color='green'><a title='∀ {α : Type} [_inst_1 : monoid.{0} α] (a : α), @eq.{1} α (@has_mul.mul.{0} α (@semigroup.to_has_mul.{0} α (@monoid.to_semigroup.{0} α _inst_1)) a (@has_one.one.{0} α (@monoid.to_has_one.{0} α _inst_1))) a'><code style='font-family: menlo, "Source Code Pro", monospace;'>└─────┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'></code><font color='green'><a title='@interactive.parse tactic.interactive.rw_rules_t (λ (a : tactic.interactive.rw_rules_t), tactic.interactive.rw_rules_t.has_reflect a) tactic.interactive.rw_rules → opt_param.{1} tactic.rewrite_cfg {to_apply_cfg := {md := tactic.transparency.reducible, approx := bool.tt, new_goals := tactic.new_goals.non_dep_first, instances := bool.tt, auto_param := bool.tt, opt_param := bool.tt, unify := bool.tt}, symm := bool.ff, occs := occurrences.all} → conv.{0} unit'><code style='font-family: menlo, "Source Code Pro", monospace;'>└┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'></code><font color='green'><a title='@interactive.parse (option.{0} name) (λ (a : option.{0} name), @option.has_reflect name (λ (a : name), name.reflect a) `(name) a) (@optional.{0 0} lean.parser.{0} lean.parser.alternative name (@has_seq_right.seq_right.{0 0} lean.parser.{0} (@applicative.to_has_seq_right.{0 0} lean.parser.{0} (@alternative.to_applicative.{0 0} lean.parser.{0} lean.parser.alternative)) unit name (lean.parser.tk (string.str (string.str string.empty (char.of_nat (@bit1.{0} nat nat.has_one nat.has_add (@bit0.{0} nat nat.has_add (@bit0.{0} nat nat.has_add (@bit0.{0} nat nat.has_add (@bit0.{0} nat nat.has_add (@bit1.{0} nat nat.has_one nat.has_add (@has_one.one.{0} nat nat.has_one))))))))) (char.of_nat (@bit0.{0} nat nat.has_add (@bit0.{0} nat nat.has_add (@bit1.{0} nat nat.has_one nat.has_add (@bit0.{0} nat nat.has_add (@bit1.{0} nat nat.has_one nat.has_add (@bit1.{0} nat nat.has_one nat.has_add (@has_one.one.{0} nat nat.has_one)))))))))) lean.parser.ident)) → @interactive.parse (option.{0} pexpr) (λ (a : option.{0} pexpr), @option.has_reflect pexpr (λ (a : pexpr), @expr.reflect bool.ff a) `(pexpr) a) (@optional.{0 0} lean.parser.{0} lean.parser.alternative pexpr (@has_seq_right.seq_right.{0 0} lean.parser.{0} (@applicative.to_has_seq_right.{0 0} lean.parser.{0} (@alternative.to_applicative.{0 0} lean.parser.{0} lean.parser.alternative)) unit pexpr (lean.parser.tk (string.str (string.str string.empty (char.of_nat (@bit1.{0} nat nat.has_one nat.has_add (@bit0.{0} nat nat.has_add (@bit0.{0} nat nat.has_add (@bit1.{0} nat nat.has_one nat.has_add (@bit0.{0} nat nat.has_add (@bit1.{0} nat nat.has_one nat.has_add (@has_one.one.{0} nat nat.has_one))))))))) (char.of_nat (@bit0.{0} nat nat.has_add (@bit1.{0} nat nat.has_one nat.has_add (@bit1.{0} nat nat.has_one nat.has_add (@bit1.{0} nat nat.has_one nat.has_add (@bit0.{0} nat nat.has_add (@bit1.{0} nat nat.has_one nat.has_add (@has_one.one.{0} nat nat.has_one)))))))))) (lean.parser.pexpr std.prec.max))) → conv.interactive.itactic → tactic.{0} unit'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font>
+<font color='grey'><a title='text'><code style='font-family: menlo, "Source Code Pro", monospace;'>txt  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'></code><font color='teal'><a title='conv'><code style='font-family: menlo, "Source Code Pro", monospace;'>───┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'></code><font color='teal'><a title='rw'><code style='font-family: menlo, "Source Code Pro", monospace;'>└──┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>             </code><font color='teal'><a title='rw'><code style='font-family: menlo, "Source Code Pro", monospace;'>└┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>          </code><font color='teal'><a title='rw'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>           </code><font color='teal'><a title='rw'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>  </code><font color='teal'><a title='rw'><code style='font-family: menlo, "Source Code Pro", monospace;'>└┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>       </code><font color='teal'><a title='rw'><code style='font-family: menlo, "Source Code Pro", monospace;'>└┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'></code><font color='teal'><a title='conv'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font>
+<font color='grey'><a title='tactic_params'><code style='font-family: menlo, "Source Code Pro", monospace;'>par  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'></code><font color='grey'><a title='[&#x27;(at id)?&#x27;, &#x27;(in expr)?&#x27;, &#x27;{ tactic }&#x27;]'><code style='font-family: menlo, "Source Code Pro", monospace;'>───┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'></code><font color='grey'><a title='[&#x27;([ (←? expr), ... ] | ←? expr)&#x27;, &#x27;tactic.rewrite_cfg?&#x27;]'><code style='font-family: menlo, "Source Code Pro", monospace;'>└──┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>             </code><font color='grey'><a title='[&#x27;([ (←? expr), ... ] | ←? expr)&#x27;, &#x27;tactic.rewrite_cfg?&#x27;]'><code style='font-family: menlo, "Source Code Pro", monospace;'>└┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>          </code><font color='grey'><a title='[&#x27;([ (←? expr), ... ] | ←? expr)&#x27;, &#x27;tactic.rewrite_cfg?&#x27;]'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>           </code><font color='grey'><a title='[&#x27;([ (←? expr), ... ] | ←? expr)&#x27;, &#x27;tactic.rewrite_cfg?&#x27;]'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>  </code><font color='grey'><a title='[&#x27;([ (←? expr), ... ] | ←? expr)&#x27;, &#x27;tactic.rewrite_cfg?&#x27;]'><code style='font-family: menlo, "Source Code Pro", monospace;'>└┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>       </code><font color='grey'><a title='[&#x27;([ (←? expr), ... ] | ←? expr)&#x27;, &#x27;tactic.rewrite_cfg?&#x27;]'><code style='font-family: menlo, "Source Code Pro", monospace;'>└┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'></code><font color='grey'><a title='[&#x27;(at id)?&#x27;, &#x27;(in expr)?&#x27;, &#x27;{ tactic }&#x27;]'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font>
+<font color='grey'><a title='tactic_param_idx'><code style='font-family: menlo, "Source Code Pro", monospace;'>pid  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'></code><font color='maroon'><a title='2'><code style='font-family: menlo, "Source Code Pro", monospace;'>───────┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>             </code><font color='maroon'><a title='2'><code style='font-family: menlo, "Source Code Pro", monospace;'>└┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>          </code><font color='maroon'><a title='2'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>           </code><font color='maroon'><a title='2'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>  </code><font color='maroon'><a title='2'><code style='font-family: menlo, "Source Code Pro", monospace;'>└┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>       </code><font color='maroon'><a title='2'><code style='font-family: menlo, "Source Code Pro", monospace;'>└─┘</code></a></font>
+<font color='grey'><a title='state'><code style='font-family: menlo, "Source Code Pro", monospace;'>st   </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'></code><font color='lime'><a title='z : int,
+le_floor :
+  ∀ {r : rat},
+    iff (@has_le.le.{0} int int.has_le z (rat.floor r))
+      (@has_le.le.{0} rat rat.has_le
+         (@coe.{1 1} int rat
+            (@coe_to_lift.{1 1} int rat
+               (@coe_base.{1 1} int rat (@int.cast_coe.{0} rat rat.has_neg rat.has_zero rat.has_one rat.has_add)))
+            z)
+         r),
+n : int,
+d : nat,
+h : @has_lt.lt.{0} nat nat.has_lt (@has_zero.zero.{0} nat nat.has_zero) d,
+c : nat.coprime (int.nat_abs n) d,
+h&#x27; :
+  @has_lt.lt.{0} int int.has_lt
+    (@coe.{1 1} nat int (@coe_to_lift.{1 1} nat int (@coe_base.{1 1} nat int int.has_coe))
+       (@has_zero.zero.{0} nat nat.has_zero))
+    (@coe.{1 1} nat int (@coe_to_lift.{1 1} nat int (@coe_base.{1 1} nat int int.has_coe)) d)
+| @has_le.le.{0} rat rat.has_le
+    (@coe.{1 1} int rat
+       (@coe_to_lift.{1 1} int rat
+          (@coe_base.{1 1} int rat (@int.cast_coe.{0} rat rat.has_neg rat.has_zero rat.has_one rat.has_add)))
+       z)
+    (rat.mk n (@coe.{1 1} nat int (@coe_to_lift.{1 1} nat int (@coe_base.{1 1} nat int int.has_coe)) d))'><code style='font-family: menlo, "Source Code Pro", monospace;'>────────────────────┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'></code><font color='lime'><a title='z : int,
+le_floor :
+  ∀ {r : rat},
+    iff (@has_le.le.{0} int int.has_le z (rat.floor r))
+      (@has_le.le.{0} rat rat.has_le
+         (@coe.{1 1} int rat
+            (@coe_to_lift.{1 1} int rat
+               (@coe_base.{1 1} int rat (@int.cast_coe.{0} rat rat.has_neg rat.has_zero rat.has_one rat.has_add)))
+            z)
+         r),
+n : int,
+d : nat,
+h : @has_lt.lt.{0} nat nat.has_lt (@has_zero.zero.{0} nat nat.has_zero) d,
+c : nat.coprime (int.nat_abs n) d,
+h&#x27; :
+  @has_lt.lt.{0} int int.has_lt
+    (@coe.{1 1} nat int (@coe_to_lift.{1 1} nat int (@coe_base.{1 1} nat int int.has_coe))
+       (@has_zero.zero.{0} nat nat.has_zero))
+    (@coe.{1 1} nat int (@coe_to_lift.{1 1} nat int (@coe_base.{1 1} nat int int.has_coe)) d)
+| @has_le.le.{0} rat rat.has_le (rat.mk z (@has_one.one.{0} int int.has_one))
+    (rat.mk n (@coe.{1 1} nat int (@coe_to_lift.{1 1} nat int (@coe_base.{1 1} nat int int.has_coe)) d))'><code style='font-family: menlo, "Source Code Pro", monospace;'>└─────────────────────────┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'></code><font color='lime'><a title='3 goals
+z : int,
+le_floor :
+  ∀ {r : rat},
+    iff (@has_le.le.{0} int int.has_le z (rat.floor r))
+      (@has_le.le.{0} rat rat.has_le
+         (@coe.{1 1} int rat
+            (@coe_to_lift.{1 1} int rat
+               (@coe_base.{1 1} int rat (@int.cast_coe.{0} rat rat.has_neg rat.has_zero rat.has_one rat.has_add)))
+            z)
+         r),
+n : int,
+d : nat,
+h : @has_lt.lt.{0} nat nat.has_lt (@has_zero.zero.{0} nat nat.has_zero) d,
+c : nat.coprime (int.nat_abs n) d,
+h&#x27; :
+  @has_lt.lt.{0} int int.has_lt
+    (@coe.{1 1} nat int (@coe_to_lift.{1 1} nat int (@coe_base.{1 1} nat int int.has_coe))
+       (@has_zero.zero.{0} nat nat.has_zero))
+    (@coe.{1 1} nat int (@coe_to_lift.{1 1} nat int (@coe_base.{1 1} nat int int.has_coe)) d)
+| @has_le.le.{0} int int.has_le
+    (@has_mul.mul.{0} int int.has_mul z
+       (@coe.{1 1} nat int (@coe_to_lift.{1 1} nat int (@coe_base.{1 1} nat int int.has_coe)) d))
+    (@has_mul.mul.{0} int int.has_mul n
+       (@has_one.one.{0} int
+          (@monoid.to_has_one.{0} int
+             (@semiring.to_monoid.{0} int
+                (@ordered_semiring.to_semiring.{0} int
+                   (@linear_ordered_semiring.to_ordered_semiring.{0} int
+                      (@linear_ordered_ring.to_linear_ordered_semiring.{0} int
+                         (@linear_ordered_comm_ring.to_linear_ordered_ring.{0} int
+                            (@decidable_linear_ordered_comm_ring.to_linear_ordered_comm_ring.{0} int
+                               int.decidable_linear_ordered_comm_ring)))))))))
+
+z : int,
+le_floor :
+  ∀ {r : rat},
+    iff (@has_le.le.{0} int int.has_le z (rat.floor r))
+      (@has_le.le.{0} rat rat.has_le
+         (@coe.{1 1} int rat
+            (@coe_to_lift.{1 1} int rat
+               (@coe_base.{1 1} int rat (@int.cast_coe.{0} rat rat.has_neg rat.has_zero rat.has_one rat.has_add)))
+            z)
+         r),
+n : int,
+d : nat,
+h : @has_lt.lt.{0} nat nat.has_lt (@has_zero.zero.{0} nat nat.has_zero) d,
+c : nat.coprime (int.nat_abs n) d,
+h&#x27; :
+  @has_lt.lt.{0} int int.has_lt
+    (@coe.{1 1} nat int (@coe_to_lift.{1 1} nat int (@coe_base.{1 1} nat int int.has_coe))
+       (@has_zero.zero.{0} nat nat.has_zero))
+    (@coe.{1 1} nat int (@coe_to_lift.{1 1} nat int (@coe_base.{1 1} nat int int.has_coe)) d)
+⊢ int
+
+z : int,
+le_floor :
+  ∀ {r : rat},
+    iff (@has_le.le.{0} int int.has_le z (rat.floor r))
+      (@has_le.le.{0} rat rat.has_le
+         (@coe.{1 1} int rat
+            (@coe_to_lift.{1 1} int rat
+               (@coe_base.{1 1} int rat (@int.cast_coe.{0} rat rat.has_neg rat.has_zero rat.has_one rat.has_add)))
+            z)
+         r),
+n : int,
+d : nat,
+h : @has_lt.lt.{0} nat nat.has_lt (@has_zero.zero.{0} nat nat.has_zero) d,
+c : nat.coprime (int.nat_abs n) d,
+h&#x27; :
+  @has_lt.lt.{0} int int.has_lt
+    (@coe.{1 1} nat int (@coe_to_lift.{1 1} nat int (@coe_base.{1 1} nat int int.has_coe))
+       (@has_zero.zero.{0} nat nat.has_zero))
+    (@coe.{1 1} nat int (@coe_to_lift.{1 1} nat int (@coe_base.{1 1} nat int int.has_coe)) d)
+⊢ int'><code style='font-family: menlo, "Source Code Pro", monospace;'>└───────┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'> </code><font color='lime'><a title='z : int,
+le_floor :
+  ∀ {r : rat},
+    iff (@has_le.le.{0} int int.has_le z (rat.floor r))
+      (@has_le.le.{0} rat rat.has_le
+         (@coe.{1 1} int rat
+            (@coe_to_lift.{1 1} int rat
+               (@coe_base.{1 1} int rat (@int.cast_coe.{0} rat rat.has_neg rat.has_zero rat.has_one rat.has_add)))
+            z)
+         r),
+n : int,
+d : nat,
+h : @has_lt.lt.{0} nat nat.has_lt (@has_zero.zero.{0} nat nat.has_zero) d,
+c : nat.coprime (int.nat_abs n) d,
+h&#x27; :
+  @has_lt.lt.{0} int int.has_lt
+    (@coe.{1 1} nat int (@coe_to_lift.{1 1} nat int (@coe_base.{1 1} nat int int.has_coe))
+       (@has_zero.zero.{0} nat nat.has_zero))
+    (@coe.{1 1} nat int (@coe_to_lift.{1 1} nat int (@coe_base.{1 1} nat int int.has_coe)) d)
+| @has_le.le.{0} rat rat.has_le
+    (@coe.{1 1} int rat
+       (@coe_to_lift.{1 1} int rat
+          (@coe_base.{1 1} int rat (@int.cast_coe.{0} rat rat.has_neg rat.has_zero rat.has_one rat.has_add)))
+       z)
+    (rat.mk n (@coe.{1 1} nat int (@coe_to_lift.{1 1} nat int (@coe_base.{1 1} nat int int.has_coe)) d))'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'></code><font color='lime'><a title='z : int,
+le_floor :
+  ∀ {r : rat},
+    iff (@has_le.le.{0} int int.has_le z (rat.floor r))
+      (@has_le.le.{0} rat rat.has_le
+         (@coe.{1 1} int rat
+            (@coe_to_lift.{1 1} int rat
+               (@coe_base.{1 1} int rat (@int.cast_coe.{0} rat rat.has_neg rat.has_zero rat.has_one rat.has_add)))
+            z)
+         r),
+n : int,
+d : nat,
+h : @has_lt.lt.{0} nat nat.has_lt (@has_zero.zero.{0} nat nat.has_zero) d,
+c : nat.coprime (int.nat_abs n) d,
+h&#x27; :
+  @has_lt.lt.{0} int int.has_lt
+    (@coe.{1 1} nat int (@coe_to_lift.{1 1} nat int (@coe_base.{1 1} nat int int.has_coe))
+       (@has_zero.zero.{0} nat nat.has_zero))
+    (@coe.{1 1} nat int (@coe_to_lift.{1 1} nat int (@coe_base.{1 1} nat int int.has_coe)) d)
+| @has_le.le.{0} int int.has_le
+    (@has_mul.mul.{0} int int.has_mul z
+       (@coe.{1 1} nat int (@coe_to_lift.{1 1} nat int (@coe_base.{1 1} nat int int.has_coe)) d))
+    n'><code style='font-family: menlo, "Source Code Pro", monospace;'>└┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'></code><font color='lime'><a title='z : int,
+le_floor :
+  ∀ {r : rat},
+    iff (@has_le.le.{0} int int.has_le z (rat.floor r))
+      (@has_le.le.{0} rat rat.has_le
+         (@coe.{1 1} int rat
+            (@coe_to_lift.{1 1} int rat
+               (@coe_base.{1 1} int rat (@int.cast_coe.{0} rat rat.has_neg rat.has_zero rat.has_one rat.has_add)))
+            z)
+         r),
+n : int,
+d : nat,
+h : @has_lt.lt.{0} nat nat.has_lt (@has_zero.zero.{0} nat nat.has_zero) d,
+c : nat.coprime (int.nat_abs n) d,
+h&#x27; :
+  @has_lt.lt.{0} int int.has_lt
+    (@coe.{1 1} nat int (@coe_to_lift.{1 1} nat int (@coe_base.{1 1} nat int int.has_coe))
+       (@has_zero.zero.{0} nat nat.has_zero))
+    (@coe.{1 1} nat int (@coe_to_lift.{1 1} nat int (@coe_base.{1 1} nat int int.has_coe)) d)
+⊢ iff
+    (@has_le.le.{0} int int.has_le z
+       (@has_div.div.{0} int int.has_div n
+          (@coe.{1 1} nat int (@coe_to_lift.{1 1} nat int (@coe_base.{1 1} nat int int.has_coe)) d)))
+    (@has_le.le.{0} int int.has_le
+       (@has_mul.mul.{0} int int.has_mul z
+          (@coe.{1 1} nat int (@coe_to_lift.{1 1} nat int (@coe_base.{1 1} nat int int.has_coe)) d))
+       n)'><code style='font-family: menlo, "Source Code Pro", monospace;'>└</code></a></font>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 34    exact int.le_div_iff_mul_le h&#x27;</code>
+<font color='grey'><a title='full-id'><code style='font-family: menlo, "Source Code Pro", monospace;'>id   </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>        </code><font color='blue'><a title='int.le_div_iff_mul_le'><code style='font-family: menlo, "Source Code Pro", monospace;'>└───────────────────┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'> </code><font color='blue'><a title='h&#x27;'><code style='font-family: menlo, "Source Code Pro", monospace;'>└┘</code></a></font>
+<font color='grey'><a title='source'><code style='font-family: menlo, "Source Code Pro", monospace;'>src  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>  </code><font color='red'><a title='{&#x27;file&#x27;: &#x27;/home/ec2-user/.elan/toolchains/3.4.2/lib/lean/library/init/meta/interactive.lean&#x27;, &#x27;line&#x27;: 266, &#x27;column&#x27;: 9}'><code style='font-family: menlo, "Source Code Pro", monospace;'>└────┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'></code><font color='red'><a title='{&#x27;file&#x27;: &#x27;/home/ec2-user/lean_info_scrapper/_target/deps/mathlib/src/data/int/basic.lean&#x27;, &#x27;line&#x27;: 684, &#x27;column&#x27;: 18}'><code style='font-family: menlo, "Source Code Pro", monospace;'>└───────────────────┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'></code><font color='red'><a title='{&#x27;file&#x27;: &#x27;/home/ec2-user/.elan/toolchains/3.4.2/lib/lean/library/init/meta/interactive.lean&#x27;, &#x27;line&#x27;: 266, &#x27;column&#x27;: 9}'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>  </code><font color='red'><a title='{&#x27;file&#x27;: &#x27;/home/ec2-user/.elan/toolchains/3.4.2/lib/lean/library/init/meta/interactive.lean&#x27;, &#x27;line&#x27;: 266, &#x27;column&#x27;: 9}'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font>
+<font color='grey'><a title='type'><code style='font-family: menlo, "Source Code Pro", monospace;'>typ  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>  </code><font color='green'><a title='@interactive.parse pexpr (λ (a : pexpr), @expr.reflect bool.ff a) interactive.types.texpr → tactic.{0} unit'><code style='font-family: menlo, "Source Code Pro", monospace;'>└────┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'></code><font color='green'><a title='∀ {a b c : int}, @has_lt.lt.{0} int int.has_lt (@has_zero.zero.{0} int int.has_zero) c → iff (@has_le.le.{0} int int.has_le a (@has_div.div.{0} int int.has_div b c)) (@has_le.le.{0} int int.has_le (@has_mul.mul.{0} int int.has_mul a c) b)'><code style='font-family: menlo, "Source Code Pro", monospace;'>└───────────────────┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'></code><font color='green'><a title='@interactive.parse pexpr (λ (a : pexpr), @expr.reflect bool.ff a) interactive.types.texpr → tactic.{0} unit'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'></code><font color='green'><a title='@has_lt.lt.{0} int int.has_lt (@coe.{1 1} nat int (@coe_to_lift.{1 1} nat int (@coe_base.{1 1} nat int int.has_coe)) (@has_zero.zero.{0} nat nat.has_zero)) (@coe.{1 1} nat int (@coe_to_lift.{1 1} nat int (@coe_base.{1 1} nat int int.has_coe)) d)'><code style='font-family: menlo, "Source Code Pro", monospace;'>└┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'></code><font color='green'><a title='@interactive.parse pexpr (λ (a : pexpr), @expr.reflect bool.ff a) interactive.types.texpr → tactic.{0} unit'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font>
+<font color='grey'><a title='doc'><code style='font-family: menlo, "Source Code Pro", monospace;'>doc  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>  </code><font color='orange'><a title='This tactic provides an exact proof term to solve the main goal. If `t` is the goal and `p` is a term of type `u` then `exact p` succeeds if and only if `t` and `u` can be unified.'><code style='font-family: menlo, "Source Code Pro", monospace;'>└────┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>                     </code><font color='orange'><a title='This tactic provides an exact proof term to solve the main goal. If `t` is the goal and `p` is a term of type `u` then `exact p` succeeds if and only if `t` and `u` can be unified.'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>  </code><font color='orange'><a title='This tactic provides an exact proof term to solve the main goal. If `t` is the goal and `p` is a term of type `u` then `exact p` succeeds if and only if `t` and `u` can be unified.'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font>
+<font color='grey'><a title='text'><code style='font-family: menlo, "Source Code Pro", monospace;'>txt  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>  </code><font color='teal'><a title='exact'><code style='font-family: menlo, "Source Code Pro", monospace;'>└────┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>                     </code><font color='teal'><a title='exact'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>  </code><font color='teal'><a title='exact'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font>
+<font color='grey'><a title='tactic_params'><code style='font-family: menlo, "Source Code Pro", monospace;'>par  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>  </code><font color='grey'><a title='[&#x27;expr&#x27;]'><code style='font-family: menlo, "Source Code Pro", monospace;'>└────┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>                     </code><font color='grey'><a title='[&#x27;expr&#x27;]'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>  </code><font color='grey'><a title='[&#x27;expr&#x27;]'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font>
+<font color='grey'><a title='tactic_param_idx'><code style='font-family: menlo, "Source Code Pro", monospace;'>pid  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>       </code><font color='maroon'><a title='0'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>                     </code><font color='maroon'><a title='0'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>  </code><font color='maroon'><a title='1'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font>
+<font color='grey'><a title='state'><code style='font-family: menlo, "Source Code Pro", monospace;'>st   </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'></code><font color='lime'><a title='z : int,
+le_floor :
+  ∀ {r : rat},
+    iff (@has_le.le.{0} int int.has_le z (rat.floor r))
+      (@has_le.le.{0} rat rat.has_le
+         (@coe.{1 1} int rat
+            (@coe_to_lift.{1 1} int rat
+               (@coe_base.{1 1} int rat (@int.cast_coe.{0} rat rat.has_neg rat.has_zero rat.has_one rat.has_add)))
+            z)
+         r),
+n : int,
+d : nat,
+h : @has_lt.lt.{0} nat nat.has_lt (@has_zero.zero.{0} nat nat.has_zero) d,
+c : nat.coprime (int.nat_abs n) d,
+h&#x27; :
+  @has_lt.lt.{0} int int.has_lt
+    (@coe.{1 1} nat int (@coe_to_lift.{1 1} nat int (@coe_base.{1 1} nat int int.has_coe))
+       (@has_zero.zero.{0} nat nat.has_zero))
+    (@coe.{1 1} nat int (@coe_to_lift.{1 1} nat int (@coe_base.{1 1} nat int int.has_coe)) d)
+⊢ iff
+    (@has_le.le.{0} int int.has_le z
+       (@has_div.div.{0} int int.has_div n
+          (@coe.{1 1} nat int (@coe_to_lift.{1 1} nat int (@coe_base.{1 1} nat int int.has_coe)) d)))
+    (@has_le.le.{0} int int.has_le
+       (@has_mul.mul.{0} int int.has_mul z
+          (@coe.{1 1} nat int (@coe_to_lift.{1 1} nat int (@coe_base.{1 1} nat int int.has_coe)) d))
+       n)'><code style='font-family: menlo, "Source Code Pro", monospace;'>────────────────────────────────┘</code></a></font>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 35  end</code>
+<font color='grey'><a title='state'><code style='font-family: menlo, "Source Code Pro", monospace;'>st   </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'></code><font color='lime'><a title='no goals'><code style='font-family: menlo, "Source Code Pro", monospace;'>└─┘</code></a></font>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 36  </code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 37  instance : floor_ring ℚ :=</code>
+<font color='grey'><a title='full-id'><code style='font-family: menlo, "Source Code Pro", monospace;'>id   </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>           </code><font color='blue'><a title='floor_ring'><code style='font-family: menlo, "Source Code Pro", monospace;'>└────────┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'> </code><font color='blue'><a title='rat'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font>
+<font color='grey'><a title='source'><code style='font-family: menlo, "Source Code Pro", monospace;'>src  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>           </code><font color='red'><a title='{&#x27;file&#x27;: &#x27;/home/ec2-user/lean_info_scrapper/_target/deps/mathlib/src/algebra/floor.lean&#x27;, &#x27;line&#x27;: 39, &#x27;column&#x27;: 6}'><code style='font-family: menlo, "Source Code Pro", monospace;'>└────────┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'> </code><font color='red'><a title='{&#x27;file&#x27;: &#x27;/home/ec2-user/lean_info_scrapper/_target/deps/mathlib/src/data/rat/basic.lean&#x27;, &#x27;line&#x27;: 46, &#x27;column&#x27;: 10}'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font>
+<font color='grey'><a title='type'><code style='font-family: menlo, "Source Code Pro", monospace;'>typ  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>           </code><font color='green'><a title='Π (α : Type u_2) [_inst_1 : linear_ordered_ring.{u_2} α], Type u_2'><code style='font-family: menlo, "Source Code Pro", monospace;'>└────────┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'> </code><font color='green'><a title='Type'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font>
+<font color='grey'><a title='doc'><code style='font-family: menlo, "Source Code Pro", monospace;'>doc  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>           </code><font color='orange'><a title='A `floor_ring` is a linear ordered ring over `α` with a function
+`floor : α → ℤ` satisfying `∀ (z : ℤ) (x : α), z ≤ floor x ↔ (z : α) ≤ x)`.'><code style='font-family: menlo, "Source Code Pro", monospace;'>└────────┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'> </code><font color='orange'><a title='`rat`, or `ℚ`, is the type of rational numbers. It is defined
+ as the set of pairs ⟨n, d⟩ of integers such that `d` is positive and `n` and
+ `d` are coprime. This representation is preferred to the quotient
+ because without periodic reduction, the numerator and denominator can grow
+ exponentially (for example, adding 1/2 to itself repeatedly).'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 38  { floor := rat.floor, le_floor := @rat.le_floor }</code>
+<font color='grey'><a title='full-id'><code style='font-family: menlo, "Source Code Pro", monospace;'>id   </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>           </code><font color='blue'><a title='rat.floor'><code style='font-family: menlo, "Source Code Pro", monospace;'>└───────┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>               </code><font color='blue'><a title='rat.le_floor'><code style='font-family: menlo, "Source Code Pro", monospace;'>└──────────┘</code></a></font>
+<font color='grey'><a title='source'><code style='font-family: menlo, "Source Code Pro", monospace;'>src  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>           </code><font color='red'><a title='{&#x27;line&#x27;: 24, &#x27;column&#x27;: 14}'><code style='font-family: menlo, "Source Code Pro", monospace;'>└───────┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>               </code><font color='red'><a title='{&#x27;line&#x27;: 27, &#x27;column&#x27;: 18}'><code style='font-family: menlo, "Source Code Pro", monospace;'>└──────────┘</code></a></font>
+<font color='grey'><a title='type'><code style='font-family: menlo, "Source Code Pro", monospace;'>typ  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>           </code><font color='green'><a title='rat → int'><code style='font-family: menlo, "Source Code Pro", monospace;'>└───────┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>               </code><font color='green'><a title='∀ {z : int} {r : rat}, iff (@has_le.le.{0} int int.has_le z (rat.floor r)) (@has_le.le.{0} rat rat.has_le (@coe.{1 1} int rat (@coe_to_lift.{1 1} int rat (@coe_base.{1 1} int rat (@int.cast_coe.{0} rat rat.has_neg rat.has_zero rat.has_one rat.has_add))) z) r)'><code style='font-family: menlo, "Source Code Pro", monospace;'>└──────────┘</code></a></font>
+<font color='grey'><a title='doc'><code style='font-family: menlo, "Source Code Pro", monospace;'>doc  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>           </code><font color='orange'><a title='`floor q` is the largest integer `z` such that `z ≤ q`'><code style='font-family: menlo, "Source Code Pro", monospace;'>└───────┘</code></a></font>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 39  </code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 40  protected lemma floor_def {q : ℚ} : ⌊q⌋ = q.num / q.denom := by { cases q, refl }</code>
+<font color='grey'><a title='full-id'><code style='font-family: menlo, "Source Code Pro", monospace;'>id   </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>                               </code><font color='blue'><a title='rat'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>    </code><font color='blue'><a title='floor'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'></code><font color='blue'><a title='q'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'></code><font color='blue'><a title='floor'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'> </code><font color='blue'><a title='eq'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'> </code><font color='blue'><a title='q'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'></code><font color='blue'><a title='rat.num'><code style='font-family: menlo, "Source Code Pro", monospace;'>└──┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'> </code><font color='blue'><a title='has_div.div'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'> </code><font color='blue'><a title='q'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'></code><font color='blue'><a title='rat.denom'><code style='font-family: menlo, "Source Code Pro", monospace;'>└────┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>               </code><font color='blue'><a title='q'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font>
+<font color='grey'><a title='source'><code style='font-family: menlo, "Source Code Pro", monospace;'>src  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>                               </code><font color='red'><a title='{&#x27;file&#x27;: &#x27;/home/ec2-user/lean_info_scrapper/_target/deps/mathlib/src/data/rat/basic.lean&#x27;, &#x27;line&#x27;: 46, &#x27;column&#x27;: 10}'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>    </code><font color='red'><a title='{&#x27;file&#x27;: &#x27;/home/ec2-user/lean_info_scrapper/_target/deps/mathlib/src/algebra/floor.lean&#x27;, &#x27;line&#x27;: 48, &#x27;column&#x27;: 4}'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'> </code><font color='red'><a title='{&#x27;file&#x27;: &#x27;/home/ec2-user/lean_info_scrapper/_target/deps/mathlib/src/algebra/floor.lean&#x27;, &#x27;line&#x27;: 48, &#x27;column&#x27;: 4}'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'> </code><font color='red'><a title='{&#x27;file&#x27;: &#x27;/home/ec2-user/.elan/toolchains/3.4.2/lib/lean/library/init/core.lean&#x27;, &#x27;line&#x27;: 145, &#x27;column&#x27;: 10}'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>  </code><font color='red'><a title='{&#x27;file&#x27;: &#x27;/home/ec2-user/lean_info_scrapper/_target/deps/mathlib/src/data/rat/basic.lean&#x27;, &#x27;line&#x27;: 46, &#x27;column&#x27;: 10}'><code style='font-family: menlo, "Source Code Pro", monospace;'>└──┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'> </code><font color='red'><a title='{&#x27;file&#x27;: &#x27;/home/ec2-user/.elan/toolchains/3.4.2/lib/lean/library/init/core.lean&#x27;, &#x27;line&#x27;: 316, &#x27;column&#x27;: 6}'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>  </code><font color='red'><a title='{&#x27;file&#x27;: &#x27;/home/ec2-user/lean_info_scrapper/_target/deps/mathlib/src/data/rat/basic.lean&#x27;, &#x27;line&#x27;: 46, &#x27;column&#x27;: 10}'><code style='font-family: menlo, "Source Code Pro", monospace;'>└────┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>         </code><font color='red'><a title='{&#x27;file&#x27;: &#x27;/home/ec2-user/.elan/toolchains/3.4.2/lib/lean/library/init/meta/interactive.lean&#x27;, &#x27;line&#x27;: 745, &#x27;column&#x27;: 9}'><code style='font-family: menlo, "Source Code Pro", monospace;'>└────┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>   </code><font color='red'><a title='{&#x27;file&#x27;: &#x27;/home/ec2-user/.elan/toolchains/3.4.2/lib/lean/library/init/meta/interactive.lean&#x27;, &#x27;line&#x27;: 1263, &#x27;column&#x27;: 9}'><code style='font-family: menlo, "Source Code Pro", monospace;'>└───┘</code></a></font>
+<font color='grey'><a title='type'><code style='font-family: menlo, "Source Code Pro", monospace;'>typ  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>                               </code><font color='green'><a title='Type'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>    </code><font color='green'><a title='Π {α : Type} [_inst_1 : linear_ordered_ring.{0} α] [_inst_2 : @floor_ring.{0} α _inst_1], α → int'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'></code><font color='green'><a title='rat'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'></code><font color='green'><a title='Π {α : Type} [_inst_1 : linear_ordered_ring.{0} α] [_inst_2 : @floor_ring.{0} α _inst_1], α → int'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'> </code><font color='green'><a title='Π {α : Type}, α → α → Prop'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'> </code><font color='green'><a title='rat'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'></code><font color='green'><a title='rat → int'><code style='font-family: menlo, "Source Code Pro", monospace;'>└──┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'> </code><font color='green'><a title='Π {α : Type} [c : has_div.{0} α], α → α → α'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'> </code><font color='green'><a title='rat'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'></code><font color='green'><a title='rat → nat'><code style='font-family: menlo, "Source Code Pro", monospace;'>└────┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>         </code><font color='green'><a title='@interactive.parse (prod.{0 0} (option.{0} name) pexpr) (λ (a : prod.{0 0} (option.{0} name) pexpr), @prod.has_reflect (option.{0} name) (λ (a : option.{0} name), @option.has_reflect name (λ (a : name), name.reflect a) `(name) a) pexpr (λ (a : pexpr), @expr.reflect bool.ff a) `(option.{0} name) `(pexpr) a) tactic.interactive.cases_arg_p → @interactive.parse (list.{0} name) (λ (a : list.{0} name), @list.reflect name (λ (a : name), name.reflect a) `(name) a) interactive.types.with_ident_list → tactic.{0} unit'><code style='font-family: menlo, "Source Code Pro", monospace;'>└────┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'></code><font color='green'><a title='rat'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>  </code><font color='green'><a title='tactic.{0} unit'><code style='font-family: menlo, "Source Code Pro", monospace;'>└───┘</code></a></font>
+<font color='grey'><a title='doc'><code style='font-family: menlo, "Source Code Pro", monospace;'>doc  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>                               </code><font color='orange'><a title='`rat`, or `ℚ`, is the type of rational numbers. It is defined
+ as the set of pairs ⟨n, d⟩ of integers such that `d` is positive and `n` and
+ `d` are coprime. This representation is preferred to the quotient
+ because without periodic reduction, the numerator and denominator can grow
+ exponentially (for example, adding 1/2 to itself repeatedly).'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>    </code><font color='orange'><a title='`floor x` is the greatest integer `z` such that `z ≤ x`'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'> </code><font color='orange'><a title='`floor x` is the greatest integer `z` such that `z ≤ x`'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>                           </code><font color='orange'><a title='Assuming `x` is a variable in the local context with an inductive type, `cases x` splits the main goal, producing one goal for each constructor of the inductive type, in which the target is replaced by a general instance of that constructor. If the type of an element in the local context depends on `x`, that element is reverted and reintroduced afterward, so that the case split affects that hypothesis as well.
+
+For example, given `n : nat` and a goal with a hypothesis `h : P n` and target `Q n`, `cases n` produces one goal with hypothesis `h : P 0` and target `Q 0`, and one goal with hypothesis `h : P (nat.succ a)` and target `Q (nat.succ a)`. Here the name `a` is chosen automatically.
+
+`cases e`, where `e` is an expression instead of a variable, generalizes `e` in the goal, and then cases on the resulting variable.
+
+`cases e with y₁ ... yₙ`, where `e` is a variable or an expression, specifies that the sequence of names `y₁ ... yₙ` should be used for the arguments to the constructors, including implicit arguments. If the list does not include enough names for all of the arguments, additional names are generated automatically. If too many names are given, the extra ones are ignored. Underscores can be used in the list, in which case the corresponding names are generated automatically.
+
+`cases h : e`, where `e` is a variable or an expression, performs cases on `e` as above, but also adds a hypothesis `h : e = ...` to each hypothesis, where `...` is the constructor instance for that particular case.'><code style='font-family: menlo, "Source Code Pro", monospace;'>└────┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>   </code><font color='orange'><a title='Shorter name for the tactic `reflexivity`.'><code style='font-family: menlo, "Source Code Pro", monospace;'>└───┘</code></a></font>
+<font color='grey'><a title='text'><code style='font-family: menlo, "Source Code Pro", monospace;'>txt  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>                                                                  </code><font color='teal'><a title='cases'><code style='font-family: menlo, "Source Code Pro", monospace;'>└────┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>   </code><font color='teal'><a title='refl'><code style='font-family: menlo, "Source Code Pro", monospace;'>└───┘</code></a></font>
+<font color='grey'><a title='tactic_params'><code style='font-family: menlo, "Source Code Pro", monospace;'>par  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>                                                                  </code><font color='grey'><a title='[&#x27;(id :)? expr&#x27;, &#x27;(with id*)?&#x27;]'><code style='font-family: menlo, "Source Code Pro", monospace;'>└────┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>   </code><font color='grey'><a title='[]'><code style='font-family: menlo, "Source Code Pro", monospace;'>└───┘</code></a></font>
+<font color='grey'><a title='tactic_param_idx'><code style='font-family: menlo, "Source Code Pro", monospace;'>pid  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>                                                                       </code><font color='maroon'><a title='0'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>       </code><font color='maroon'><a title='0'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font>
+<font color='grey'><a title='state'><code style='font-family: menlo, "Source Code Pro", monospace;'>st   </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>                                                               </code><font color='lime'><a title='q : rat
+⊢ @eq.{1} int (@floor.{0} rat rat.linear_ordered_ring rat.floor_ring q)
+    (@has_div.div.{0} int int.has_div (q.num)
+       (@coe.{1 1} nat int (@coe_to_lift.{1 1} nat int (@coe_base.{1 1} nat int int.has_coe)) (q.denom)))'><code style='font-family: menlo, "Source Code Pro", monospace;'>└────────┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'></code><font color='lime'><a title='q_num : int,
+q_denom : nat,
+q_pos : @has_lt.lt.{0} nat nat.has_lt (@has_zero.zero.{0} nat nat.has_zero) q_denom,
+q_cop : nat.coprime (int.nat_abs q_num) q_denom
+⊢ @eq.{1} int
+    (@floor.{0} rat rat.linear_ordered_ring rat.floor_ring {num := q_num, denom := q_denom, pos := q_pos, cop := q_cop})
+    (@has_div.div.{0} int int.has_div ({num := q_num, denom := q_denom, pos := q_pos, cop := q_cop}.num)
+       (@coe.{1 1} nat int (@coe_to_lift.{1 1} nat int (@coe_base.{1 1} nat int int.has_coe))
+          ({num := q_num, denom := q_denom, pos := q_pos, cop := q_cop}.denom)))'><code style='font-family: menlo, "Source Code Pro", monospace;'>└─────┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'></code><font color='lime'><a title='no goals'><code style='font-family: menlo, "Source Code Pro", monospace;'>└┘</code></a></font>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 41  </code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 42  end rat</code></pre>
+</body>

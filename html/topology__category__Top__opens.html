@@ -1,0 +1,347 @@
+<head>
+<meta charset="UTF-8">
+<link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro&display=swap" rel="stylesheet">
+</head>
+
+<body>
+<pre>
+<code style='font-family: menlo, "Source Code Pro", monospace;'>  1  /-</code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'>  2  Copyright (c) 2019 Scott Morrison. All rights reserved.</code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'>  3  Released under Apache 2.0 license as described in the file LICENSE.</code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'>  4  Authors: Scott Morrison</code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'>  5  -/</code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'>  6  import topology.category.Top.basic</code>
+<font color='grey'><a title='source'><code style='font-family: menlo, "Source Code Pro", monospace;'>src  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>       </code><font color='red'><a title='{&#x27;file&#x27;: &#x27;/home/ec2-user/lean_info_scrapper/_target/deps/mathlib/src/topology/category/Top/basic.lean&#x27;, &#x27;line&#x27;: 1, &#x27;column&#x27;: 0}'><code style='font-family: menlo, "Source Code Pro", monospace;'>└─────────────────────────┘</code></a></font>
+<code style='font-family: menlo, "Source Code Pro", monospace;'>  7  import category_theory.natural_isomorphism</code>
+<font color='grey'><a title='source'><code style='font-family: menlo, "Source Code Pro", monospace;'>src  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>       </code><font color='red'><a title='{&#x27;file&#x27;: &#x27;/home/ec2-user/lean_info_scrapper/_target/deps/mathlib/src/category_theory/natural_isomorphism.lean&#x27;, &#x27;line&#x27;: 1, &#x27;column&#x27;: 0}'><code style='font-family: menlo, "Source Code Pro", monospace;'>└─────────────────────────────────┘</code></a></font>
+<code style='font-family: menlo, "Source Code Pro", monospace;'>  8  import category_theory.opposites</code>
+<font color='grey'><a title='source'><code style='font-family: menlo, "Source Code Pro", monospace;'>src  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>       </code><font color='red'><a title='{&#x27;file&#x27;: &#x27;/home/ec2-user/lean_info_scrapper/_target/deps/mathlib/src/category_theory/opposites.lean&#x27;, &#x27;line&#x27;: 1, &#x27;column&#x27;: 0}'><code style='font-family: menlo, "Source Code Pro", monospace;'>└───────────────────────┘</code></a></font>
+<code style='font-family: menlo, "Source Code Pro", monospace;'>  9  import category_theory.eq_to_hom</code>
+<font color='grey'><a title='source'><code style='font-family: menlo, "Source Code Pro", monospace;'>src  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>       </code><font color='red'><a title='{&#x27;file&#x27;: &#x27;/home/ec2-user/lean_info_scrapper/_target/deps/mathlib/src/category_theory/eq_to_hom.lean&#x27;, &#x27;line&#x27;: 1, &#x27;column&#x27;: 0}'><code style='font-family: menlo, "Source Code Pro", monospace;'>└───────────────────────┘</code></a></font>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 10  import topology.opens</code>
+<font color='grey'><a title='source'><code style='font-family: menlo, "Source Code Pro", monospace;'>src  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>       </code><font color='red'><a title='{&#x27;file&#x27;: &#x27;/home/ec2-user/lean_info_scrapper/_target/deps/mathlib/src/topology/opens.lean&#x27;, &#x27;line&#x27;: 1, &#x27;column&#x27;: 0}'><code style='font-family: menlo, "Source Code Pro", monospace;'>└────────────┘</code></a></font>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 11  </code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 12  open category_theory</code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 13  open topological_space</code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 14  open opposite</code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 15  </code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 16  universe u</code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 17  </code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 18  namespace topological_space.opens</code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 19  </code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 20  variables {X Y Z : Top.{u}}</code>
+<font color='grey'><a title='full-id'><code style='font-family: menlo, "Source Code Pro", monospace;'>id   </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>                   </code><font color='blue'><a title='Top'><code style='font-family: menlo, "Source Code Pro", monospace;'>└─┘</code></a></font>
+<font color='grey'><a title='source'><code style='font-family: menlo, "Source Code Pro", monospace;'>src  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>                   </code><font color='red'><a title='{&#x27;file&#x27;: &#x27;/home/ec2-user/lean_info_scrapper/_target/deps/mathlib/src/topology/category/Top/basic.lean&#x27;, &#x27;line&#x27;: 15, &#x27;column&#x27;: 17}'><code style='font-family: menlo, "Source Code Pro", monospace;'>└─┘</code></a></font>
+<font color='grey'><a title='type'><code style='font-family: menlo, "Source Code Pro", monospace;'>typ  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>                   </code><font color='green'><a title='Type (u+1)'><code style='font-family: menlo, "Source Code Pro", monospace;'>└─┘</code></a></font>
+<font color='grey'><a title='doc'><code style='font-family: menlo, "Source Code Pro", monospace;'>doc  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>                   </code><font color='orange'><a title='The category of topological spaces and continuous maps.'><code style='font-family: menlo, "Source Code Pro", monospace;'>└─┘</code></a></font>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 21  </code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 22  instance opens_category : category.{u} (opens X) :=</code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 23  { hom  := λ U V, ulift (plift (U ≤ V)),</code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 24    id   := λ X, ⟨ ⟨ le_refl X ⟩ ⟩,</code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 25    comp := λ X Y Z f g, ⟨ ⟨ le_trans f.down.down g.down.down ⟩ ⟩ }</code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 26  </code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 27  def to_Top (X : Top.{u}) : opens X ⥤ Top :=</code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 28  { obj := λ U, ⟨U.val, infer_instance⟩,</code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 29    map := λ U V i, ⟨λ x, ⟨x.1, i.down.down x.2⟩,</code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 30      (embedding.continuous_iff embedding_subtype_val).2 continuous_induced_dom⟩ }</code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 31  </code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 32  /-- `opens.map f` gives the functor from open sets in Y to open set in X,</code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 33      given by taking preimages under f. -/</code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 34  def map (f : X ⟶ Y) : opens Y ⥤ opens X :=</code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 35  { obj := λ U, ⟨ f.val ⁻¹&#x27; U.val, f.property _ U.property ⟩,</code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 36    map := λ U V i, ⟨ ⟨ λ a b, i.down.down b ⟩ ⟩ }.</code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 37  </code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 38  @[simp] lemma map_obj (f : X ⟶ Y) (U) (p) : (map f).obj ⟨U, p⟩ = ⟨ f.val ⁻¹&#x27; U, f.property _ p ⟩ :=</code>
+<font color='grey'><a title='doc'><code style='font-family: menlo, "Source Code Pro", monospace;'>doc  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>  </code><font color='orange'><a title='simplification lemma'><code style='font-family: menlo, "Source Code Pro", monospace;'>└──┘</code></a></font>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 39  rfl</code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 40  </code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 41  @[simp] lemma map_id_obj&#x27; (U) (p) : (map (𝟙 X)).obj ⟨U, p⟩ = ⟨U, p⟩ :=</code>
+<font color='grey'><a title='doc'><code style='font-family: menlo, "Source Code Pro", monospace;'>doc  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>  </code><font color='orange'><a title='simplification lemma'><code style='font-family: menlo, "Source Code Pro", monospace;'>└──┘</code></a></font>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 42  rfl</code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 43  </code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 44  @[simp] lemma map_id_obj (U : opens X) : (map (𝟙 X)).obj U = U :=</code>
+<font color='grey'><a title='doc'><code style='font-family: menlo, "Source Code Pro", monospace;'>doc  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>  </code><font color='orange'><a title='simplification lemma'><code style='font-family: menlo, "Source Code Pro", monospace;'>└──┘</code></a></font>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 45  by { ext, refl } -- not quite `rfl`, since we don&#x27;t have eta for records</code>
+<font color='grey'><a title='source'><code style='font-family: menlo, "Source Code Pro", monospace;'>src  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>     </code><font color='red'><a title='{&#x27;file&#x27;: &#x27;/home/ec2-user/lean_info_scrapper/_target/deps/mathlib/src/tactic/ext.lean&#x27;, &#x27;line&#x27;: 342, &#x27;column&#x27;: 9}'><code style='font-family: menlo, "Source Code Pro", monospace;'>└─┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>  </code><font color='red'><a title='{&#x27;file&#x27;: &#x27;/home/ec2-user/.elan/toolchains/3.4.2/lib/lean/library/init/meta/interactive.lean&#x27;, &#x27;line&#x27;: 1263, &#x27;column&#x27;: 9}'><code style='font-family: menlo, "Source Code Pro", monospace;'>└───┘</code></a></font>
+<font color='grey'><a title='type'><code style='font-family: menlo, "Source Code Pro", monospace;'>typ  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>     </code><font color='green'><a title='@interactive.parse tactic.ext_patt (λ (a : tactic.ext_patt), @list.reflect tactic.rcases_patt (λ (a : tactic.rcases_patt), tactic.rcases_patt.has_reflect a) `(tactic.rcases_patt) a) tactic.ext_parse → @interactive.parse (option.{0} nat) (λ (a : option.{0} nat), @option.has_reflect nat (λ (a : nat), nat.reflect a) `(nat) a) (@optional.{0 0} lean.parser.{0} lean.parser.alternative nat (@has_seq_right.seq_right.{0 0} lean.parser.{0} (@applicative.to_has_seq_right.{0 0} lean.parser.{0} (@monad.to_applicative.{0 0} lean.parser.{0} (@interaction_monad.monad.{0} lean.parser_state))) unit nat (lean.parser.tk (string.str string.empty (char.of_nat (@bit0.{0} nat nat.has_add (@bit1.{0} nat nat.has_one nat.has_add (@bit0.{0} nat nat.has_add (@bit1.{0} nat nat.has_one nat.has_add (@bit1.{0} nat nat.has_one nat.has_add (@has_one.one.{0} nat nat.has_one))))))))) lean.parser.small_nat)) → tactic.{0} unit'><code style='font-family: menlo, "Source Code Pro", monospace;'>└─┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>  </code><font color='green'><a title='tactic.{0} unit'><code style='font-family: menlo, "Source Code Pro", monospace;'>└───┘</code></a></font>
+<font color='grey'><a title='doc'><code style='font-family: menlo, "Source Code Pro", monospace;'>doc  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>     </code><font color='orange'><a title='- `ext` applies as many extensionality lemmas as possible;
+- `ext ids`, with `ids` a list of identifiers, finds extentionality and applies them
+  until it runs out of identifiers in `ids` to name the local constants.
+
+When trying to prove:
+
+```lean
+α β : Type,
+f g : α → set β
+⊢ f = g
+```
+
+applying `ext x y` yields:
+
+```lean
+α β : Type,
+f g : α → set β,
+x : α,
+y : β
+⊢ y ∈ f x ↔ y ∈ f x
+```
+
+by applying functional extensionality and set extensionality.
+
+A maximum depth can be provided with `ext x y z : 3`.'><code style='font-family: menlo, "Source Code Pro", monospace;'>└─┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>  </code><font color='orange'><a title='Shorter name for the tactic `reflexivity`.'><code style='font-family: menlo, "Source Code Pro", monospace;'>└───┘</code></a></font>
+<font color='grey'><a title='text'><code style='font-family: menlo, "Source Code Pro", monospace;'>txt  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>     </code><font color='teal'><a title='ext'><code style='font-family: menlo, "Source Code Pro", monospace;'>└─┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>  </code><font color='teal'><a title='refl'><code style='font-family: menlo, "Source Code Pro", monospace;'>└───┘</code></a></font>
+<font color='grey'><a title='tactic_params'><code style='font-family: menlo, "Source Code Pro", monospace;'>par  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>     </code><font color='grey'><a title='[&#x27;((patt) | patt_list)*&#x27;, &quot;&lt;error while executing interactive.param_desc: don&#x27;t know how to pretty print lean.parser.small_nat&gt;&quot;]'><code style='font-family: menlo, "Source Code Pro", monospace;'>└─┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>  </code><font color='grey'><a title='[]'><code style='font-family: menlo, "Source Code Pro", monospace;'>└───┘</code></a></font>
+<font color='grey'><a title='tactic_param_idx'><code style='font-family: menlo, "Source Code Pro", monospace;'>pid  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>              </code><font color='maroon'><a title='0'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 46  </code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 47  @[simp] lemma map_id_obj_unop (U : (opens X)ᵒᵖ) : (map (𝟙 X)).obj (unop U) = unop U :=</code>
+<font color='grey'><a title='doc'><code style='font-family: menlo, "Source Code Pro", monospace;'>doc  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>  </code><font color='orange'><a title='simplification lemma'><code style='font-family: menlo, "Source Code Pro", monospace;'>└──┘</code></a></font>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 48  by simp</code>
+<font color='grey'><a title='source'><code style='font-family: menlo, "Source Code Pro", monospace;'>src  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>   </code><font color='red'><a title='{&#x27;file&#x27;: &#x27;/home/ec2-user/.elan/toolchains/3.4.2/lib/lean/library/init/meta/interactive.lean&#x27;, &#x27;line&#x27;: 1209, &#x27;column&#x27;: 9}'><code style='font-family: menlo, "Source Code Pro", monospace;'>└───┘</code></a></font>
+<font color='grey'><a title='type'><code style='font-family: menlo, "Source Code Pro", monospace;'>typ  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>   </code><font color='green'><a title='@interactive.parse (option.{0} unit) (λ (a : option.{0} unit), @option.has_reflect unit (λ (a : unit), punit.reflect a) `(unit) a) (@optional.{0 0} lean.parser.{0} lean.parser.alternative unit (lean.parser.tk (string.str string.empty (char.of_nat (@bit1.{0} nat nat.has_one nat.has_add (@bit0.{0} nat nat.has_add (@bit0.{0} nat nat.has_add (@bit0.{0} nat nat.has_add (@bit0.{0} nat nat.has_add (@has_one.one.{0} nat nat.has_one)))))))))) → @interactive.parse bool (λ (a : bool), bool.has_reflect a) interactive.types.only_flag → @interactive.parse (list.{0} tactic.simp_arg_type) (λ (a : list.{0} tactic.simp_arg_type), @list.reflect tactic.simp_arg_type (λ (a : tactic.simp_arg_type), tactic.simp_arg_type.has_reflect a) `(tactic.simp_arg_type) a) tactic.simp_arg_list → @interactive.parse (list.{0} name) (λ (a : list.{0} name), @list.reflect name (λ (a : name), name.reflect a) `(name) a) interactive.types.with_ident_list → @interactive.parse interactive.loc (λ (a : interactive.loc), interactive.loc.has_reflect a) interactive.types.location → opt_param.{1} tactic.simp_config_ext {to_simp_config := {max_steps := simp.default_max_steps, contextual := bool.ff, lift_eq := bool.tt, canonize_instances := bool.tt, canonize_proofs := bool.ff, use_axioms := bool.tt, zeta := bool.tt, beta := bool.tt, eta := bool.tt, proj := bool.tt, iota := bool.tt, iota_eqn := bool.ff, constructor_eq := bool.tt, single_pass := bool.ff, fail_if_unchanged := bool.tt, memoize := bool.tt}, discharger := @tactic.failed unit} → tactic.{0} unit'><code style='font-family: menlo, "Source Code Pro", monospace;'>└───┘</code></a></font>
+<font color='grey'><a title='doc'><code style='font-family: menlo, "Source Code Pro", monospace;'>doc  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>   </code><font color='orange'><a title='The `simp` tactic uses lemmas and hypotheses to simplify the main goal target or non-dependent hypotheses. It has many variants.
+
+`simp` simplifies the main goal target using lemmas tagged with the attribute `[simp]`.
+
+`simp [h₁ h₂ ... hₙ]` simplifies the main goal target using the lemmas tagged with the attribute `[simp]` and the given `hᵢ`&#x27;s, where the `hᵢ`&#x27;s are expressions. If an `hᵢ` is a defined constant `f`, then the equational lemmas associated with `f` are used. This provides a convenient way to unfold `f`.
+
+`simp [*]` simplifies the main goal target using the lemmas tagged with the attribute `[simp]` and all hypotheses.
+
+`simp *` is a shorthand for `simp [*]`.
+
+`simp only [h₁ h₂ ... hₙ]` is like `simp [h₁ h₂ ... hₙ]` but does not use `[simp]` lemmas
+
+`simp [-id_1, ... -id_n]` simplifies the main goal target using the lemmas tagged with the attribute `[simp]`, but removes the ones named `idᵢ`.
+
+`simp at h₁ h₂ ... hₙ` simplifies the non-dependent hypotheses `h₁ : T₁` ... `hₙ : Tₙ`. The tactic fails if the target or another hypothesis depends on one of them. The token `⊢` or `|-` can be added to the list to include the target.
+
+`simp at *` simplifies all the hypotheses and the target.
+
+`simp * at *` simplifies target and all (non-dependent propositional) hypotheses using the other hypotheses.
+
+`simp with attr₁ ... attrₙ` simplifies the main goal target using the lemmas tagged with any of the attributes `[attr₁]`, ..., `[attrₙ]` or `[simp]`.'><code style='font-family: menlo, "Source Code Pro", monospace;'>└───┘</code></a></font>
+<font color='grey'><a title='text'><code style='font-family: menlo, "Source Code Pro", monospace;'>txt  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>   </code><font color='teal'><a title='simp'><code style='font-family: menlo, "Source Code Pro", monospace;'>└───┘</code></a></font>
+<font color='grey'><a title='tactic_params'><code style='font-family: menlo, "Source Code Pro", monospace;'>par  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>   </code><font color='grey'><a title='[&#x27;!?&#x27;, &#x27;only?&#x27;, &#x27;(* | [(* | (- id | expr)), ...]?)&#x27;, &#x27;(with id*)?&#x27;, &#x27;(at (* | (⊢ | id)*))?&#x27;, &#x27;tactic.simp_config_ext?&#x27;]'><code style='font-family: menlo, "Source Code Pro", monospace;'>└───┘</code></a></font>
+<font color='grey'><a title='tactic_param_idx'><code style='font-family: menlo, "Source Code Pro", monospace;'>pid  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>       </code><font color='maroon'><a title='0'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 49  @[simp] lemma op_map_id_obj (U : (opens X)ᵒᵖ) : (map (𝟙 X)).op.obj U = U :=</code>
+<font color='grey'><a title='doc'><code style='font-family: menlo, "Source Code Pro", monospace;'>doc  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>  </code><font color='orange'><a title='simplification lemma'><code style='font-family: menlo, "Source Code Pro", monospace;'>└──┘</code></a></font>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 50  by simp</code>
+<font color='grey'><a title='source'><code style='font-family: menlo, "Source Code Pro", monospace;'>src  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>   </code><font color='red'><a title='{&#x27;file&#x27;: &#x27;/home/ec2-user/.elan/toolchains/3.4.2/lib/lean/library/init/meta/interactive.lean&#x27;, &#x27;line&#x27;: 1209, &#x27;column&#x27;: 9}'><code style='font-family: menlo, "Source Code Pro", monospace;'>└────</code></a></font>
+<font color='grey'><a title='type'><code style='font-family: menlo, "Source Code Pro", monospace;'>typ  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>   </code><font color='green'><a title='@interactive.parse (option.{0} unit) (λ (a : option.{0} unit), @option.has_reflect unit (λ (a : unit), punit.reflect a) `(unit) a) (@optional.{0 0} lean.parser.{0} lean.parser.alternative unit (lean.parser.tk (string.str string.empty (char.of_nat (@bit1.{0} nat nat.has_one nat.has_add (@bit0.{0} nat nat.has_add (@bit0.{0} nat nat.has_add (@bit0.{0} nat nat.has_add (@bit0.{0} nat nat.has_add (@has_one.one.{0} nat nat.has_one)))))))))) → @interactive.parse bool (λ (a : bool), bool.has_reflect a) interactive.types.only_flag → @interactive.parse (list.{0} tactic.simp_arg_type) (λ (a : list.{0} tactic.simp_arg_type), @list.reflect tactic.simp_arg_type (λ (a : tactic.simp_arg_type), tactic.simp_arg_type.has_reflect a) `(tactic.simp_arg_type) a) tactic.simp_arg_list → @interactive.parse (list.{0} name) (λ (a : list.{0} name), @list.reflect name (λ (a : name), name.reflect a) `(name) a) interactive.types.with_ident_list → @interactive.parse interactive.loc (λ (a : interactive.loc), interactive.loc.has_reflect a) interactive.types.location → opt_param.{1} tactic.simp_config_ext {to_simp_config := {max_steps := simp.default_max_steps, contextual := bool.ff, lift_eq := bool.tt, canonize_instances := bool.tt, canonize_proofs := bool.ff, use_axioms := bool.tt, zeta := bool.tt, beta := bool.tt, eta := bool.tt, proj := bool.tt, iota := bool.tt, iota_eqn := bool.ff, constructor_eq := bool.tt, single_pass := bool.ff, fail_if_unchanged := bool.tt, memoize := bool.tt}, discharger := @tactic.failed unit} → tactic.{0} unit'><code style='font-family: menlo, "Source Code Pro", monospace;'>└────</code></a></font>
+<font color='grey'><a title='doc'><code style='font-family: menlo, "Source Code Pro", monospace;'>doc  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>   </code><font color='orange'><a title='The `simp` tactic uses lemmas and hypotheses to simplify the main goal target or non-dependent hypotheses. It has many variants.
+
+`simp` simplifies the main goal target using lemmas tagged with the attribute `[simp]`.
+
+`simp [h₁ h₂ ... hₙ]` simplifies the main goal target using the lemmas tagged with the attribute `[simp]` and the given `hᵢ`&#x27;s, where the `hᵢ`&#x27;s are expressions. If an `hᵢ` is a defined constant `f`, then the equational lemmas associated with `f` are used. This provides a convenient way to unfold `f`.
+
+`simp [*]` simplifies the main goal target using the lemmas tagged with the attribute `[simp]` and all hypotheses.
+
+`simp *` is a shorthand for `simp [*]`.
+
+`simp only [h₁ h₂ ... hₙ]` is like `simp [h₁ h₂ ... hₙ]` but does not use `[simp]` lemmas
+
+`simp [-id_1, ... -id_n]` simplifies the main goal target using the lemmas tagged with the attribute `[simp]`, but removes the ones named `idᵢ`.
+
+`simp at h₁ h₂ ... hₙ` simplifies the non-dependent hypotheses `h₁ : T₁` ... `hₙ : Tₙ`. The tactic fails if the target or another hypothesis depends on one of them. The token `⊢` or `|-` can be added to the list to include the target.
+
+`simp at *` simplifies all the hypotheses and the target.
+
+`simp * at *` simplifies target and all (non-dependent propositional) hypotheses using the other hypotheses.
+
+`simp with attr₁ ... attrₙ` simplifies the main goal target using the lemmas tagged with any of the attributes `[attr₁]`, ..., `[attrₙ]` or `[simp]`.'><code style='font-family: menlo, "Source Code Pro", monospace;'>└────</code></a></font>
+<font color='grey'><a title='text'><code style='font-family: menlo, "Source Code Pro", monospace;'>txt  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>   </code><font color='teal'><a title='simp'><code style='font-family: menlo, "Source Code Pro", monospace;'>└────</code></a></font>
+<font color='grey'><a title='tactic_params'><code style='font-family: menlo, "Source Code Pro", monospace;'>par  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>   </code><font color='grey'><a title='[&#x27;!?&#x27;, &#x27;only?&#x27;, &#x27;(* | [(* | (- id | expr)), ...]?)&#x27;, &#x27;(with id*)?&#x27;, &#x27;(at (* | (⊢ | id)*))?&#x27;, &#x27;tactic.simp_config_ext?&#x27;]'><code style='font-family: menlo, "Source Code Pro", monospace;'>└────</code></a></font>
+<font color='grey'><a title='tactic_param_idx'><code style='font-family: menlo, "Source Code Pro", monospace;'>pid  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>       </code><font color='maroon'><a title='0'><code style='font-family: menlo, "Source Code Pro", monospace;'>└</code></a></font>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 51  </code>
+<font color='grey'><a title='source'><code style='font-family: menlo, "Source Code Pro", monospace;'>src  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'></code><font color='red'><a title='{&#x27;file&#x27;: &#x27;/home/ec2-user/.elan/toolchains/3.4.2/lib/lean/library/init/meta/interactive.lean&#x27;, &#x27;line&#x27;: 1209, &#x27;column&#x27;: 9}'><code style='font-family: menlo, "Source Code Pro", monospace;'>┘</code></a></font>
+<font color='grey'><a title='type'><code style='font-family: menlo, "Source Code Pro", monospace;'>typ  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'></code><font color='green'><a title='@interactive.parse (option.{0} unit) (λ (a : option.{0} unit), @option.has_reflect unit (λ (a : unit), punit.reflect a) `(unit) a) (@optional.{0 0} lean.parser.{0} lean.parser.alternative unit (lean.parser.tk (string.str string.empty (char.of_nat (@bit1.{0} nat nat.has_one nat.has_add (@bit0.{0} nat nat.has_add (@bit0.{0} nat nat.has_add (@bit0.{0} nat nat.has_add (@bit0.{0} nat nat.has_add (@has_one.one.{0} nat nat.has_one)))))))))) → @interactive.parse bool (λ (a : bool), bool.has_reflect a) interactive.types.only_flag → @interactive.parse (list.{0} tactic.simp_arg_type) (λ (a : list.{0} tactic.simp_arg_type), @list.reflect tactic.simp_arg_type (λ (a : tactic.simp_arg_type), tactic.simp_arg_type.has_reflect a) `(tactic.simp_arg_type) a) tactic.simp_arg_list → @interactive.parse (list.{0} name) (λ (a : list.{0} name), @list.reflect name (λ (a : name), name.reflect a) `(name) a) interactive.types.with_ident_list → @interactive.parse interactive.loc (λ (a : interactive.loc), interactive.loc.has_reflect a) interactive.types.location → opt_param.{1} tactic.simp_config_ext {to_simp_config := {max_steps := simp.default_max_steps, contextual := bool.ff, lift_eq := bool.tt, canonize_instances := bool.tt, canonize_proofs := bool.ff, use_axioms := bool.tt, zeta := bool.tt, beta := bool.tt, eta := bool.tt, proj := bool.tt, iota := bool.tt, iota_eqn := bool.ff, constructor_eq := bool.tt, single_pass := bool.ff, fail_if_unchanged := bool.tt, memoize := bool.tt}, discharger := @tactic.failed unit} → tactic.{0} unit'><code style='font-family: menlo, "Source Code Pro", monospace;'>┘</code></a></font>
+<font color='grey'><a title='doc'><code style='font-family: menlo, "Source Code Pro", monospace;'>doc  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'></code><font color='orange'><a title='The `simp` tactic uses lemmas and hypotheses to simplify the main goal target or non-dependent hypotheses. It has many variants.
+
+`simp` simplifies the main goal target using lemmas tagged with the attribute `[simp]`.
+
+`simp [h₁ h₂ ... hₙ]` simplifies the main goal target using the lemmas tagged with the attribute `[simp]` and the given `hᵢ`&#x27;s, where the `hᵢ`&#x27;s are expressions. If an `hᵢ` is a defined constant `f`, then the equational lemmas associated with `f` are used. This provides a convenient way to unfold `f`.
+
+`simp [*]` simplifies the main goal target using the lemmas tagged with the attribute `[simp]` and all hypotheses.
+
+`simp *` is a shorthand for `simp [*]`.
+
+`simp only [h₁ h₂ ... hₙ]` is like `simp [h₁ h₂ ... hₙ]` but does not use `[simp]` lemmas
+
+`simp [-id_1, ... -id_n]` simplifies the main goal target using the lemmas tagged with the attribute `[simp]`, but removes the ones named `idᵢ`.
+
+`simp at h₁ h₂ ... hₙ` simplifies the non-dependent hypotheses `h₁ : T₁` ... `hₙ : Tₙ`. The tactic fails if the target or another hypothesis depends on one of them. The token `⊢` or `|-` can be added to the list to include the target.
+
+`simp at *` simplifies all the hypotheses and the target.
+
+`simp * at *` simplifies target and all (non-dependent propositional) hypotheses using the other hypotheses.
+
+`simp with attr₁ ... attrₙ` simplifies the main goal target using the lemmas tagged with any of the attributes `[attr₁]`, ..., `[attrₙ]` or `[simp]`.'><code style='font-family: menlo, "Source Code Pro", monospace;'>┘</code></a></font>
+<font color='grey'><a title='text'><code style='font-family: menlo, "Source Code Pro", monospace;'>txt  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'></code><font color='teal'><a title='simp'><code style='font-family: menlo, "Source Code Pro", monospace;'>┘</code></a></font>
+<font color='grey'><a title='tactic_params'><code style='font-family: menlo, "Source Code Pro", monospace;'>par  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'></code><font color='grey'><a title='[&#x27;!?&#x27;, &#x27;only?&#x27;, &#x27;(* | [(* | (- id | expr)), ...]?)&#x27;, &#x27;(with id*)?&#x27;, &#x27;(at (* | (⊢ | id)*))?&#x27;, &#x27;tactic.simp_config_ext?&#x27;]'><code style='font-family: menlo, "Source Code Pro", monospace;'>┘</code></a></font>
+<font color='grey'><a title='tactic_param_idx'><code style='font-family: menlo, "Source Code Pro", monospace;'>pid  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'></code><font color='maroon'><a title='0'><code style='font-family: menlo, "Source Code Pro", monospace;'>┘</code></a></font>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 52  section</code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 53  variable (X)</code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 54  def map_id : map (𝟙 X) ≅ 𝟭 (opens X) :=</code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 55  { hom := { app := λ U, eq_to_hom (map_id_obj U) },</code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 56    inv := { app := λ U, eq_to_hom (map_id_obj U).symm } }</code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 57  </code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 58  @[simp] lemma map_id_hom_app (U) : (map_id X).hom.app U = eq_to_hom (map_id_obj U) := rfl</code>
+<font color='grey'><a title='doc'><code style='font-family: menlo, "Source Code Pro", monospace;'>doc  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>  </code><font color='orange'><a title='simplification lemma'><code style='font-family: menlo, "Source Code Pro", monospace;'>└──┘</code></a></font>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 59  @[simp] lemma map_id_inv_app (U) : (map_id X).inv.app U = eq_to_hom (map_id_obj U).symm := rfl</code>
+<font color='grey'><a title='doc'><code style='font-family: menlo, "Source Code Pro", monospace;'>doc  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>  </code><font color='orange'><a title='simplification lemma'><code style='font-family: menlo, "Source Code Pro", monospace;'>└──┘</code></a></font>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 60  end</code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 61  </code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 62  @[simp] lemma map_comp_obj&#x27; (f : X ⟶ Y) (g : Y ⟶ Z) (U) (p) : (map (f ≫ g)).obj ⟨U, p⟩ = (map f).obj ((map g).obj ⟨U, p⟩) :=</code>
+<font color='grey'><a title='doc'><code style='font-family: menlo, "Source Code Pro", monospace;'>doc  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>  </code><font color='orange'><a title='simplification lemma'><code style='font-family: menlo, "Source Code Pro", monospace;'>└──┘</code></a></font>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 63  rfl</code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 64  </code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 65  @[simp] lemma map_comp_obj (f : X ⟶ Y) (g : Y ⟶ Z) (U) : (map (f ≫ g)).obj U = (map f).obj ((map g).obj U) :=</code>
+<font color='grey'><a title='doc'><code style='font-family: menlo, "Source Code Pro", monospace;'>doc  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>  </code><font color='orange'><a title='simplification lemma'><code style='font-family: menlo, "Source Code Pro", monospace;'>└──┘</code></a></font>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 66  by { ext, refl } -- not quite `rfl`, since we don&#x27;t have eta for records</code>
+<font color='grey'><a title='source'><code style='font-family: menlo, "Source Code Pro", monospace;'>src  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>     </code><font color='red'><a title='{&#x27;file&#x27;: &#x27;/home/ec2-user/lean_info_scrapper/_target/deps/mathlib/src/tactic/ext.lean&#x27;, &#x27;line&#x27;: 342, &#x27;column&#x27;: 9}'><code style='font-family: menlo, "Source Code Pro", monospace;'>└─┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>  </code><font color='red'><a title='{&#x27;file&#x27;: &#x27;/home/ec2-user/.elan/toolchains/3.4.2/lib/lean/library/init/meta/interactive.lean&#x27;, &#x27;line&#x27;: 1263, &#x27;column&#x27;: 9}'><code style='font-family: menlo, "Source Code Pro", monospace;'>└───┘</code></a></font>
+<font color='grey'><a title='type'><code style='font-family: menlo, "Source Code Pro", monospace;'>typ  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>     </code><font color='green'><a title='@interactive.parse tactic.ext_patt (λ (a : tactic.ext_patt), @list.reflect tactic.rcases_patt (λ (a : tactic.rcases_patt), tactic.rcases_patt.has_reflect a) `(tactic.rcases_patt) a) tactic.ext_parse → @interactive.parse (option.{0} nat) (λ (a : option.{0} nat), @option.has_reflect nat (λ (a : nat), nat.reflect a) `(nat) a) (@optional.{0 0} lean.parser.{0} lean.parser.alternative nat (@has_seq_right.seq_right.{0 0} lean.parser.{0} (@applicative.to_has_seq_right.{0 0} lean.parser.{0} (@monad.to_applicative.{0 0} lean.parser.{0} (@interaction_monad.monad.{0} lean.parser_state))) unit nat (lean.parser.tk (string.str string.empty (char.of_nat (@bit0.{0} nat nat.has_add (@bit1.{0} nat nat.has_one nat.has_add (@bit0.{0} nat nat.has_add (@bit1.{0} nat nat.has_one nat.has_add (@bit1.{0} nat nat.has_one nat.has_add (@has_one.one.{0} nat nat.has_one))))))))) lean.parser.small_nat)) → tactic.{0} unit'><code style='font-family: menlo, "Source Code Pro", monospace;'>└─┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>  </code><font color='green'><a title='tactic.{0} unit'><code style='font-family: menlo, "Source Code Pro", monospace;'>└───┘</code></a></font>
+<font color='grey'><a title='doc'><code style='font-family: menlo, "Source Code Pro", monospace;'>doc  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>     </code><font color='orange'><a title='- `ext` applies as many extensionality lemmas as possible;
+- `ext ids`, with `ids` a list of identifiers, finds extentionality and applies them
+  until it runs out of identifiers in `ids` to name the local constants.
+
+When trying to prove:
+
+```lean
+α β : Type,
+f g : α → set β
+⊢ f = g
+```
+
+applying `ext x y` yields:
+
+```lean
+α β : Type,
+f g : α → set β,
+x : α,
+y : β
+⊢ y ∈ f x ↔ y ∈ f x
+```
+
+by applying functional extensionality and set extensionality.
+
+A maximum depth can be provided with `ext x y z : 3`.'><code style='font-family: menlo, "Source Code Pro", monospace;'>└─┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>  </code><font color='orange'><a title='Shorter name for the tactic `reflexivity`.'><code style='font-family: menlo, "Source Code Pro", monospace;'>└───┘</code></a></font>
+<font color='grey'><a title='text'><code style='font-family: menlo, "Source Code Pro", monospace;'>txt  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>     </code><font color='teal'><a title='ext'><code style='font-family: menlo, "Source Code Pro", monospace;'>└─┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>  </code><font color='teal'><a title='refl'><code style='font-family: menlo, "Source Code Pro", monospace;'>└───┘</code></a></font>
+<font color='grey'><a title='tactic_params'><code style='font-family: menlo, "Source Code Pro", monospace;'>par  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>     </code><font color='grey'><a title='[&#x27;((patt) | patt_list)*&#x27;, &quot;&lt;error while executing interactive.param_desc: don&#x27;t know how to pretty print lean.parser.small_nat&gt;&quot;]'><code style='font-family: menlo, "Source Code Pro", monospace;'>└─┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>  </code><font color='grey'><a title='[]'><code style='font-family: menlo, "Source Code Pro", monospace;'>└───┘</code></a></font>
+<font color='grey'><a title='tactic_param_idx'><code style='font-family: menlo, "Source Code Pro", monospace;'>pid  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>              </code><font color='maroon'><a title='0'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 67  </code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 68  @[simp] lemma map_comp_obj_unop (f : X ⟶ Y) (g : Y ⟶ Z) (U) : (map (f ≫ g)).obj (unop U) = (map f).obj ((map g).obj (unop U)) :=</code>
+<font color='grey'><a title='full-id'><code style='font-family: menlo, "Source Code Pro", monospace;'>id   </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>                                                                                                                     </code><font color='blue'><a title='opposite.unop'><code style='font-family: menlo, "Source Code Pro", monospace;'>└──┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'> </code><font color='blue'><a title='U'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font>
+<font color='grey'><a title='source'><code style='font-family: menlo, "Source Code Pro", monospace;'>src  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>                                                                                                                     </code><font color='red'><a title='{&#x27;file&#x27;: &#x27;/home/ec2-user/lean_info_scrapper/_target/deps/mathlib/src/data/opposite.lean&#x27;, &#x27;line&#x27;: 45, &#x27;column&#x27;: 4}'><code style='font-family: menlo, "Source Code Pro", monospace;'>└──┘</code></a></font>
+<font color='grey'><a title='type'><code style='font-family: menlo, "Source Code Pro", monospace;'>typ  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>                                                                                                                     </code><font color='green'><a title='Π {α : Sort u}, opposite.{u} α → α'><code style='font-family: menlo, "Source Code Pro", monospace;'>└──┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'> </code><font color='green'><a title='opposite.{(max (u+1) 1)} (@topological_space.opens.{u} (@coe_sort.{u+2 u+2} Top.{u} (@category_theory.bundled.has_coe_to_sort.{u u} topological_space.{u}) Z) (Top.topological_space_unbundled.{u} Z))'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font>
+<font color='grey'><a title='doc'><code style='font-family: menlo, "Source Code Pro", monospace;'>doc  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>  </code><font color='orange'><a title='simplification lemma'><code style='font-family: menlo, "Source Code Pro", monospace;'>└──┘</code></a></font>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 69  by simp</code>
+<font color='grey'><a title='source'><code style='font-family: menlo, "Source Code Pro", monospace;'>src  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>   </code><font color='red'><a title='{&#x27;file&#x27;: &#x27;/home/ec2-user/.elan/toolchains/3.4.2/lib/lean/library/init/meta/interactive.lean&#x27;, &#x27;line&#x27;: 1209, &#x27;column&#x27;: 9}'><code style='font-family: menlo, "Source Code Pro", monospace;'>└───┘</code></a></font>
+<font color='grey'><a title='type'><code style='font-family: menlo, "Source Code Pro", monospace;'>typ  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>   </code><font color='green'><a title='@interactive.parse (option.{0} unit) (λ (a : option.{0} unit), @option.has_reflect unit (λ (a : unit), punit.reflect a) `(unit) a) (@optional.{0 0} lean.parser.{0} lean.parser.alternative unit (lean.parser.tk (string.str string.empty (char.of_nat (@bit1.{0} nat nat.has_one nat.has_add (@bit0.{0} nat nat.has_add (@bit0.{0} nat nat.has_add (@bit0.{0} nat nat.has_add (@bit0.{0} nat nat.has_add (@has_one.one.{0} nat nat.has_one)))))))))) → @interactive.parse bool (λ (a : bool), bool.has_reflect a) interactive.types.only_flag → @interactive.parse (list.{0} tactic.simp_arg_type) (λ (a : list.{0} tactic.simp_arg_type), @list.reflect tactic.simp_arg_type (λ (a : tactic.simp_arg_type), tactic.simp_arg_type.has_reflect a) `(tactic.simp_arg_type) a) tactic.simp_arg_list → @interactive.parse (list.{0} name) (λ (a : list.{0} name), @list.reflect name (λ (a : name), name.reflect a) `(name) a) interactive.types.with_ident_list → @interactive.parse interactive.loc (λ (a : interactive.loc), interactive.loc.has_reflect a) interactive.types.location → opt_param.{1} tactic.simp_config_ext {to_simp_config := {max_steps := simp.default_max_steps, contextual := bool.ff, lift_eq := bool.tt, canonize_instances := bool.tt, canonize_proofs := bool.ff, use_axioms := bool.tt, zeta := bool.tt, beta := bool.tt, eta := bool.tt, proj := bool.tt, iota := bool.tt, iota_eqn := bool.ff, constructor_eq := bool.tt, single_pass := bool.ff, fail_if_unchanged := bool.tt, memoize := bool.tt}, discharger := @tactic.failed unit} → tactic.{0} unit'><code style='font-family: menlo, "Source Code Pro", monospace;'>└───┘</code></a></font>
+<font color='grey'><a title='doc'><code style='font-family: menlo, "Source Code Pro", monospace;'>doc  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>   </code><font color='orange'><a title='The `simp` tactic uses lemmas and hypotheses to simplify the main goal target or non-dependent hypotheses. It has many variants.
+
+`simp` simplifies the main goal target using lemmas tagged with the attribute `[simp]`.
+
+`simp [h₁ h₂ ... hₙ]` simplifies the main goal target using the lemmas tagged with the attribute `[simp]` and the given `hᵢ`&#x27;s, where the `hᵢ`&#x27;s are expressions. If an `hᵢ` is a defined constant `f`, then the equational lemmas associated with `f` are used. This provides a convenient way to unfold `f`.
+
+`simp [*]` simplifies the main goal target using the lemmas tagged with the attribute `[simp]` and all hypotheses.
+
+`simp *` is a shorthand for `simp [*]`.
+
+`simp only [h₁ h₂ ... hₙ]` is like `simp [h₁ h₂ ... hₙ]` but does not use `[simp]` lemmas
+
+`simp [-id_1, ... -id_n]` simplifies the main goal target using the lemmas tagged with the attribute `[simp]`, but removes the ones named `idᵢ`.
+
+`simp at h₁ h₂ ... hₙ` simplifies the non-dependent hypotheses `h₁ : T₁` ... `hₙ : Tₙ`. The tactic fails if the target or another hypothesis depends on one of them. The token `⊢` or `|-` can be added to the list to include the target.
+
+`simp at *` simplifies all the hypotheses and the target.
+
+`simp * at *` simplifies target and all (non-dependent propositional) hypotheses using the other hypotheses.
+
+`simp with attr₁ ... attrₙ` simplifies the main goal target using the lemmas tagged with any of the attributes `[attr₁]`, ..., `[attrₙ]` or `[simp]`.'><code style='font-family: menlo, "Source Code Pro", monospace;'>└───┘</code></a></font>
+<font color='grey'><a title='text'><code style='font-family: menlo, "Source Code Pro", monospace;'>txt  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>   </code><font color='teal'><a title='simp'><code style='font-family: menlo, "Source Code Pro", monospace;'>└───┘</code></a></font>
+<font color='grey'><a title='tactic_params'><code style='font-family: menlo, "Source Code Pro", monospace;'>par  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>   </code><font color='grey'><a title='[&#x27;!?&#x27;, &#x27;only?&#x27;, &#x27;(* | [(* | (- id | expr)), ...]?)&#x27;, &#x27;(with id*)?&#x27;, &#x27;(at (* | (⊢ | id)*))?&#x27;, &#x27;tactic.simp_config_ext?&#x27;]'><code style='font-family: menlo, "Source Code Pro", monospace;'>└───┘</code></a></font>
+<font color='grey'><a title='tactic_param_idx'><code style='font-family: menlo, "Source Code Pro", monospace;'>pid  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>       </code><font color='maroon'><a title='0'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 70  @[simp] lemma op_map_comp_obj (f : X ⟶ Y) (g : Y ⟶ Z) (U) : (map (f ≫ g)).op.obj U = (map f).op.obj ((map g).op.obj U) :=</code>
+<font color='grey'><a title='doc'><code style='font-family: menlo, "Source Code Pro", monospace;'>doc  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>  </code><font color='orange'><a title='simplification lemma'><code style='font-family: menlo, "Source Code Pro", monospace;'>└──┘</code></a></font>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 71  by simp</code>
+<font color='grey'><a title='source'><code style='font-family: menlo, "Source Code Pro", monospace;'>src  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>   </code><font color='red'><a title='{&#x27;file&#x27;: &#x27;/home/ec2-user/.elan/toolchains/3.4.2/lib/lean/library/init/meta/interactive.lean&#x27;, &#x27;line&#x27;: 1209, &#x27;column&#x27;: 9}'><code style='font-family: menlo, "Source Code Pro", monospace;'>└────</code></a></font>
+<font color='grey'><a title='type'><code style='font-family: menlo, "Source Code Pro", monospace;'>typ  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>   </code><font color='green'><a title='@interactive.parse (option.{0} unit) (λ (a : option.{0} unit), @option.has_reflect unit (λ (a : unit), punit.reflect a) `(unit) a) (@optional.{0 0} lean.parser.{0} lean.parser.alternative unit (lean.parser.tk (string.str string.empty (char.of_nat (@bit1.{0} nat nat.has_one nat.has_add (@bit0.{0} nat nat.has_add (@bit0.{0} nat nat.has_add (@bit0.{0} nat nat.has_add (@bit0.{0} nat nat.has_add (@has_one.one.{0} nat nat.has_one)))))))))) → @interactive.parse bool (λ (a : bool), bool.has_reflect a) interactive.types.only_flag → @interactive.parse (list.{0} tactic.simp_arg_type) (λ (a : list.{0} tactic.simp_arg_type), @list.reflect tactic.simp_arg_type (λ (a : tactic.simp_arg_type), tactic.simp_arg_type.has_reflect a) `(tactic.simp_arg_type) a) tactic.simp_arg_list → @interactive.parse (list.{0} name) (λ (a : list.{0} name), @list.reflect name (λ (a : name), name.reflect a) `(name) a) interactive.types.with_ident_list → @interactive.parse interactive.loc (λ (a : interactive.loc), interactive.loc.has_reflect a) interactive.types.location → opt_param.{1} tactic.simp_config_ext {to_simp_config := {max_steps := simp.default_max_steps, contextual := bool.ff, lift_eq := bool.tt, canonize_instances := bool.tt, canonize_proofs := bool.ff, use_axioms := bool.tt, zeta := bool.tt, beta := bool.tt, eta := bool.tt, proj := bool.tt, iota := bool.tt, iota_eqn := bool.ff, constructor_eq := bool.tt, single_pass := bool.ff, fail_if_unchanged := bool.tt, memoize := bool.tt}, discharger := @tactic.failed unit} → tactic.{0} unit'><code style='font-family: menlo, "Source Code Pro", monospace;'>└────</code></a></font>
+<font color='grey'><a title='doc'><code style='font-family: menlo, "Source Code Pro", monospace;'>doc  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>   </code><font color='orange'><a title='The `simp` tactic uses lemmas and hypotheses to simplify the main goal target or non-dependent hypotheses. It has many variants.
+
+`simp` simplifies the main goal target using lemmas tagged with the attribute `[simp]`.
+
+`simp [h₁ h₂ ... hₙ]` simplifies the main goal target using the lemmas tagged with the attribute `[simp]` and the given `hᵢ`&#x27;s, where the `hᵢ`&#x27;s are expressions. If an `hᵢ` is a defined constant `f`, then the equational lemmas associated with `f` are used. This provides a convenient way to unfold `f`.
+
+`simp [*]` simplifies the main goal target using the lemmas tagged with the attribute `[simp]` and all hypotheses.
+
+`simp *` is a shorthand for `simp [*]`.
+
+`simp only [h₁ h₂ ... hₙ]` is like `simp [h₁ h₂ ... hₙ]` but does not use `[simp]` lemmas
+
+`simp [-id_1, ... -id_n]` simplifies the main goal target using the lemmas tagged with the attribute `[simp]`, but removes the ones named `idᵢ`.
+
+`simp at h₁ h₂ ... hₙ` simplifies the non-dependent hypotheses `h₁ : T₁` ... `hₙ : Tₙ`. The tactic fails if the target or another hypothesis depends on one of them. The token `⊢` or `|-` can be added to the list to include the target.
+
+`simp at *` simplifies all the hypotheses and the target.
+
+`simp * at *` simplifies target and all (non-dependent propositional) hypotheses using the other hypotheses.
+
+`simp with attr₁ ... attrₙ` simplifies the main goal target using the lemmas tagged with any of the attributes `[attr₁]`, ..., `[attrₙ]` or `[simp]`.'><code style='font-family: menlo, "Source Code Pro", monospace;'>└────</code></a></font>
+<font color='grey'><a title='text'><code style='font-family: menlo, "Source Code Pro", monospace;'>txt  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>   </code><font color='teal'><a title='simp'><code style='font-family: menlo, "Source Code Pro", monospace;'>└────</code></a></font>
+<font color='grey'><a title='tactic_params'><code style='font-family: menlo, "Source Code Pro", monospace;'>par  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>   </code><font color='grey'><a title='[&#x27;!?&#x27;, &#x27;only?&#x27;, &#x27;(* | [(* | (- id | expr)), ...]?)&#x27;, &#x27;(with id*)?&#x27;, &#x27;(at (* | (⊢ | id)*))?&#x27;, &#x27;tactic.simp_config_ext?&#x27;]'><code style='font-family: menlo, "Source Code Pro", monospace;'>└────</code></a></font>
+<font color='grey'><a title='tactic_param_idx'><code style='font-family: menlo, "Source Code Pro", monospace;'>pid  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>       </code><font color='maroon'><a title='0'><code style='font-family: menlo, "Source Code Pro", monospace;'>└</code></a></font>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 72  </code>
+<font color='grey'><a title='source'><code style='font-family: menlo, "Source Code Pro", monospace;'>src  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'></code><font color='red'><a title='{&#x27;file&#x27;: &#x27;/home/ec2-user/.elan/toolchains/3.4.2/lib/lean/library/init/meta/interactive.lean&#x27;, &#x27;line&#x27;: 1209, &#x27;column&#x27;: 9}'><code style='font-family: menlo, "Source Code Pro", monospace;'>┘</code></a></font>
+<font color='grey'><a title='type'><code style='font-family: menlo, "Source Code Pro", monospace;'>typ  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'></code><font color='green'><a title='@interactive.parse (option.{0} unit) (λ (a : option.{0} unit), @option.has_reflect unit (λ (a : unit), punit.reflect a) `(unit) a) (@optional.{0 0} lean.parser.{0} lean.parser.alternative unit (lean.parser.tk (string.str string.empty (char.of_nat (@bit1.{0} nat nat.has_one nat.has_add (@bit0.{0} nat nat.has_add (@bit0.{0} nat nat.has_add (@bit0.{0} nat nat.has_add (@bit0.{0} nat nat.has_add (@has_one.one.{0} nat nat.has_one)))))))))) → @interactive.parse bool (λ (a : bool), bool.has_reflect a) interactive.types.only_flag → @interactive.parse (list.{0} tactic.simp_arg_type) (λ (a : list.{0} tactic.simp_arg_type), @list.reflect tactic.simp_arg_type (λ (a : tactic.simp_arg_type), tactic.simp_arg_type.has_reflect a) `(tactic.simp_arg_type) a) tactic.simp_arg_list → @interactive.parse (list.{0} name) (λ (a : list.{0} name), @list.reflect name (λ (a : name), name.reflect a) `(name) a) interactive.types.with_ident_list → @interactive.parse interactive.loc (λ (a : interactive.loc), interactive.loc.has_reflect a) interactive.types.location → opt_param.{1} tactic.simp_config_ext {to_simp_config := {max_steps := simp.default_max_steps, contextual := bool.ff, lift_eq := bool.tt, canonize_instances := bool.tt, canonize_proofs := bool.ff, use_axioms := bool.tt, zeta := bool.tt, beta := bool.tt, eta := bool.tt, proj := bool.tt, iota := bool.tt, iota_eqn := bool.ff, constructor_eq := bool.tt, single_pass := bool.ff, fail_if_unchanged := bool.tt, memoize := bool.tt}, discharger := @tactic.failed unit} → tactic.{0} unit'><code style='font-family: menlo, "Source Code Pro", monospace;'>┘</code></a></font>
+<font color='grey'><a title='doc'><code style='font-family: menlo, "Source Code Pro", monospace;'>doc  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'></code><font color='orange'><a title='The `simp` tactic uses lemmas and hypotheses to simplify the main goal target or non-dependent hypotheses. It has many variants.
+
+`simp` simplifies the main goal target using lemmas tagged with the attribute `[simp]`.
+
+`simp [h₁ h₂ ... hₙ]` simplifies the main goal target using the lemmas tagged with the attribute `[simp]` and the given `hᵢ`&#x27;s, where the `hᵢ`&#x27;s are expressions. If an `hᵢ` is a defined constant `f`, then the equational lemmas associated with `f` are used. This provides a convenient way to unfold `f`.
+
+`simp [*]` simplifies the main goal target using the lemmas tagged with the attribute `[simp]` and all hypotheses.
+
+`simp *` is a shorthand for `simp [*]`.
+
+`simp only [h₁ h₂ ... hₙ]` is like `simp [h₁ h₂ ... hₙ]` but does not use `[simp]` lemmas
+
+`simp [-id_1, ... -id_n]` simplifies the main goal target using the lemmas tagged with the attribute `[simp]`, but removes the ones named `idᵢ`.
+
+`simp at h₁ h₂ ... hₙ` simplifies the non-dependent hypotheses `h₁ : T₁` ... `hₙ : Tₙ`. The tactic fails if the target or another hypothesis depends on one of them. The token `⊢` or `|-` can be added to the list to include the target.
+
+`simp at *` simplifies all the hypotheses and the target.
+
+`simp * at *` simplifies target and all (non-dependent propositional) hypotheses using the other hypotheses.
+
+`simp with attr₁ ... attrₙ` simplifies the main goal target using the lemmas tagged with any of the attributes `[attr₁]`, ..., `[attrₙ]` or `[simp]`.'><code style='font-family: menlo, "Source Code Pro", monospace;'>┘</code></a></font>
+<font color='grey'><a title='text'><code style='font-family: menlo, "Source Code Pro", monospace;'>txt  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'></code><font color='teal'><a title='simp'><code style='font-family: menlo, "Source Code Pro", monospace;'>┘</code></a></font>
+<font color='grey'><a title='tactic_params'><code style='font-family: menlo, "Source Code Pro", monospace;'>par  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'></code><font color='grey'><a title='[&#x27;!?&#x27;, &#x27;only?&#x27;, &#x27;(* | [(* | (- id | expr)), ...]?)&#x27;, &#x27;(with id*)?&#x27;, &#x27;(at (* | (⊢ | id)*))?&#x27;, &#x27;tactic.simp_config_ext?&#x27;]'><code style='font-family: menlo, "Source Code Pro", monospace;'>┘</code></a></font>
+<font color='grey'><a title='tactic_param_idx'><code style='font-family: menlo, "Source Code Pro", monospace;'>pid  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'></code><font color='maroon'><a title='0'><code style='font-family: menlo, "Source Code Pro", monospace;'>┘</code></a></font>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 73  def map_comp (f : X ⟶ Y) (g : Y ⟶ Z) : map (f ≫ g) ≅ map g ⋙ map f :=</code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 74  { hom := { app := λ U, eq_to_hom (map_comp_obj f g U) },</code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 75    inv := { app := λ U, eq_to_hom (map_comp_obj f g U).symm } }</code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 76  </code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 77  @[simp] lemma map_comp_hom_app (f : X ⟶ Y) (g : Y ⟶ Z) (U) : (map_comp f g).hom.app U = eq_to_hom (map_comp_obj f g U) := rfl</code>
+<font color='grey'><a title='doc'><code style='font-family: menlo, "Source Code Pro", monospace;'>doc  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>  </code><font color='orange'><a title='simplification lemma'><code style='font-family: menlo, "Source Code Pro", monospace;'>└──┘</code></a></font>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 78  @[simp] lemma map_comp_inv_app (f : X ⟶ Y) (g : Y ⟶ Z) (U) : (map_comp f g).inv.app U = eq_to_hom (map_comp_obj f g U).symm := rfl</code>
+<font color='grey'><a title='doc'><code style='font-family: menlo, "Source Code Pro", monospace;'>doc  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>  </code><font color='orange'><a title='simplification lemma'><code style='font-family: menlo, "Source Code Pro", monospace;'>└──┘</code></a></font>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 79  </code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 80  -- We could make f g implicit here, but it&#x27;s nice to be able to see when</code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 81  -- they are the identity (often!)</code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 82  def map_iso (f g : X ⟶ Y) (h : f = g) : map f ≅ map g :=</code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 83  nat_iso.of_components (λ U, eq_to_iso (congr_fun (congr_arg functor.obj (congr_arg map h)) U) ) (by obviously)</code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 84  </code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 85  @[simp] lemma map_iso_refl (f : X ⟶ Y) (h) : map_iso f f h = iso.refl (map _) := rfl</code>
+<font color='grey'><a title='doc'><code style='font-family: menlo, "Source Code Pro", monospace;'>doc  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>  </code><font color='orange'><a title='simplification lemma'><code style='font-family: menlo, "Source Code Pro", monospace;'>└──┘</code></a></font>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 86  </code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 87  @[simp] lemma map_iso_hom_app (f g : X ⟶ Y) (h : f = g) (U : opens Y) :</code>
+<font color='grey'><a title='doc'><code style='font-family: menlo, "Source Code Pro", monospace;'>doc  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>  </code><font color='orange'><a title='simplification lemma'><code style='font-family: menlo, "Source Code Pro", monospace;'>└──┘</code></a></font>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 88    (map_iso f g h).hom.app U = eq_to_hom (congr_fun (congr_arg functor.obj (congr_arg map h)) U) :=</code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 89  rfl</code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 90  </code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 91  @[simp] lemma map_iso_inv_app (f g : X ⟶ Y) (h : f = g) (U : opens Y) :</code>
+<font color='grey'><a title='doc'><code style='font-family: menlo, "Source Code Pro", monospace;'>doc  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>  </code><font color='orange'><a title='simplification lemma'><code style='font-family: menlo, "Source Code Pro", monospace;'>└──┘</code></a></font>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 92    (map_iso f g h).inv.app U = eq_to_hom (congr_fun (congr_arg functor.obj (congr_arg map h.symm)) U) :=</code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 93  rfl</code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 94  </code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 95  end topological_space.opens</code></pre>
+</body>

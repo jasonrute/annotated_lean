@@ -1,0 +1,67 @@
+<head>
+<meta charset="UTF-8">
+<link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro&display=swap" rel="stylesheet">
+</head>
+
+<body>
+<pre>
+<code style='font-family: menlo, "Source Code Pro", monospace;'>  1  /-</code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'>  2  Copyright (c) 2019 Scott Morrison. All rights reserved.</code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'>  3  Released under Apache 2.0 license as described in the file LICENSE.</code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'>  4  Authors: Scott Morrison</code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'>  5  -/</code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'>  6  import topology.basic</code>
+<font color='grey'><a title='source'><code style='font-family: menlo, "Source Code Pro", monospace;'>src  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>       </code><font color='red'><a title='{&#x27;file&#x27;: &#x27;/home/ec2-user/lean_info_scrapper/_target/deps/mathlib/src/topology/basic.lean&#x27;, &#x27;line&#x27;: 1, &#x27;column&#x27;: 0}'><code style='font-family: menlo, "Source Code Pro", monospace;'>└────────────┘</code></a></font>
+<code style='font-family: menlo, "Source Code Pro", monospace;'>  7  import topology.algebra.ring</code>
+<font color='grey'><a title='source'><code style='font-family: menlo, "Source Code Pro", monospace;'>src  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>       </code><font color='red'><a title='{&#x27;file&#x27;: &#x27;/home/ec2-user/lean_info_scrapper/_target/deps/mathlib/src/topology/algebra/ring.lean&#x27;, &#x27;line&#x27;: 1, &#x27;column&#x27;: 0}'><code style='font-family: menlo, "Source Code Pro", monospace;'>└───────────────────┘</code></a></font>
+<code style='font-family: menlo, "Source Code Pro", monospace;'>  8  import ring_theory.subring</code>
+<font color='grey'><a title='source'><code style='font-family: menlo, "Source Code Pro", monospace;'>src  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>       </code><font color='red'><a title='{&#x27;file&#x27;: &#x27;/home/ec2-user/lean_info_scrapper/_target/deps/mathlib/src/ring_theory/subring.lean&#x27;, &#x27;line&#x27;: 1, &#x27;column&#x27;: 0}'><code style='font-family: menlo, "Source Code Pro", monospace;'>└─────────────────┘</code></a></font>
+<code style='font-family: menlo, "Source Code Pro", monospace;'>  9  </code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 10  universes u v</code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 11  </code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 12  local attribute [elab_simple] continuous.comp</code>
+<font color='grey'><a title='full-id'><code style='font-family: menlo, "Source Code Pro", monospace;'>id   </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>                              </code><font color='blue'><a title='continuous.comp'><code style='font-family: menlo, "Source Code Pro", monospace;'>└─────────────┘</code></a></font>
+<font color='grey'><a title='source'><code style='font-family: menlo, "Source Code Pro", monospace;'>src  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>                              </code><font color='red'><a title='{&#x27;file&#x27;: &#x27;/home/ec2-user/lean_info_scrapper/_target/deps/mathlib/src/topology/basic.lean&#x27;, &#x27;line&#x27;: 657, &#x27;column&#x27;: 6}'><code style='font-family: menlo, "Source Code Pro", monospace;'>└─────────────┘</code></a></font>
+<font color='grey'><a title='type'><code style='font-family: menlo, "Source Code Pro", monospace;'>typ  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>                              </code><font color='green'><a title='∀ {α : Type u_1} {β : Type u_2} {γ : Type u_3} [_inst_1 : topological_space.{u_1} α] [_inst_2 : topological_space.{u_2} β] [_inst_3 : topological_space.{u_3} γ] {g : β → γ} {f : α → β}, @continuous.{u_2 u_3} β γ _inst_2 _inst_3 g → @continuous.{u_1 u_2} α β _inst_1 _inst_2 f → @continuous.{u_1 u_3} α γ _inst_1 _inst_3 (@function.comp.{u_1+1 u_2+1 u_3+1} α β γ g f)'><code style='font-family: menlo, "Source Code Pro", monospace;'>└─────────────┘</code></a></font>
+<font color='grey'><a title='doc'><code style='font-family: menlo, "Source Code Pro", monospace;'>doc  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>                 </code><font color='orange'><a title='instructs elaborator that the arguments of the function application (f ...) should be elaborated from left to right, and without propagating information from the expected type to its arguments'><code style='font-family: menlo, "Source Code Pro", monospace;'>└─────────┘</code></a></font>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 13  </code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 14  @[to_additive continuous_add_submonoid]</code>
+<font color='grey'><a title='doc'><code style='font-family: menlo, "Source Code Pro", monospace;'>doc  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>  </code><font color='orange'><a title='Transport multiplicative to additive'><code style='font-family: menlo, "Source Code Pro", monospace;'>└─────────┘</code></a></font>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 15  instance continuous_submonoid (α : Type u) (β : Type v) [topological_space α] [topological_space β]</code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 16    [monoid β] [topological_monoid β] : is_submonoid { f : α → β | continuous f } :=</code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 17  { one_mem := @continuous_const _ _ _ _ 1,</code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 18    mul_mem :=</code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 19    λ f g fc gc, continuous.comp (topological_monoid.continuous_mul β) (continuous.prod_mk fc gc) }.</code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 20  </code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 21  @[to_additive continuous_add_subgroup]</code>
+<font color='grey'><a title='doc'><code style='font-family: menlo, "Source Code Pro", monospace;'>doc  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>  </code><font color='orange'><a title='Transport multiplicative to additive'><code style='font-family: menlo, "Source Code Pro", monospace;'>└─────────┘</code></a></font>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 22  instance continuous_subgroup (α : Type u) (β : Type v) [topological_space α] [topological_space β]</code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 23    [group β] [topological_group β] : is_subgroup { f : α → β | continuous f } :=</code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 24  { inv_mem := λ f fc, continuous.comp (topological_group.continuous_inv β) fc,</code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 25    ..continuous_submonoid α β, }.</code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 26  </code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 27  @[to_additive continuous_add_monoid]</code>
+<font color='grey'><a title='doc'><code style='font-family: menlo, "Source Code Pro", monospace;'>doc  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>  </code><font color='orange'><a title='Transport multiplicative to additive'><code style='font-family: menlo, "Source Code Pro", monospace;'>└─────────┘</code></a></font>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 28  instance continuous_monoid {α : Type u} {β : Type v} [topological_space α] [topological_space β]</code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 29    [monoid β] [topological_monoid β] : monoid { f : α → β | continuous f } :=</code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 30  subtype.monoid</code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 31  </code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 32  @[to_additive continuous_add_group]</code>
+<font color='grey'><a title='doc'><code style='font-family: menlo, "Source Code Pro", monospace;'>doc  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>  </code><font color='orange'><a title='Transport multiplicative to additive'><code style='font-family: menlo, "Source Code Pro", monospace;'>└─────────┘</code></a></font>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 33  instance continuous_group {α : Type u} {β : Type v} [topological_space α] [topological_space β]</code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 34    [group β] [topological_group β] : group { f : α → β | continuous f } :=</code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 35  subtype.group</code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 36  </code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 37  instance continuous_subring (α : Type u) (β : Type v) [topological_space α] [topological_space β]</code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 38    [ring β] [topological_ring β] : is_subring { f : α → β | continuous f } :=</code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 39  { ..continuous_add_subgroup α β,</code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 40    ..continuous_submonoid α β }.</code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 41  </code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 42  instance continuous_ring {α : Type u} {β : Type v} [topological_space α] [topological_space β]</code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 43    [ring β] [topological_ring β] : ring { f : α → β | continuous f } :=</code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 44  @subtype.ring _ _ _ (continuous_subring α β) -- infer_instance doesn&#x27;t work?!</code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 45  </code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 46  instance continuous_comm_ring {α : Type u} {β : Type v} [topological_space α] [topological_space β]</code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 47    [comm_ring β] [topological_ring β] : comm_ring { f : α → β | continuous f } :=</code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 48  @subtype.comm_ring _ _ _ (continuous_subring α β) -- infer_instance doesn&#x27;t work?!</code></pre>
+</body>

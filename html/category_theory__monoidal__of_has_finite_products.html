@@ -1,0 +1,87 @@
+<head>
+<meta charset="UTF-8">
+<link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro&display=swap" rel="stylesheet">
+</head>
+
+<body>
+<pre>
+<code style='font-family: menlo, "Source Code Pro", monospace;'>  1  /-</code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'>  2  Copyright (c) 2019 Scott Morrison. All rights reserved.</code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'>  3  Released under Apache 2.0 license as described in the file LICENSE.</code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'>  4  Authors: Scott Morrison, Simon Hudon</code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'>  5  -/</code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'>  6  import category_theory.monoidal.category</code>
+<font color='grey'><a title='source'><code style='font-family: menlo, "Source Code Pro", monospace;'>src  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>       </code><font color='red'><a title='{&#x27;file&#x27;: &#x27;/home/ec2-user/lean_info_scrapper/_target/deps/mathlib/src/category_theory/monoidal/category.lean&#x27;, &#x27;line&#x27;: 1, &#x27;column&#x27;: 0}'><code style='font-family: menlo, "Source Code Pro", monospace;'>└───────────────────────────────┘</code></a></font>
+<code style='font-family: menlo, "Source Code Pro", monospace;'>  7  import category_theory.limits.shapes.finite_products</code>
+<font color='grey'><a title='source'><code style='font-family: menlo, "Source Code Pro", monospace;'>src  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>       </code><font color='red'><a title='{&#x27;file&#x27;: &#x27;/home/ec2-user/lean_info_scrapper/_target/deps/mathlib/src/category_theory/limits/shapes/finite_products.lean&#x27;, &#x27;line&#x27;: 1, &#x27;column&#x27;: 0}'><code style='font-family: menlo, "Source Code Pro", monospace;'>└───────────────────────────────────────────┘</code></a></font>
+<code style='font-family: menlo, "Source Code Pro", monospace;'>  8  import category_theory.limits.shapes.binary_products</code>
+<font color='grey'><a title='source'><code style='font-family: menlo, "Source Code Pro", monospace;'>src  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>       </code><font color='red'><a title='{&#x27;file&#x27;: &#x27;/home/ec2-user/lean_info_scrapper/_target/deps/mathlib/src/category_theory/limits/shapes/binary_products.lean&#x27;, &#x27;line&#x27;: 1, &#x27;column&#x27;: 0}'><code style='font-family: menlo, "Source Code Pro", monospace;'>└───────────────────────────────────────────┘</code></a></font>
+<code style='font-family: menlo, "Source Code Pro", monospace;'>  9  import category_theory.limits.shapes.terminal</code>
+<font color='grey'><a title='source'><code style='font-family: menlo, "Source Code Pro", monospace;'>src  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>       </code><font color='red'><a title='{&#x27;file&#x27;: &#x27;/home/ec2-user/lean_info_scrapper/_target/deps/mathlib/src/category_theory/limits/shapes/terminal.lean&#x27;, &#x27;line&#x27;: 1, &#x27;column&#x27;: 0}'><code style='font-family: menlo, "Source Code Pro", monospace;'>└────────────────────────────────────┘</code></a></font>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 10  import category_theory.limits.types</code>
+<font color='grey'><a title='source'><code style='font-family: menlo, "Source Code Pro", monospace;'>src  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>       </code><font color='red'><a title='{&#x27;file&#x27;: &#x27;/home/ec2-user/lean_info_scrapper/_target/deps/mathlib/src/category_theory/limits/types.lean&#x27;, &#x27;line&#x27;: 1, &#x27;column&#x27;: 0}'><code style='font-family: menlo, "Source Code Pro", monospace;'>└──────────────────────────┘</code></a></font>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 11  </code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 12  /-!</code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 13  # The natural monoidal structure on any category with finite (co)products.</code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 14  </code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 15  A category with a monoidal structure provided in this way is sometimes called a (co)cartesian category,</code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 16  although this is also sometimes used to mean a finitely complete category.</code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 17  (See &lt;https://ncatlab.org/nlab/show/cartesian+category&gt;.)</code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 18  </code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 19  As this works with either products or coproducts, we don&#x27;t set up either construct as an instance.</code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 20  -/</code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 21  </code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 22  open category_theory.limits</code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 23  </code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 24  universes v u</code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 25  </code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 26  namespace category_theory</code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 27  </code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 28  section</code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 29  variables (C : Type u) [𝒞 : category.{v} C]</code>
+<font color='grey'><a title='full-id'><code style='font-family: menlo, "Source Code Pro", monospace;'>id   </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>                            </code><font color='blue'><a title='category_theory.category'><code style='font-family: menlo, "Source Code Pro", monospace;'>└──────┘</code></a></font>
+<font color='grey'><a title='source'><code style='font-family: menlo, "Source Code Pro", monospace;'>src  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>                            </code><font color='red'><a title='{&#x27;file&#x27;: &#x27;/home/ec2-user/lean_info_scrapper/_target/deps/mathlib/src/category_theory/category/default.lean&#x27;, &#x27;line&#x27;: 61, &#x27;column&#x27;: 6}'><code style='font-family: menlo, "Source Code Pro", monospace;'>└──────┘</code></a></font>
+<font color='grey'><a title='type'><code style='font-family: menlo, "Source Code Pro", monospace;'>typ  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>                            </code><font color='green'><a title='Type u → Type (max u (v+1))'><code style='font-family: menlo, "Source Code Pro", monospace;'>└──────┘</code></a></font>
+<font color='grey'><a title='doc'><code style='font-family: menlo, "Source Code Pro", monospace;'>doc  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>                            </code><font color='orange'><a title='The typeclass `category C` describes morphisms associated to objects of type `C`.
+The universe levels of the objects and morphisms are unconstrained, and will often need to be
+specified explicitly, as `category.{v} C`. (See also `large_category` and `small_category`.)'><code style='font-family: menlo, "Source Code Pro", monospace;'>└──────┘</code></a></font>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 30  include 𝒞</code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 31  </code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 32  local attribute [tidy] tactic.case_bash</code>
+<font color='grey'><a title='full-id'><code style='font-family: menlo, "Source Code Pro", monospace;'>id   </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>                       </code><font color='blue'><a title='tactic.case_bash'><code style='font-family: menlo, "Source Code Pro", monospace;'>└──────────────┘</code></a></font>
+<font color='grey'><a title='source'><code style='font-family: menlo, "Source Code Pro", monospace;'>src  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>                       </code><font color='red'><a title='{&#x27;file&#x27;: &#x27;/home/ec2-user/lean_info_scrapper/_target/deps/mathlib/src/tactic/core.lean&#x27;, &#x27;line&#x27;: 761, &#x27;column&#x27;: 9}'><code style='font-family: menlo, "Source Code Pro", monospace;'>└──────────────┘</code></a></font>
+<font color='grey'><a title='type'><code style='font-family: menlo, "Source Code Pro", monospace;'>typ  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>                       </code><font color='green'><a title='tactic.{0} unit'><code style='font-family: menlo, "Source Code Pro", monospace;'>└──────────────┘</code></a></font>
+<font color='grey'><a title='doc'><code style='font-family: menlo, "Source Code Pro", monospace;'>doc  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>                 </code><font color='orange'><a title='A tactic that should be called by `tidy`.'><code style='font-family: menlo, "Source Code Pro", monospace;'>└──┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>  </code><font color='orange'><a title='calls `cases` on every local hypothesis, succeeding if
+   it succeeds on at least one hypothesis.'><code style='font-family: menlo, "Source Code Pro", monospace;'>└──────────────┘</code></a></font>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 33  </code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 34  /-- A category with finite products has a natural monoidal structure. -/</code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 35  def monoidal_of_has_finite_products [has_finite_products.{v} C] : monoidal_category C :=</code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 36  { tensor_unit  := terminal C,</code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 37    tensor_obj   := λ X Y, limits.prod X Y,</code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 38    tensor_hom   := λ _ _ _ _ f g, limits.prod.map f g,</code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 39    associator   := prod.associator,</code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 40    left_unitor  := prod.left_unitor,</code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 41    right_unitor := prod.right_unitor,</code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 42    pentagon&#x27;    := prod.pentagon,</code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 43    triangle&#x27;    := prod.triangle,</code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 44    associator_naturality&#x27; := @prod.associator_naturality _ _ _, }</code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 45  </code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 46  /-- A category with finite coproducts has a natural monoidal structure. -/</code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 47  def monoidal_of_has_finite_coproducts [has_finite_coproducts.{v} C] : monoidal_category C :=</code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 48  { tensor_unit  := initial C,</code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 49    tensor_obj   := λ X Y, limits.coprod X Y,</code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 50    tensor_hom   := λ _ _ _ _ f g, limits.coprod.map f g,</code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 51    associator   := coprod.associator,</code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 52    left_unitor  := coprod.left_unitor,</code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 53    right_unitor := coprod.right_unitor,</code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 54    pentagon&#x27;    := coprod.pentagon,</code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 55    triangle&#x27;    := coprod.triangle,</code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 56    associator_naturality&#x27; := @coprod.associator_naturality _ _ _, }</code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 57  </code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 58  end</code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 59  </code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 60  end category_theory</code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 61  </code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 62  -- TODO in fact, a category with finite products is braided, and symmetric,</code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 63  -- and we should say that here.</code></pre>
+</body>

@@ -1,0 +1,223 @@
+<head>
+<meta charset="UTF-8">
+<link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro&display=swap" rel="stylesheet">
+</head>
+
+<body>
+<pre>
+<code style='font-family: menlo, "Source Code Pro", monospace;'>  1  /-</code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'>  2  Copyright (c) 2019 Scott Morrison All rights reserved.</code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'>  3  Released under Apache 2.0 license as described in the file LICENSE.</code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'>  4  Authors: Scott Morrison</code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'>  5  </code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'>  6  The core of a category C is the groupoid whose morphisms are all the</code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'>  7  isomorphisms of C.</code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'>  8  -/</code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'>  9  </code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 10  import category_theory.groupoid</code>
+<font color='grey'><a title='source'><code style='font-family: menlo, "Source Code Pro", monospace;'>src  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>       </code><font color='red'><a title='{&#x27;file&#x27;: &#x27;/home/ec2-user/lean_info_scrapper/_target/deps/mathlib/src/category_theory/groupoid.lean&#x27;, &#x27;line&#x27;: 1, &#x27;column&#x27;: 0}'><code style='font-family: menlo, "Source Code Pro", monospace;'>└──────────────────────┘</code></a></font>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 11  import category_theory.whiskering</code>
+<font color='grey'><a title='source'><code style='font-family: menlo, "Source Code Pro", monospace;'>src  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>       </code><font color='red'><a title='{&#x27;file&#x27;: &#x27;/home/ec2-user/lean_info_scrapper/_target/deps/mathlib/src/category_theory/whiskering.lean&#x27;, &#x27;line&#x27;: 1, &#x27;column&#x27;: 0}'><code style='font-family: menlo, "Source Code Pro", monospace;'>└────────────────────────┘</code></a></font>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 12  </code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 13  namespace category_theory</code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 14  </code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 15  universes v₁ v₂ u₁ u₂ -- declare the `v`&#x27;s first; see `category_theory.category` for an explanation</code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 16  </code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 17  def core (C : Type u₁) := C</code>
+<font color='grey'><a title='full-id'><code style='font-family: menlo, "Source Code Pro", monospace;'>id   </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>                          </code><font color='blue'><a title='C'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font>
+<font color='grey'><a title='type'><code style='font-family: menlo, "Source Code Pro", monospace;'>typ  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>                          </code><font color='green'><a title='Type u₁'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 18  </code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 19  variables {C : Type u₁} [𝒞 : category.{v₁} C]</code>
+<font color='grey'><a title='full-id'><code style='font-family: menlo, "Source Code Pro", monospace;'>id   </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>                             </code><font color='blue'><a title='category_theory.category'><code style='font-family: menlo, "Source Code Pro", monospace;'>└──────┘</code></a></font>
+<font color='grey'><a title='source'><code style='font-family: menlo, "Source Code Pro", monospace;'>src  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>                             </code><font color='red'><a title='{&#x27;file&#x27;: &#x27;/home/ec2-user/lean_info_scrapper/_target/deps/mathlib/src/category_theory/category/default.lean&#x27;, &#x27;line&#x27;: 61, &#x27;column&#x27;: 6}'><code style='font-family: menlo, "Source Code Pro", monospace;'>└──────┘</code></a></font>
+<font color='grey'><a title='type'><code style='font-family: menlo, "Source Code Pro", monospace;'>typ  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>                             </code><font color='green'><a title='Type u → Type (max u (v+1))'><code style='font-family: menlo, "Source Code Pro", monospace;'>└──────┘</code></a></font>
+<font color='grey'><a title='doc'><code style='font-family: menlo, "Source Code Pro", monospace;'>doc  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>                             </code><font color='orange'><a title='The typeclass `category C` describes morphisms associated to objects of type `C`.
+The universe levels of the objects and morphisms are unconstrained, and will often need to be
+specified explicitly, as `category.{v} C`. (See also `large_category` and `small_category`.)'><code style='font-family: menlo, "Source Code Pro", monospace;'>└──────┘</code></a></font>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 20  include 𝒞</code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 21  </code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 22  instance core_category : groupoid.{v₁} (core C) :=</code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 23  { hom  := λ X Y : C, X ≅ Y,</code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 24    inv  := λ X Y f, iso.symm f,</code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 25    id   := λ X, iso.refl X,</code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 26    comp := λ X Y Z f g, iso.trans f g }</code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 27  </code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 28  namespace core</code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 29  @[simp] lemma id_hom (X : core C) : iso.hom (𝟙 X) = 𝟙 X := rfl</code>
+<font color='grey'><a title='doc'><code style='font-family: menlo, "Source Code Pro", monospace;'>doc  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>  </code><font color='orange'><a title='simplification lemma'><code style='font-family: menlo, "Source Code Pro", monospace;'>└──┘</code></a></font>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 30  @[simp] lemma comp_hom {X Y Z : core C} (f : X ⟶ Y) (g : Y ⟶ Z) : (f ≫ g).hom = f.hom ≫ g.hom :=</code>
+<font color='grey'><a title='doc'><code style='font-family: menlo, "Source Code Pro", monospace;'>doc  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>  </code><font color='orange'><a title='simplification lemma'><code style='font-family: menlo, "Source Code Pro", monospace;'>└──┘</code></a></font>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 31  rfl</code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 32  </code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 33  def inclusion : core C ⥤ C :=</code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 34  { obj := id,</code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 35    map := λ X Y f, f.hom }</code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 36  </code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 37  variables {G : Type u₂} [𝒢 : groupoid.{v₂} G]</code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 38  include 𝒢</code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 39  </code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 40  /-- A functor from a groupoid to a category C factors through the core of C. -/</code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 41  -- Note that this function is not functorial</code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 42  -- (consider the two functors from [0] to [1], and the natural transformation between them).</code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 43  def functor_to_core (F : G ⥤ C) : G ⥤ core C :=</code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 44  { obj := λ X, F.obj X,</code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 45    map := λ X Y f, ⟨F.map f, F.map (inv f)⟩ }</code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 46  </code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 47  def forget_functor_to_core : (G ⥤ core C) ⥤ (G ⥤ C) := (whiskering_right _ _ _).obj inclusion</code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 48  end core</code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 49  </code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 50  end category_theory</code>
+<font color='grey'><a title='state'><code style='font-family: menlo, "Source Code Pro", monospace;'>st   </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>    </code><font color='lime'><a title='C : Type u₁,
+𝒞 : category_theory.category.{v₁ u₁} C,
+X Y : category_theory.core.{u₁} C,
+f :
+  @category_theory.has_hom.hom.{v₁ u₁} (category_theory.core.{u₁} C)
+    (@category_theory.category_struct.to_has_hom.{v₁ u₁} (category_theory.core.{u₁} C)
+       (@category_theory.category_struct.mk.{v₁ u₁} (category_theory.core.{u₁} C)
+          (@category_theory.has_hom.mk.{v₁ u₁} (category_theory.core.{u₁} C)
+             (λ (X Y : C), @category_theory.iso.{v₁ u₁} C 𝒞 X Y))
+          (λ (X : category_theory.core.{u₁} C), @category_theory.iso.refl.{v₁ u₁} C 𝒞 X)
+          (λ (X Y Z : category_theory.core.{u₁} C)
+           (f :
+             @category_theory.has_hom.hom.{v₁ u₁} (category_theory.core.{u₁} C)
+               (@category_theory.has_hom.mk.{v₁ u₁} (category_theory.core.{u₁} C)
+                  (λ (X Y : C), @category_theory.iso.{v₁ u₁} C 𝒞 X Y))
+               X
+               Y)
+           (g :
+             @category_theory.has_hom.hom.{v₁ u₁} (category_theory.core.{u₁} C)
+               (@category_theory.has_hom.mk.{v₁ u₁} (category_theory.core.{u₁} C)
+                  (λ (X Y : C), @category_theory.iso.{v₁ u₁} C 𝒞 X Y))
+               Y
+               Z), @category_theory.iso.trans.{v₁ u₁} C 𝒞 X Y Z f g)))
+    X
+    Y
+⊢ @eq.{v₁+1}
+    (@category_theory.has_hom.hom.{v₁ u₁} (category_theory.core.{u₁} C)
+       (@category_theory.category_struct.to_has_hom.{v₁ u₁} (category_theory.core.{u₁} C)
+          (@category_theory.category_struct.mk.{v₁ u₁} (category_theory.core.{u₁} C)
+             (@category_theory.has_hom.mk.{v₁ u₁} (category_theory.core.{u₁} C)
+                (λ (X Y : C), @category_theory.iso.{v₁ u₁} C 𝒞 X Y))
+             (λ (X : category_theory.core.{u₁} C), @category_theory.iso.refl.{v₁ u₁} C 𝒞 X)
+             (λ (X Y Z : category_theory.core.{u₁} C)
+              (f :
+                @category_theory.has_hom.hom.{v₁ u₁} (category_theory.core.{u₁} C)
+                  (@category_theory.has_hom.mk.{v₁ u₁} (category_theory.core.{u₁} C)
+                     (λ (X Y : C), @category_theory.iso.{v₁ u₁} C 𝒞 X Y))
+                  X
+                  Y)
+              (g :
+                @category_theory.has_hom.hom.{v₁ u₁} (category_theory.core.{u₁} C)
+                  (@category_theory.has_hom.mk.{v₁ u₁} (category_theory.core.{u₁} C)
+                     (λ (X Y : C), @category_theory.iso.{v₁ u₁} C 𝒞 X Y))
+                  Y
+                  Z), @category_theory.iso.trans.{v₁ u₁} C 𝒞 X Y Z f g)))
+       X
+       Y)
+    (@category_theory.category_struct.comp.{v₁ u₁} (category_theory.core.{u₁} C)
+       (@category_theory.category_struct.mk.{v₁ u₁} (category_theory.core.{u₁} C)
+          (@category_theory.has_hom.mk.{v₁ u₁} (category_theory.core.{u₁} C)
+             (λ (X Y : C), @category_theory.iso.{v₁ u₁} C 𝒞 X Y))
+          (λ (X : category_theory.core.{u₁} C), @category_theory.iso.refl.{v₁ u₁} C 𝒞 X)
+          (λ (X Y Z : category_theory.core.{u₁} C)
+           (f :
+             @category_theory.has_hom.hom.{v₁ u₁} (category_theory.core.{u₁} C)
+               (@category_theory.has_hom.mk.{v₁ u₁} (category_theory.core.{u₁} C)
+                  (λ (X Y : C), @category_theory.iso.{v₁ u₁} C 𝒞 X Y))
+               X
+               Y)
+           (g :
+             @category_theory.has_hom.hom.{v₁ u₁} (category_theory.core.{u₁} C)
+               (@category_theory.has_hom.mk.{v₁ u₁} (category_theory.core.{u₁} C)
+                  (λ (X Y : C), @category_theory.iso.{v₁ u₁} C 𝒞 X Y))
+               Y
+               Z), @category_theory.iso.trans.{v₁ u₁} C 𝒞 X Y Z f g))
+       X
+       X
+       Y
+       (@category_theory.category_struct.id.{v₁ u₁} (category_theory.core.{u₁} C)
+          (@category_theory.category_struct.mk.{v₁ u₁} (category_theory.core.{u₁} C)
+             (@category_theory.has_hom.mk.{v₁ u₁} (category_theory.core.{u₁} C)
+                (λ (X Y : C), @category_theory.iso.{v₁ u₁} C 𝒞 X Y))
+             (λ (X : category_theory.core.{u₁} C), @category_theory.iso.refl.{v₁ u₁} C 𝒞 X)
+             (λ (X Y Z : category_theory.core.{u₁} C)
+              (f :
+                @category_theory.has_hom.hom.{v₁ u₁} (category_theory.core.{u₁} C)
+                  (@category_theory.has_hom.mk.{v₁ u₁} (category_theory.core.{u₁} C)
+                     (λ (X Y : C), @category_theory.iso.{v₁ u₁} C 𝒞 X Y))
+                  X
+                  Y)
+              (g :
+                @category_theory.has_hom.hom.{v₁ u₁} (category_theory.core.{u₁} C)
+                  (@category_theory.has_hom.mk.{v₁ u₁} (category_theory.core.{u₁} C)
+                     (λ (X Y : C), @category_theory.iso.{v₁ u₁} C 𝒞 X Y))
+                  Y
+                  Z), @category_theory.iso.trans.{v₁ u₁} C 𝒞 X Y Z f g))
+          X)
+       f)
+    f'><code style='font-family: menlo, "Source Code Pro", monospace;'>└────┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'></code><font color='lime'><a title='C : Type u₁,
+𝒞 : category_theory.category.{v₁ u₁} C,
+G : Type u₂,
+𝒢 : category_theory.groupoid.{v₂ u₂} G,
+F : @category_theory.functor.{v₂ v₁ u₂ u₁} G (@category_theory.groupoid.to_category.{v₂ u₂} G 𝒢) C 𝒞,
+X Y : G,
+f :
+  @category_theory.has_hom.hom.{v₂ u₂} G
+    (@category_theory.category_struct.to_has_hom.{v₂ u₂} G
+       (@category_theory.category.to_category_struct.{v₂ u₂} G
+          (@category_theory.groupoid.to_category.{v₂ u₂} G 𝒢)))
+    X
+    Y
+⊢ @eq.{v₁+1}
+    (@category_theory.has_hom.hom.{v₁ u₁} C
+       (@category_theory.category_struct.to_has_hom.{v₁ u₁} C
+          (@category_theory.category.to_category_struct.{v₁ u₁} C 𝒞))
+       (@category_theory.functor.obj.{v₂ v₁ u₂ u₁} G (@category_theory.groupoid.to_category.{v₂ u₂} G 𝒢)
+          C
+          𝒞
+          F
+          X)
+       (@category_theory.functor.obj.{v₂ v₁ u₂ u₁} G (@category_theory.groupoid.to_category.{v₂ u₂} G 𝒢)
+          C
+          𝒞
+          F
+          X))
+    (@category_theory.category_struct.comp.{v₁ u₁} C
+       (@category_theory.category.to_category_struct.{v₁ u₁} C 𝒞)
+       (@category_theory.functor.obj.{v₂ v₁ u₂ u₁} G (@category_theory.groupoid.to_category.{v₂ u₂} G 𝒢)
+          C
+          𝒞
+          F
+          X)
+       (@category_theory.functor.obj.{v₂ v₁ u₂ u₁} G (@category_theory.groupoid.to_category.{v₂ u₂} G 𝒢)
+          C
+          𝒞
+          F
+          Y)
+       (@category_theory.functor.obj.{v₂ v₁ u₂ u₁} G (@category_theory.groupoid.to_category.{v₂ u₂} G 𝒢)
+          C
+          𝒞
+          F
+          X)
+       (@category_theory.functor.map.{v₂ v₁ u₂ u₁} G (@category_theory.groupoid.to_category.{v₂ u₂} G 𝒢)
+          C
+          𝒞
+          F
+          X
+          Y
+          f)
+       (@category_theory.functor.map.{v₂ v₁ u₂ u₁} G (@category_theory.groupoid.to_category.{v₂ u₂} G 𝒢)
+          C
+          𝒞
+          F
+          Y
+          X
+          (@category_theory.is_iso.inv.{v₂ u₂} G (@category_theory.groupoid.to_category.{v₂ u₂} G 𝒢) X Y f
+             (@category_theory.is_iso.of_groupoid.{v₂ u₂} G 𝒢 X Y f))))
+    (@category_theory.category_struct.id.{v₁ u₁} C (@category_theory.category.to_category_struct.{v₁ u₁} C 𝒞)
+       (@category_theory.functor.obj.{v₂ v₁ u₂ u₁} G (@category_theory.groupoid.to_category.{v₂ u₂} G 𝒢)
+          C
+          𝒞
+          F
+          X))'><code style='font-family: menlo, "Source Code Pro", monospace;'>└───────┘</code></a></font></pre>
+</body>

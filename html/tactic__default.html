@@ -1,0 +1,60 @@
+<head>
+<meta charset="UTF-8">
+<link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro&display=swap" rel="stylesheet">
+</head>
+
+<body>
+<pre>
+<code style='font-family: menlo, "Source Code Pro", monospace;'>  1  /-</code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'>  2  This file imports many useful tactics (&quot;the kitchen sink&quot;).</code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'>  3  </code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'>  4  You can use `import tactic` at the beginning of your file to get everything.</code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'>  5  (Although you may want to strip things down when you&#x27;re polishing.)</code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'>  6  </code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'>  7  Because this file imports some complicated tactics, it has many transitive dependencies</code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'>  8  (which of course may not use `import tactic`, and must import selectively).</code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'>  9  </code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 10  As (non-exhaustive) examples, these includes things like:</code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 11  * algebra.group_power</code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 12  * algebra.ordered_ring</code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 13  * data.rat</code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 14  * data.nat.prime</code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 15  * data.list.perm</code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 16  * data.set.lattice</code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 17  * data.equiv.encodable</code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 18  * order.complete_lattice</code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 19  -/</code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 20  import</code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 21    tactic.basic</code>
+<font color='grey'><a title='source'><code style='font-family: menlo, "Source Code Pro", monospace;'>src  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>  </code><font color='red'><a title='{&#x27;file&#x27;: &#x27;/home/ec2-user/lean_info_scrapper/_target/deps/mathlib/src/tactic/basic.lean&#x27;, &#x27;line&#x27;: 1, &#x27;column&#x27;: 0}'><code style='font-family: menlo, "Source Code Pro", monospace;'>└──────────┘</code></a></font>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 22    tactic.monotonicity.interactive</code>
+<font color='grey'><a title='source'><code style='font-family: menlo, "Source Code Pro", monospace;'>src  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>  </code><font color='red'><a title='{&#x27;file&#x27;: &#x27;/home/ec2-user/lean_info_scrapper/_target/deps/mathlib/src/tactic/monotonicity/interactive.lean&#x27;, &#x27;line&#x27;: 1, &#x27;column&#x27;: 0}'><code style='font-family: menlo, "Source Code Pro", monospace;'>└─────────────────────────────┘</code></a></font>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 23    tactic.finish</code>
+<font color='grey'><a title='source'><code style='font-family: menlo, "Source Code Pro", monospace;'>src  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>  </code><font color='red'><a title='{&#x27;file&#x27;: &#x27;/home/ec2-user/lean_info_scrapper/_target/deps/mathlib/src/tactic/finish.lean&#x27;, &#x27;line&#x27;: 1, &#x27;column&#x27;: 0}'><code style='font-family: menlo, "Source Code Pro", monospace;'>└───────────┘</code></a></font>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 24    tactic.tauto</code>
+<font color='grey'><a title='source'><code style='font-family: menlo, "Source Code Pro", monospace;'>src  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>  </code><font color='red'><a title='{&#x27;file&#x27;: &#x27;/home/ec2-user/lean_info_scrapper/_target/deps/mathlib/src/tactic/tauto.lean&#x27;, &#x27;line&#x27;: 1, &#x27;column&#x27;: 0}'><code style='font-family: menlo, "Source Code Pro", monospace;'>└──────────┘</code></a></font>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 25    tactic.tidy</code>
+<font color='grey'><a title='source'><code style='font-family: menlo, "Source Code Pro", monospace;'>src  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>  </code><font color='red'><a title='{&#x27;file&#x27;: &#x27;/home/ec2-user/lean_info_scrapper/_target/deps/mathlib/src/tactic/tidy.lean&#x27;, &#x27;line&#x27;: 1, &#x27;column&#x27;: 0}'><code style='font-family: menlo, "Source Code Pro", monospace;'>└─────────┘</code></a></font>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 26    tactic.abel</code>
+<font color='grey'><a title='source'><code style='font-family: menlo, "Source Code Pro", monospace;'>src  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>  </code><font color='red'><a title='{&#x27;file&#x27;: &#x27;/home/ec2-user/lean_info_scrapper/_target/deps/mathlib/src/tactic/abel.lean&#x27;, &#x27;line&#x27;: 1, &#x27;column&#x27;: 0}'><code style='font-family: menlo, "Source Code Pro", monospace;'>└─────────┘</code></a></font>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 27    tactic.ring</code>
+<font color='grey'><a title='source'><code style='font-family: menlo, "Source Code Pro", monospace;'>src  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>  </code><font color='red'><a title='{&#x27;file&#x27;: &#x27;/home/ec2-user/lean_info_scrapper/_target/deps/mathlib/src/tactic/ring.lean&#x27;, &#x27;line&#x27;: 1, &#x27;column&#x27;: 0}'><code style='font-family: menlo, "Source Code Pro", monospace;'>└─────────┘</code></a></font>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 28    tactic.ring_exp</code>
+<font color='grey'><a title='source'><code style='font-family: menlo, "Source Code Pro", monospace;'>src  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>  </code><font color='red'><a title='{&#x27;file&#x27;: &#x27;/home/ec2-user/lean_info_scrapper/_target/deps/mathlib/src/tactic/ring_exp.lean&#x27;, &#x27;line&#x27;: 1, &#x27;column&#x27;: 0}'><code style='font-family: menlo, "Source Code Pro", monospace;'>└─────────────┘</code></a></font>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 29    tactic.linarith</code>
+<font color='grey'><a title='source'><code style='font-family: menlo, "Source Code Pro", monospace;'>src  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>  </code><font color='red'><a title='{&#x27;file&#x27;: &#x27;/home/ec2-user/lean_info_scrapper/_target/deps/mathlib/src/tactic/linarith.lean&#x27;, &#x27;line&#x27;: 1, &#x27;column&#x27;: 0}'><code style='font-family: menlo, "Source Code Pro", monospace;'>└─────────────┘</code></a></font>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 30    tactic.omega</code>
+<font color='grey'><a title='source'><code style='font-family: menlo, "Source Code Pro", monospace;'>src  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>  </code><font color='red'><a title='{&#x27;file&#x27;: &#x27;/home/ec2-user/lean_info_scrapper/_target/deps/mathlib/src/tactic/omega/default.lean&#x27;, &#x27;line&#x27;: 1, &#x27;column&#x27;: 0}'><code style='font-family: menlo, "Source Code Pro", monospace;'>└──────────┘</code></a></font>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 31    tactic.wlog</code>
+<font color='grey'><a title='source'><code style='font-family: menlo, "Source Code Pro", monospace;'>src  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>  </code><font color='red'><a title='{&#x27;file&#x27;: &#x27;/home/ec2-user/lean_info_scrapper/_target/deps/mathlib/src/tactic/wlog.lean&#x27;, &#x27;line&#x27;: 1, &#x27;column&#x27;: 0}'><code style='font-family: menlo, "Source Code Pro", monospace;'>└─────────┘</code></a></font>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 32    tactic.tfae</code>
+<font color='grey'><a title='source'><code style='font-family: menlo, "Source Code Pro", monospace;'>src  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>  </code><font color='red'><a title='{&#x27;file&#x27;: &#x27;/home/ec2-user/lean_info_scrapper/_target/deps/mathlib/src/tactic/tfae.lean&#x27;, &#x27;line&#x27;: 1, &#x27;column&#x27;: 0}'><code style='font-family: menlo, "Source Code Pro", monospace;'>└─────────┘</code></a></font>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 33    tactic.apply_fun</code>
+<font color='grey'><a title='source'><code style='font-family: menlo, "Source Code Pro", monospace;'>src  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>  </code><font color='red'><a title='{&#x27;file&#x27;: &#x27;/home/ec2-user/lean_info_scrapper/_target/deps/mathlib/src/tactic/apply_fun.lean&#x27;, &#x27;line&#x27;: 1, &#x27;column&#x27;: 0}'><code style='font-family: menlo, "Source Code Pro", monospace;'>└──────────────┘</code></a></font>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 34    tactic.apply</code>
+<font color='grey'><a title='source'><code style='font-family: menlo, "Source Code Pro", monospace;'>src  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>  </code><font color='red'><a title='{&#x27;file&#x27;: &#x27;/home/ec2-user/lean_info_scrapper/_target/deps/mathlib/src/tactic/apply.lean&#x27;, &#x27;line&#x27;: 1, &#x27;column&#x27;: 0}'><code style='font-family: menlo, "Source Code Pro", monospace;'>└──────────┘</code></a></font>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 35    tactic.suggest</code>
+<font color='grey'><a title='source'><code style='font-family: menlo, "Source Code Pro", monospace;'>src  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>  </code><font color='red'><a title='{&#x27;file&#x27;: &#x27;/home/ec2-user/lean_info_scrapper/_target/deps/mathlib/src/tactic/suggest.lean&#x27;, &#x27;line&#x27;: 1, &#x27;column&#x27;: 0}'><code style='font-family: menlo, "Source Code Pro", monospace;'>└────────────┘</code></a></font>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 36    tactic.simp_rw</code>
+<font color='grey'><a title='source'><code style='font-family: menlo, "Source Code Pro", monospace;'>src  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>  </code><font color='red'><a title='{&#x27;file&#x27;: &#x27;/home/ec2-user/lean_info_scrapper/_target/deps/mathlib/src/tactic/simp_rw.lean&#x27;, &#x27;line&#x27;: 1, &#x27;column&#x27;: 0}'><code style='font-family: menlo, "Source Code Pro", monospace;'>└────────────┘</code></a></font></pre>
+</body>

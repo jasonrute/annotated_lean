@@ -1,0 +1,1185 @@
+<head>
+<meta charset="UTF-8">
+<link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro&display=swap" rel="stylesheet">
+</head>
+
+<body>
+<pre>
+<code style='font-family: menlo, "Source Code Pro", monospace;'>  1  /-</code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'>  2  Copyright (c) 2017 Scott Morrison. All rights reserved.</code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'>  3  Released under Apache 2.0 license as described in the file LICENSE.</code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'>  4  Authors: Stephen Morgan, Scott Morrison</code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'>  5  -/</code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'>  6  import category_theory.products.basic</code>
+<font color='grey'><a title='source'><code style='font-family: menlo, "Source Code Pro", monospace;'>src  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>       </code><font color='red'><a title='{&#x27;file&#x27;: &#x27;/home/ec2-user/lean_info_scrapper/_target/deps/mathlib/src/category_theory/products/basic.lean&#x27;, &#x27;line&#x27;: 1, &#x27;column&#x27;: 0}'><code style='font-family: menlo, "Source Code Pro", monospace;'>└────────────────────────────┘</code></a></font>
+<code style='font-family: menlo, "Source Code Pro", monospace;'>  7  </code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'>  8  /-#</code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'>  9  The associator functor `((C × D) × E) ⥤ (C × (D × E))` and its inverse form an equivalence.</code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 10  -/</code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 11  </code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 12  universes v₁ v₂ v₃ u₁ u₂ u₃</code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 13  </code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 14  open category_theory</code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 15  </code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 16  namespace category_theory.prod</code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 17  </code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 18  variables (C : Type u₁) [𝒞 : category.{v₁} C]</code>
+<font color='grey'><a title='full-id'><code style='font-family: menlo, "Source Code Pro", monospace;'>id   </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>                             </code><font color='blue'><a title='category_theory.category'><code style='font-family: menlo, "Source Code Pro", monospace;'>└──────┘</code></a></font>
+<font color='grey'><a title='source'><code style='font-family: menlo, "Source Code Pro", monospace;'>src  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>                             </code><font color='red'><a title='{&#x27;file&#x27;: &#x27;/home/ec2-user/lean_info_scrapper/_target/deps/mathlib/src/category_theory/category/default.lean&#x27;, &#x27;line&#x27;: 61, &#x27;column&#x27;: 6}'><code style='font-family: menlo, "Source Code Pro", monospace;'>└──────┘</code></a></font>
+<font color='grey'><a title='type'><code style='font-family: menlo, "Source Code Pro", monospace;'>typ  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>                             </code><font color='green'><a title='Type u → Type (max u (v+1))'><code style='font-family: menlo, "Source Code Pro", monospace;'>└──────┘</code></a></font>
+<font color='grey'><a title='doc'><code style='font-family: menlo, "Source Code Pro", monospace;'>doc  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>                             </code><font color='orange'><a title='The typeclass `category C` describes morphisms associated to objects of type `C`.
+The universe levels of the objects and morphisms are unconstrained, and will often need to be
+specified explicitly, as `category.{v} C`. (See also `large_category` and `small_category`.)'><code style='font-family: menlo, "Source Code Pro", monospace;'>└──────┘</code></a></font>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 19            (D : Type u₂) [𝒟 : category.{v₂} D]</code>
+<font color='grey'><a title='full-id'><code style='font-family: menlo, "Source Code Pro", monospace;'>id   </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>                             </code><font color='blue'><a title='category_theory.category'><code style='font-family: menlo, "Source Code Pro", monospace;'>└──────┘</code></a></font>
+<font color='grey'><a title='source'><code style='font-family: menlo, "Source Code Pro", monospace;'>src  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>                             </code><font color='red'><a title='{&#x27;file&#x27;: &#x27;/home/ec2-user/lean_info_scrapper/_target/deps/mathlib/src/category_theory/category/default.lean&#x27;, &#x27;line&#x27;: 61, &#x27;column&#x27;: 6}'><code style='font-family: menlo, "Source Code Pro", monospace;'>└──────┘</code></a></font>
+<font color='grey'><a title='type'><code style='font-family: menlo, "Source Code Pro", monospace;'>typ  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>                             </code><font color='green'><a title='Type u → Type (max u (v+1))'><code style='font-family: menlo, "Source Code Pro", monospace;'>└──────┘</code></a></font>
+<font color='grey'><a title='doc'><code style='font-family: menlo, "Source Code Pro", monospace;'>doc  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>                             </code><font color='orange'><a title='The typeclass `category C` describes morphisms associated to objects of type `C`.
+The universe levels of the objects and morphisms are unconstrained, and will often need to be
+specified explicitly, as `category.{v} C`. (See also `large_category` and `small_category`.)'><code style='font-family: menlo, "Source Code Pro", monospace;'>└──────┘</code></a></font>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 20            (E : Type u₃) [ℰ : category.{v₃} E]</code>
+<font color='grey'><a title='full-id'><code style='font-family: menlo, "Source Code Pro", monospace;'>id   </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>                             </code><font color='blue'><a title='category_theory.category'><code style='font-family: menlo, "Source Code Pro", monospace;'>└──────┘</code></a></font>
+<font color='grey'><a title='source'><code style='font-family: menlo, "Source Code Pro", monospace;'>src  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>                             </code><font color='red'><a title='{&#x27;file&#x27;: &#x27;/home/ec2-user/lean_info_scrapper/_target/deps/mathlib/src/category_theory/category/default.lean&#x27;, &#x27;line&#x27;: 61, &#x27;column&#x27;: 6}'><code style='font-family: menlo, "Source Code Pro", monospace;'>└──────┘</code></a></font>
+<font color='grey'><a title='type'><code style='font-family: menlo, "Source Code Pro", monospace;'>typ  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>                             </code><font color='green'><a title='Type u → Type (max u (v+1))'><code style='font-family: menlo, "Source Code Pro", monospace;'>└──────┘</code></a></font>
+<font color='grey'><a title='doc'><code style='font-family: menlo, "Source Code Pro", monospace;'>doc  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>                             </code><font color='orange'><a title='The typeclass `category C` describes morphisms associated to objects of type `C`.
+The universe levels of the objects and morphisms are unconstrained, and will often need to be
+specified explicitly, as `category.{v} C`. (See also `large_category` and `small_category`.)'><code style='font-family: menlo, "Source Code Pro", monospace;'>└──────┘</code></a></font>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 21  include 𝒞 𝒟 ℰ</code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 22  </code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 23  -- Here and below we specify explicitly the projections to generate `@[simp]` lemmas for, </code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 24  -- as the default behaviour of `@[simps]` will generate projections all the way down to components of pairs.</code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 25  @[simps obj map] def associator : ((C × D) × E) ⥤ (C × (D × E)) :=</code>
+<font color='grey'><a title='full-id'><code style='font-family: menlo, "Source Code Pro", monospace;'>id   </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>                                    </code><font color='blue'><a title='C'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'> </code><font color='blue'><a title='prod'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'> </code><font color='blue'><a title='D'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>  </code><font color='blue'><a title='prod'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'> </code><font color='blue'><a title='E'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>  </code><font color='blue'><a title='category_theory.functor'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>  </code><font color='blue'><a title='C'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'> </code><font color='blue'><a title='prod'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>  </code><font color='blue'><a title='D'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'> </code><font color='blue'><a title='prod'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'> </code><font color='blue'><a title='E'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font>
+<font color='grey'><a title='source'><code style='font-family: menlo, "Source Code Pro", monospace;'>src  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>                                      </code><font color='red'><a title='{&#x27;file&#x27;: &#x27;/home/ec2-user/.elan/toolchains/3.4.2/lib/lean/library/init/core.lean&#x27;, &#x27;line&#x27;: 166, &#x27;column&#x27;: 10}'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>    </code><font color='red'><a title='{&#x27;file&#x27;: &#x27;/home/ec2-user/.elan/toolchains/3.4.2/lib/lean/library/init/core.lean&#x27;, &#x27;line&#x27;: 166, &#x27;column&#x27;: 10}'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>    </code><font color='red'><a title='{&#x27;file&#x27;: &#x27;/home/ec2-user/lean_info_scrapper/_target/deps/mathlib/src/category_theory/functor.lean&#x27;, &#x27;line&#x27;: 30, &#x27;column&#x27;: 10}'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>    </code><font color='red'><a title='{&#x27;file&#x27;: &#x27;/home/ec2-user/.elan/toolchains/3.4.2/lib/lean/library/init/core.lean&#x27;, &#x27;line&#x27;: 166, &#x27;column&#x27;: 10}'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>    </code><font color='red'><a title='{&#x27;file&#x27;: &#x27;/home/ec2-user/.elan/toolchains/3.4.2/lib/lean/library/init/core.lean&#x27;, &#x27;line&#x27;: 166, &#x27;column&#x27;: 10}'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font>
+<font color='grey'><a title='type'><code style='font-family: menlo, "Source Code Pro", monospace;'>typ  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>                                    </code><font color='green'><a title='Type u₁'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'> </code><font color='green'><a title='Type u₁ → Type u₂ → Type (max u₁ u₂)'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'> </code><font color='green'><a title='Type u₂'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>  </code><font color='green'><a title='Type (max u₁ u₂) → Type u₃ → Type (max (max u₁ u₂) u₃)'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'> </code><font color='green'><a title='Type u₃'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>  </code><font color='green'><a title='Π (C : Type (max (max u₁ u₂) u₃)) [_inst_1 : category_theory.category.{(max (max v₁ v₂) v₃) (max (max u₁ u₂) u₃)} C] (D : Type (max u₁ u₂ u₃)) [_inst_2 : category_theory.category.{(max v₁ v₂ v₃) (max u₁ u₂ u₃)} D], Type (max (max (max v₁ v₂) v₃) (max v₁ v₂ v₃) (max (max u₁ u₂) u₃) u₁ u₂ u₃)'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>  </code><font color='green'><a title='Type u₁'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'> </code><font color='green'><a title='Type u₁ → Type (max u₂ u₃) → Type (max u₁ u₂ u₃)'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>  </code><font color='green'><a title='Type u₂'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'> </code><font color='green'><a title='Type u₂ → Type u₃ → Type (max u₂ u₃)'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'> </code><font color='green'><a title='Type u₃'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font>
+<font color='grey'><a title='doc'><code style='font-family: menlo, "Source Code Pro", monospace;'>doc  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>  </code><font color='orange'><a title='Automatically derive lemmas specifying the projections of this declaration.'><code style='font-family: menlo, "Source Code Pro", monospace;'>└───┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>                                         </code><font color='orange'><a title='`functor C D` represents a functor between categories `C` and `D`.
+
+To apply a functor `F` to an object use `F.obj X`, and to a morphism use `F.map f`.
+
+The axiom `map_id_lemma` expresses preservation of identities, and
+`map_comp_lemma` expresses functoriality.'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 26  { obj := λ X, (X.1.1, (X.1.2, X.2)),</code>
+<font color='grey'><a title='full-id'><code style='font-family: menlo, "Source Code Pro", monospace;'>id   </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'></code><font color='blue'><a title='obviously'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>          </code><font color='blue'><a title='X'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>  </code><font color='blue'><a title='prod.mk'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'></code><font color='blue'><a title='X'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'></code><font color='blue'><a title='prod.fst'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'> </code><font color='blue'><a title='prod.fst'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>   </code><font color='blue'><a title='prod.mk'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'></code><font color='blue'><a title='X'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'></code><font color='blue'><a title='prod.fst'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'> </code><font color='blue'><a title='prod.snd'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>   </code><font color='blue'><a title='X'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'></code><font color='blue'><a title='prod.snd'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font>
+<font color='grey'><a title='source'><code style='font-family: menlo, "Source Code Pro", monospace;'>src  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'></code><font color='red'><a title='{&#x27;file&#x27;: &#x27;/home/ec2-user/lean_info_scrapper/_target/deps/mathlib/src/category_theory/category/default.lean&#x27;}'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>             </code><font color='red'><a title='{&#x27;file&#x27;: &#x27;/home/ec2-user/.elan/toolchains/3.4.2/lib/lean/library/init/core.lean&#x27;, &#x27;line&#x27;: 166, &#x27;column&#x27;: 10}'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'> </code><font color='red'><a title='{&#x27;file&#x27;: &#x27;/home/ec2-user/.elan/toolchains/3.4.2/lib/lean/library/init/core.lean&#x27;, &#x27;line&#x27;: 166, &#x27;column&#x27;: 10}'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'> </code><font color='red'><a title='{&#x27;file&#x27;: &#x27;/home/ec2-user/.elan/toolchains/3.4.2/lib/lean/library/init/core.lean&#x27;, &#x27;line&#x27;: 166, &#x27;column&#x27;: 10}'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>   </code><font color='red'><a title='{&#x27;file&#x27;: &#x27;/home/ec2-user/.elan/toolchains/3.4.2/lib/lean/library/init/core.lean&#x27;, &#x27;line&#x27;: 166, &#x27;column&#x27;: 10}'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'> </code><font color='red'><a title='{&#x27;file&#x27;: &#x27;/home/ec2-user/.elan/toolchains/3.4.2/lib/lean/library/init/core.lean&#x27;, &#x27;line&#x27;: 166, &#x27;column&#x27;: 10}'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'> </code><font color='red'><a title='{&#x27;file&#x27;: &#x27;/home/ec2-user/.elan/toolchains/3.4.2/lib/lean/library/init/core.lean&#x27;, &#x27;line&#x27;: 166, &#x27;column&#x27;: 10}'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>    </code><font color='red'><a title='{&#x27;file&#x27;: &#x27;/home/ec2-user/.elan/toolchains/3.4.2/lib/lean/library/init/core.lean&#x27;, &#x27;line&#x27;: 166, &#x27;column&#x27;: 10}'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font>
+<font color='grey'><a title='type'><code style='font-family: menlo, "Source Code Pro", monospace;'>typ  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'></code><font color='green'><a title='tactic.{0} unit'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>          </code><font color='green'><a title='prod.{(max u₁ u₂) u₃} (prod.{u₁ u₂} C D) E'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>  </code><font color='green'><a title='Π {α : Type u₁} {β : Type (max u₂ u₃)}, α → β → prod.{u₁ (max u₂ u₃)} α β'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'></code><font color='green'><a title='prod.{(max u₁ u₂) u₃} (prod.{u₁ u₂} C D) E'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'></code><font color='green'><a title='Π {α : Type (max u₁ u₂)} {β : Type u₃}, prod.{(max u₁ u₂) u₃} α β → α'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'> </code><font color='green'><a title='Π {α : Type u₁} {β : Type u₂}, prod.{u₁ u₂} α β → α'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>   </code><font color='green'><a title='Π {α : Type u₂} {β : Type u₃}, α → β → prod.{u₂ u₃} α β'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'></code><font color='green'><a title='prod.{(max u₁ u₂) u₃} (prod.{u₁ u₂} C D) E'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'></code><font color='green'><a title='Π {α : Type (max u₁ u₂)} {β : Type u₃}, prod.{(max u₁ u₂) u₃} α β → α'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'> </code><font color='green'><a title='Π {α : Type u₁} {β : Type u₂}, prod.{u₁ u₂} α β → β'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>   </code><font color='green'><a title='prod.{(max u₁ u₂) u₃} (prod.{u₁ u₂} C D) E'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'></code><font color='green'><a title='Π {α : Type (max u₁ u₂)} {β : Type u₃}, prod.{(max u₁ u₂) u₃} α β → β'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font>
+<font color='grey'><a title='doc'><code style='font-family: menlo, "Source Code Pro", monospace;'>doc  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'></code><font color='orange'><a title='The `obviously` tactic is a &quot;replaceable&quot; tactic, which means that its meaning is defined by tactics that are defined later with the `@[obviously]` attribute. It is intended for use with `auto_param`s for structure fields.'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 27    map := λ _ _ f, (f.1.1, (f.1.2, f.2)) }</code>
+<font color='grey'><a title='full-id'><code style='font-family: menlo, "Source Code Pro", monospace;'>id   </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>           </code><font color='blue'><a title='_x'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'> </code><font color='blue'><a title='_x'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'> </code><font color='blue'><a title='f'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>  </code><font color='blue'><a title='prod.mk'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'></code><font color='blue'><a title='f'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'></code><font color='blue'><a title='prod.fst'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'> </code><font color='blue'><a title='prod.fst'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>   </code><font color='blue'><a title='prod.mk'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'></code><font color='blue'><a title='f'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'></code><font color='blue'><a title='prod.fst'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'> </code><font color='blue'><a title='prod.snd'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>   </code><font color='blue'><a title='f'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'></code><font color='blue'><a title='prod.snd'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font>
+<font color='grey'><a title='source'><code style='font-family: menlo, "Source Code Pro", monospace;'>src  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>                  </code><font color='red'><a title='{&#x27;file&#x27;: &#x27;/home/ec2-user/.elan/toolchains/3.4.2/lib/lean/library/init/core.lean&#x27;, &#x27;line&#x27;: 166, &#x27;column&#x27;: 10}'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'> </code><font color='red'><a title='{&#x27;file&#x27;: &#x27;/home/ec2-user/.elan/toolchains/3.4.2/lib/lean/library/init/core.lean&#x27;, &#x27;line&#x27;: 166, &#x27;column&#x27;: 10}'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'> </code><font color='red'><a title='{&#x27;file&#x27;: &#x27;/home/ec2-user/.elan/toolchains/3.4.2/lib/lean/library/init/core.lean&#x27;, &#x27;line&#x27;: 166, &#x27;column&#x27;: 10}'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>   </code><font color='red'><a title='{&#x27;file&#x27;: &#x27;/home/ec2-user/.elan/toolchains/3.4.2/lib/lean/library/init/core.lean&#x27;, &#x27;line&#x27;: 166, &#x27;column&#x27;: 10}'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'> </code><font color='red'><a title='{&#x27;file&#x27;: &#x27;/home/ec2-user/.elan/toolchains/3.4.2/lib/lean/library/init/core.lean&#x27;, &#x27;line&#x27;: 166, &#x27;column&#x27;: 10}'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'> </code><font color='red'><a title='{&#x27;file&#x27;: &#x27;/home/ec2-user/.elan/toolchains/3.4.2/lib/lean/library/init/core.lean&#x27;, &#x27;line&#x27;: 166, &#x27;column&#x27;: 10}'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>    </code><font color='red'><a title='{&#x27;file&#x27;: &#x27;/home/ec2-user/.elan/toolchains/3.4.2/lib/lean/library/init/core.lean&#x27;, &#x27;line&#x27;: 166, &#x27;column&#x27;: 10}'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font>
+<font color='grey'><a title='type'><code style='font-family: menlo, "Source Code Pro", monospace;'>typ  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>           </code><font color='green'><a title='prod.{(max u₁ u₂) u₃} (prod.{u₁ u₂} C D) E'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'> </code><font color='green'><a title='prod.{(max u₁ u₂) u₃} (prod.{u₁ u₂} C D) E'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'> </code><font color='green'><a title='@category_theory.has_hom.hom.{(max (max v₁ v₂) v₃) (max (max u₁ u₂) u₃)} (prod.{(max u₁ u₂) u₃} (prod.{u₁ u₂} C D) E) (@category_theory.category_struct.to_has_hom.{(max (max v₁ v₂) v₃) (max (max u₁ u₂) u₃)} (prod.{(max u₁ u₂) u₃} (prod.{u₁ u₂} C D) E) (@category_theory.category.to_category_struct.{(max (max v₁ v₂) v₃) (max (max u₁ u₂) u₃)} (prod.{(max u₁ u₂) u₃} (prod.{u₁ u₂} C D) E) (@category_theory.prod.{(max v₁ v₂) v₃ (max u₁ u₂) u₃} (prod.{u₁ u₂} C D) (@category_theory.prod.{v₁ v₂ u₁ u₂} C 𝒞 D 𝒟) E ℰ))) _x _x_1'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>  </code><font color='green'><a title='Π {α : Type v₁} {β : Type (max v₂ v₃)}, α → β → prod.{v₁ (max v₂ v₃)} α β'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'></code><font color='green'><a title='@category_theory.has_hom.hom.{(max (max v₁ v₂) v₃) (max (max u₁ u₂) u₃)} (prod.{(max u₁ u₂) u₃} (prod.{u₁ u₂} C D) E) (@category_theory.category_struct.to_has_hom.{(max (max v₁ v₂) v₃) (max (max u₁ u₂) u₃)} (prod.{(max u₁ u₂) u₃} (prod.{u₁ u₂} C D) E) (@category_theory.category.to_category_struct.{(max (max v₁ v₂) v₃) (max (max u₁ u₂) u₃)} (prod.{(max u₁ u₂) u₃} (prod.{u₁ u₂} C D) E) (@category_theory.prod.{(max v₁ v₂) v₃ (max u₁ u₂) u₃} (prod.{u₁ u₂} C D) (@category_theory.prod.{v₁ v₂ u₁ u₂} C 𝒞 D 𝒟) E ℰ))) _x _x_1'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'></code><font color='green'><a title='Π {α : Type (max v₁ v₂)} {β : Type v₃}, prod.{(max v₁ v₂) v₃} α β → α'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'> </code><font color='green'><a title='Π {α : Type v₁} {β : Type v₂}, prod.{v₁ v₂} α β → α'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>   </code><font color='green'><a title='Π {α : Type v₂} {β : Type v₃}, α → β → prod.{v₂ v₃} α β'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'></code><font color='green'><a title='@category_theory.has_hom.hom.{(max (max v₁ v₂) v₃) (max (max u₁ u₂) u₃)} (prod.{(max u₁ u₂) u₃} (prod.{u₁ u₂} C D) E) (@category_theory.category_struct.to_has_hom.{(max (max v₁ v₂) v₃) (max (max u₁ u₂) u₃)} (prod.{(max u₁ u₂) u₃} (prod.{u₁ u₂} C D) E) (@category_theory.category.to_category_struct.{(max (max v₁ v₂) v₃) (max (max u₁ u₂) u₃)} (prod.{(max u₁ u₂) u₃} (prod.{u₁ u₂} C D) E) (@category_theory.prod.{(max v₁ v₂) v₃ (max u₁ u₂) u₃} (prod.{u₁ u₂} C D) (@category_theory.prod.{v₁ v₂ u₁ u₂} C 𝒞 D 𝒟) E ℰ))) _x _x_1'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'></code><font color='green'><a title='Π {α : Type (max v₁ v₂)} {β : Type v₃}, prod.{(max v₁ v₂) v₃} α β → α'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'> </code><font color='green'><a title='Π {α : Type v₁} {β : Type v₂}, prod.{v₁ v₂} α β → β'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>   </code><font color='green'><a title='@category_theory.has_hom.hom.{(max (max v₁ v₂) v₃) (max (max u₁ u₂) u₃)} (prod.{(max u₁ u₂) u₃} (prod.{u₁ u₂} C D) E) (@category_theory.category_struct.to_has_hom.{(max (max v₁ v₂) v₃) (max (max u₁ u₂) u₃)} (prod.{(max u₁ u₂) u₃} (prod.{u₁ u₂} C D) E) (@category_theory.category.to_category_struct.{(max (max v₁ v₂) v₃) (max (max u₁ u₂) u₃)} (prod.{(max u₁ u₂) u₃} (prod.{u₁ u₂} C D) E) (@category_theory.prod.{(max v₁ v₂) v₃ (max u₁ u₂) u₃} (prod.{u₁ u₂} C D) (@category_theory.prod.{v₁ v₂ u₁ u₂} C 𝒞 D 𝒟) E ℰ))) _x _x_1'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'></code><font color='green'><a title='Π {α : Type (max v₁ v₂)} {β : Type v₃}, prod.{(max v₁ v₂) v₃} α β → β'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 28  </code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 29  @[simps obj map] def inverse_associator : (C × (D × E)) ⥤ ((C × D) × E) :=</code>
+<font color='grey'><a title='full-id'><code style='font-family: menlo, "Source Code Pro", monospace;'>id   </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>                                           </code><font color='blue'><a title='C'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'> </code><font color='blue'><a title='prod'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>  </code><font color='blue'><a title='D'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'> </code><font color='blue'><a title='prod'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'> </code><font color='blue'><a title='E'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>   </code><font color='blue'><a title='category_theory.functor'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>   </code><font color='blue'><a title='C'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'> </code><font color='blue'><a title='prod'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'> </code><font color='blue'><a title='D'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>  </code><font color='blue'><a title='prod'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'> </code><font color='blue'><a title='E'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font>
+<font color='grey'><a title='source'><code style='font-family: menlo, "Source Code Pro", monospace;'>src  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>                                             </code><font color='red'><a title='{&#x27;file&#x27;: &#x27;/home/ec2-user/.elan/toolchains/3.4.2/lib/lean/library/init/core.lean&#x27;, &#x27;line&#x27;: 166, &#x27;column&#x27;: 10}'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>    </code><font color='red'><a title='{&#x27;file&#x27;: &#x27;/home/ec2-user/.elan/toolchains/3.4.2/lib/lean/library/init/core.lean&#x27;, &#x27;line&#x27;: 166, &#x27;column&#x27;: 10}'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>     </code><font color='red'><a title='{&#x27;file&#x27;: &#x27;/home/ec2-user/lean_info_scrapper/_target/deps/mathlib/src/category_theory/functor.lean&#x27;, &#x27;line&#x27;: 30, &#x27;column&#x27;: 10}'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>     </code><font color='red'><a title='{&#x27;file&#x27;: &#x27;/home/ec2-user/.elan/toolchains/3.4.2/lib/lean/library/init/core.lean&#x27;, &#x27;line&#x27;: 166, &#x27;column&#x27;: 10}'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>    </code><font color='red'><a title='{&#x27;file&#x27;: &#x27;/home/ec2-user/.elan/toolchains/3.4.2/lib/lean/library/init/core.lean&#x27;, &#x27;line&#x27;: 166, &#x27;column&#x27;: 10}'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font>
+<font color='grey'><a title='type'><code style='font-family: menlo, "Source Code Pro", monospace;'>typ  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>                                           </code><font color='green'><a title='Type u₁'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'> </code><font color='green'><a title='Type u₁ → Type (max u₂ u₃) → Type (max u₁ u₂ u₃)'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>  </code><font color='green'><a title='Type u₂'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'> </code><font color='green'><a title='Type u₂ → Type u₃ → Type (max u₂ u₃)'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'> </code><font color='green'><a title='Type u₃'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>   </code><font color='green'><a title='Π (C : Type (max u₁ u₂ u₃)) [_inst_1 : category_theory.category.{(max v₁ v₂ v₃) (max u₁ u₂ u₃)} C] (D : Type (max (max u₁ u₂) u₃)) [_inst_2 : category_theory.category.{(max (max v₁ v₂) v₃) (max (max u₁ u₂) u₃)} D], Type (max (max v₁ v₂ v₃) (max (max v₁ v₂) v₃) (max u₁ u₂ u₃) (max u₁ u₂) u₃)'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>   </code><font color='green'><a title='Type u₁'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'> </code><font color='green'><a title='Type u₁ → Type u₂ → Type (max u₁ u₂)'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'> </code><font color='green'><a title='Type u₂'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>  </code><font color='green'><a title='Type (max u₁ u₂) → Type u₃ → Type (max (max u₁ u₂) u₃)'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'> </code><font color='green'><a title='Type u₃'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font>
+<font color='grey'><a title='doc'><code style='font-family: menlo, "Source Code Pro", monospace;'>doc  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>  </code><font color='orange'><a title='Automatically derive lemmas specifying the projections of this declaration.'><code style='font-family: menlo, "Source Code Pro", monospace;'>└───┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>                                                 </code><font color='orange'><a title='`functor C D` represents a functor between categories `C` and `D`.
+
+To apply a functor `F` to an object use `F.obj X`, and to a morphism use `F.map f`.
+
+The axiom `map_id_lemma` expresses preservation of identities, and
+`map_comp_lemma` expresses functoriality.'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 30  { obj := λ X, ((X.1, X.2.1), X.2.2),</code>
+<font color='grey'><a title='full-id'><code style='font-family: menlo, "Source Code Pro", monospace;'>id   </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'></code><font color='blue'><a title='obviously'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>          </code><font color='blue'><a title='X'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>  </code><font color='blue'><a title='prod.mk'><code style='font-family: menlo, "Source Code Pro", monospace;'>└┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'></code><font color='blue'><a title='X'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'></code><font color='blue'><a title='prod.fst'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>   </code><font color='blue'><a title='X'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'></code><font color='blue'><a title='prod.snd'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'> </code><font color='blue'><a title='prod.fst'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>    </code><font color='blue'><a title='X'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'></code><font color='blue'><a title='prod.snd'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'> </code><font color='blue'><a title='prod.snd'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font>
+<font color='grey'><a title='source'><code style='font-family: menlo, "Source Code Pro", monospace;'>src  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'></code><font color='red'><a title='{&#x27;file&#x27;: &#x27;/home/ec2-user/lean_info_scrapper/_target/deps/mathlib/src/category_theory/category/default.lean&#x27;}'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>             </code><font color='red'><a title='{&#x27;file&#x27;: &#x27;/home/ec2-user/.elan/toolchains/3.4.2/lib/lean/library/init/core.lean&#x27;, &#x27;line&#x27;: 166, &#x27;column&#x27;: 10}'><code style='font-family: menlo, "Source Code Pro", monospace;'>└┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'> </code><font color='red'><a title='{&#x27;file&#x27;: &#x27;/home/ec2-user/.elan/toolchains/3.4.2/lib/lean/library/init/core.lean&#x27;, &#x27;line&#x27;: 166, &#x27;column&#x27;: 10}'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>    </code><font color='red'><a title='{&#x27;file&#x27;: &#x27;/home/ec2-user/.elan/toolchains/3.4.2/lib/lean/library/init/core.lean&#x27;, &#x27;line&#x27;: 166, &#x27;column&#x27;: 10}'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'> </code><font color='red'><a title='{&#x27;file&#x27;: &#x27;/home/ec2-user/.elan/toolchains/3.4.2/lib/lean/library/init/core.lean&#x27;, &#x27;line&#x27;: 166, &#x27;column&#x27;: 10}'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>     </code><font color='red'><a title='{&#x27;file&#x27;: &#x27;/home/ec2-user/.elan/toolchains/3.4.2/lib/lean/library/init/core.lean&#x27;, &#x27;line&#x27;: 166, &#x27;column&#x27;: 10}'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'> </code><font color='red'><a title='{&#x27;file&#x27;: &#x27;/home/ec2-user/.elan/toolchains/3.4.2/lib/lean/library/init/core.lean&#x27;, &#x27;line&#x27;: 166, &#x27;column&#x27;: 10}'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font>
+<font color='grey'><a title='type'><code style='font-family: menlo, "Source Code Pro", monospace;'>typ  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'></code><font color='green'><a title='tactic.{0} unit'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>          </code><font color='green'><a title='prod.{u₁ (max u₂ u₃)} C (prod.{u₂ u₃} D E)'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>  </code><font color='green'><a title='Π {α : Type (max u₁ u₂)} {β : Type u₃}, α → β → prod.{(max u₁ u₂) u₃} α β'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'></code><font color='green'><a title='Π {α : Type u₁} {β : Type u₂}, α → β → prod.{u₁ u₂} α β'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'></code><font color='green'><a title='prod.{u₁ (max u₂ u₃)} C (prod.{u₂ u₃} D E)'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'></code><font color='green'><a title='Π {α : Type u₁} {β : Type (max u₂ u₃)}, prod.{u₁ (max u₂ u₃)} α β → α'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>   </code><font color='green'><a title='prod.{u₁ (max u₂ u₃)} C (prod.{u₂ u₃} D E)'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'></code><font color='green'><a title='Π {α : Type u₁} {β : Type (max u₂ u₃)}, prod.{u₁ (max u₂ u₃)} α β → β'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'> </code><font color='green'><a title='Π {α : Type u₂} {β : Type u₃}, prod.{u₂ u₃} α β → α'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>    </code><font color='green'><a title='prod.{u₁ (max u₂ u₃)} C (prod.{u₂ u₃} D E)'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'></code><font color='green'><a title='Π {α : Type u₁} {β : Type (max u₂ u₃)}, prod.{u₁ (max u₂ u₃)} α β → β'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'> </code><font color='green'><a title='Π {α : Type u₂} {β : Type u₃}, prod.{u₂ u₃} α β → β'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font>
+<font color='grey'><a title='doc'><code style='font-family: menlo, "Source Code Pro", monospace;'>doc  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'></code><font color='orange'><a title='The `obviously` tactic is a &quot;replaceable&quot; tactic, which means that its meaning is defined by tactics that are defined later with the `@[obviously]` attribute. It is intended for use with `auto_param`s for structure fields.'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 31    map := λ _ _ f, ((f.1, f.2.1), f.2.2) }</code>
+<font color='grey'><a title='full-id'><code style='font-family: menlo, "Source Code Pro", monospace;'>id   </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>           </code><font color='blue'><a title='_x'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'> </code><font color='blue'><a title='_x'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'> </code><font color='blue'><a title='f'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>  </code><font color='blue'><a title='prod.mk'><code style='font-family: menlo, "Source Code Pro", monospace;'>└┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'></code><font color='blue'><a title='f'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'></code><font color='blue'><a title='prod.fst'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>   </code><font color='blue'><a title='f'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'></code><font color='blue'><a title='prod.snd'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'> </code><font color='blue'><a title='prod.fst'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>    </code><font color='blue'><a title='f'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'></code><font color='blue'><a title='prod.snd'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'> </code><font color='blue'><a title='prod.snd'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font>
+<font color='grey'><a title='source'><code style='font-family: menlo, "Source Code Pro", monospace;'>src  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>                  </code><font color='red'><a title='{&#x27;file&#x27;: &#x27;/home/ec2-user/.elan/toolchains/3.4.2/lib/lean/library/init/core.lean&#x27;, &#x27;line&#x27;: 166, &#x27;column&#x27;: 10}'><code style='font-family: menlo, "Source Code Pro", monospace;'>└┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'> </code><font color='red'><a title='{&#x27;file&#x27;: &#x27;/home/ec2-user/.elan/toolchains/3.4.2/lib/lean/library/init/core.lean&#x27;, &#x27;line&#x27;: 166, &#x27;column&#x27;: 10}'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>    </code><font color='red'><a title='{&#x27;file&#x27;: &#x27;/home/ec2-user/.elan/toolchains/3.4.2/lib/lean/library/init/core.lean&#x27;, &#x27;line&#x27;: 166, &#x27;column&#x27;: 10}'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'> </code><font color='red'><a title='{&#x27;file&#x27;: &#x27;/home/ec2-user/.elan/toolchains/3.4.2/lib/lean/library/init/core.lean&#x27;, &#x27;line&#x27;: 166, &#x27;column&#x27;: 10}'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>     </code><font color='red'><a title='{&#x27;file&#x27;: &#x27;/home/ec2-user/.elan/toolchains/3.4.2/lib/lean/library/init/core.lean&#x27;, &#x27;line&#x27;: 166, &#x27;column&#x27;: 10}'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'> </code><font color='red'><a title='{&#x27;file&#x27;: &#x27;/home/ec2-user/.elan/toolchains/3.4.2/lib/lean/library/init/core.lean&#x27;, &#x27;line&#x27;: 166, &#x27;column&#x27;: 10}'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font>
+<font color='grey'><a title='type'><code style='font-family: menlo, "Source Code Pro", monospace;'>typ  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>           </code><font color='green'><a title='prod.{u₁ (max u₂ u₃)} C (prod.{u₂ u₃} D E)'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'> </code><font color='green'><a title='prod.{u₁ (max u₂ u₃)} C (prod.{u₂ u₃} D E)'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'> </code><font color='green'><a title='@category_theory.has_hom.hom.{(max v₁ v₂ v₃) (max u₁ u₂ u₃)} (prod.{u₁ (max u₂ u₃)} C (prod.{u₂ u₃} D E)) (@category_theory.category_struct.to_has_hom.{(max v₁ v₂ v₃) (max u₁ u₂ u₃)} (prod.{u₁ (max u₂ u₃)} C (prod.{u₂ u₃} D E)) (@category_theory.category.to_category_struct.{(max v₁ v₂ v₃) (max u₁ u₂ u₃)} (prod.{u₁ (max u₂ u₃)} C (prod.{u₂ u₃} D E)) (@category_theory.prod.{v₁ (max v₂ v₃) u₁ (max u₂ u₃)} C 𝒞 (prod.{u₂ u₃} D E) (@category_theory.prod.{v₂ v₃ u₂ u₃} D 𝒟 E ℰ)))) _x _x_1'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>  </code><font color='green'><a title='Π {α : Type (max v₁ v₂)} {β : Type v₃}, α → β → prod.{(max v₁ v₂) v₃} α β'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'></code><font color='green'><a title='Π {α : Type v₁} {β : Type v₂}, α → β → prod.{v₁ v₂} α β'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'></code><font color='green'><a title='@category_theory.has_hom.hom.{(max v₁ v₂ v₃) (max u₁ u₂ u₃)} (prod.{u₁ (max u₂ u₃)} C (prod.{u₂ u₃} D E)) (@category_theory.category_struct.to_has_hom.{(max v₁ v₂ v₃) (max u₁ u₂ u₃)} (prod.{u₁ (max u₂ u₃)} C (prod.{u₂ u₃} D E)) (@category_theory.category.to_category_struct.{(max v₁ v₂ v₃) (max u₁ u₂ u₃)} (prod.{u₁ (max u₂ u₃)} C (prod.{u₂ u₃} D E)) (@category_theory.prod.{v₁ (max v₂ v₃) u₁ (max u₂ u₃)} C 𝒞 (prod.{u₂ u₃} D E) (@category_theory.prod.{v₂ v₃ u₂ u₃} D 𝒟 E ℰ)))) _x _x_1'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'></code><font color='green'><a title='Π {α : Type v₁} {β : Type (max v₂ v₃)}, prod.{v₁ (max v₂ v₃)} α β → α'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>   </code><font color='green'><a title='@category_theory.has_hom.hom.{(max v₁ v₂ v₃) (max u₁ u₂ u₃)} (prod.{u₁ (max u₂ u₃)} C (prod.{u₂ u₃} D E)) (@category_theory.category_struct.to_has_hom.{(max v₁ v₂ v₃) (max u₁ u₂ u₃)} (prod.{u₁ (max u₂ u₃)} C (prod.{u₂ u₃} D E)) (@category_theory.category.to_category_struct.{(max v₁ v₂ v₃) (max u₁ u₂ u₃)} (prod.{u₁ (max u₂ u₃)} C (prod.{u₂ u₃} D E)) (@category_theory.prod.{v₁ (max v₂ v₃) u₁ (max u₂ u₃)} C 𝒞 (prod.{u₂ u₃} D E) (@category_theory.prod.{v₂ v₃ u₂ u₃} D 𝒟 E ℰ)))) _x _x_1'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'></code><font color='green'><a title='Π {α : Type v₁} {β : Type (max v₂ v₃)}, prod.{v₁ (max v₂ v₃)} α β → β'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'> </code><font color='green'><a title='Π {α : Type v₂} {β : Type v₃}, prod.{v₂ v₃} α β → α'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>    </code><font color='green'><a title='@category_theory.has_hom.hom.{(max v₁ v₂ v₃) (max u₁ u₂ u₃)} (prod.{u₁ (max u₂ u₃)} C (prod.{u₂ u₃} D E)) (@category_theory.category_struct.to_has_hom.{(max v₁ v₂ v₃) (max u₁ u₂ u₃)} (prod.{u₁ (max u₂ u₃)} C (prod.{u₂ u₃} D E)) (@category_theory.category.to_category_struct.{(max v₁ v₂ v₃) (max u₁ u₂ u₃)} (prod.{u₁ (max u₂ u₃)} C (prod.{u₂ u₃} D E)) (@category_theory.prod.{v₁ (max v₂ v₃) u₁ (max u₂ u₃)} C 𝒞 (prod.{u₂ u₃} D E) (@category_theory.prod.{v₂ v₃ u₂ u₃} D 𝒟 E ℰ)))) _x _x_1'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'></code><font color='green'><a title='Π {α : Type v₁} {β : Type (max v₂ v₃)}, prod.{v₁ (max v₂ v₃)} α β → β'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'> </code><font color='green'><a title='Π {α : Type v₂} {β : Type v₃}, prod.{v₂ v₃} α β → β'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 32  </code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 33  def associativity : (C × D) × E ≌ C × (D × E) :=</code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 34  equivalence.mk (associator C D E) (inverse_associator C D E)</code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 35    (nat_iso.of_components (λ X, eq_to_iso (by simp)) (by tidy))</code>
+<font color='grey'><a title='source'><code style='font-family: menlo, "Source Code Pro", monospace;'>src  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>                                             </code><font color='red'><a title='{&#x27;file&#x27;: &#x27;/home/ec2-user/.elan/toolchains/3.4.2/lib/lean/library/init/meta/interactive.lean&#x27;, &#x27;line&#x27;: 1209, &#x27;column&#x27;: 9}'><code style='font-family: menlo, "Source Code Pro", monospace;'>└──┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>       </code><font color='red'><a title='{&#x27;file&#x27;: &#x27;/home/ec2-user/lean_info_scrapper/_target/deps/mathlib/src/tactic/tidy.lean&#x27;, &#x27;line&#x27;: 91, &#x27;column&#x27;: 9}'><code style='font-family: menlo, "Source Code Pro", monospace;'>└──┘</code></a></font>
+<font color='grey'><a title='type'><code style='font-family: menlo, "Source Code Pro", monospace;'>typ  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>                                             </code><font color='green'><a title='@interactive.parse (option.{0} unit) (λ (a : option.{0} unit), @option.has_reflect unit (λ (a : unit), punit.reflect a) `(unit) a) (@optional.{0 0} lean.parser.{0} lean.parser.alternative unit (lean.parser.tk (string.str string.empty (char.of_nat (@bit1.{0} nat nat.has_one nat.has_add (@bit0.{0} nat nat.has_add (@bit0.{0} nat nat.has_add (@bit0.{0} nat nat.has_add (@bit0.{0} nat nat.has_add (@has_one.one.{0} nat nat.has_one)))))))))) → @interactive.parse bool (λ (a : bool), bool.has_reflect a) interactive.types.only_flag → @interactive.parse (list.{0} tactic.simp_arg_type) (λ (a : list.{0} tactic.simp_arg_type), @list.reflect tactic.simp_arg_type (λ (a : tactic.simp_arg_type), tactic.simp_arg_type.has_reflect a) `(tactic.simp_arg_type) a) tactic.simp_arg_list → @interactive.parse (list.{0} name) (λ (a : list.{0} name), @list.reflect name (λ (a : name), name.reflect a) `(name) a) interactive.types.with_ident_list → @interactive.parse interactive.loc (λ (a : interactive.loc), interactive.loc.has_reflect a) interactive.types.location → opt_param.{1} tactic.simp_config_ext {to_simp_config := {max_steps := simp.default_max_steps, contextual := bool.ff, lift_eq := bool.tt, canonize_instances := bool.tt, canonize_proofs := bool.ff, use_axioms := bool.tt, zeta := bool.tt, beta := bool.tt, eta := bool.tt, proj := bool.tt, iota := bool.tt, iota_eqn := bool.ff, constructor_eq := bool.tt, single_pass := bool.ff, fail_if_unchanged := bool.tt, memoize := bool.tt}, discharger := @tactic.failed unit} → tactic.{0} unit'><code style='font-family: menlo, "Source Code Pro", monospace;'>└──┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>       </code><font color='green'><a title='@interactive.parse (option.{0} unit) (λ (a : option.{0} unit), @option.has_reflect unit (λ (a : unit), punit.reflect a) `(unit) a) (@optional.{0 0} lean.parser.{0} lean.parser.alternative unit (lean.parser.tk (string.str string.empty (char.of_nat (@bit1.{0} nat nat.has_one nat.has_add (@bit1.{0} nat nat.has_one nat.has_add (@bit1.{0} nat nat.has_one nat.has_add (@bit1.{0} nat nat.has_one nat.has_add (@bit1.{0} nat nat.has_one nat.has_add (@has_one.one.{0} nat nat.has_one)))))))))) → opt_param.{1} tactic.tidy.cfg {trace_result := bool.ff, trace_result_prefix := string.str (string.str (string.str (string.str (string.str (string.str (string.str (string.str (string.str (string.str (string.str (string.str (string.str (string.str (string.str (string.str (string.str (string.str string.empty (char.of_nat (@bit1.{0} nat nat.has_one nat.has_add (@bit1.{0} nat nat.has_one nat.has_add (@bit1.{0} nat nat.has_one nat.has_add (@bit1.{0} nat nat.has_one nat.has_add (@bit0.{0} nat nat.has_add (@has_one.one.{0} nat nat.has_one)))))))) (char.of_nat (@bit1.{0} nat nat.has_one nat.has_add (@bit0.{0} nat nat.has_add (@bit1.{0} nat nat.has_one nat.has_add (@bit1.{0} nat nat.has_one nat.has_add (@bit0.{0} nat nat.has_add (@has_one.one.{0} nat nat.has_one)))))))) (char.of_nat (@bit0.{0} nat nat.has_add (@bit0.{0} nat nat.has_add (@bit0.{0} nat nat.has_add (@bit0.{0} nat nat.has_add (@bit0.{0} nat nat.has_add (@has_one.one.{0} nat nat.has_one)))))))) (char.of_nat (@bit0.{0} nat nat.has_add (@bit0.{0} nat nat.has_add (@bit0.{0} nat nat.has_add (@bit0.{0} nat nat.has_add (@bit0.{0} nat nat.has_add (@bit1.{0} nat nat.has_one nat.has_add (@has_one.one.{0} nat nat.has_one))))))))) (char.of_nat (@bit0.{0} nat nat.has_add (@bit0.{0} nat nat.has_add (@bit1.{0} nat nat.has_one nat.has_add (@bit0.{0} nat nat.has_add (@bit1.{0} nat nat.has_one nat.has_add (@bit1.{0} nat nat.has_one nat.has_add (@has_one.one.{0} nat nat.has_one))))))))) (char.of_nat (@bit1.{0} nat nat.has_one nat.has_add (@bit0.{0} nat nat.has_add (@bit0.{0} nat nat.has_add (@bit1.{0} nat nat.has_one nat.has_add (@bit0.{0} nat nat.has_add (@bit1.{0} nat nat.has_one nat.has_add (@has_one.one.{0} nat nat.has_one))))))))) (char.of_nat (@bit0.{0} nat nat.has_add (@bit0.{0} nat nat.has_add (@bit1.{0} nat nat.has_one nat.has_add (@bit0.{0} nat nat.has_add (@bit0.{0} nat nat.has_add (@bit1.{0} nat nat.has_one nat.has_add (@has_one.one.{0} nat nat.has_one))))))))) (char.of_nat (@bit1.{0} nat nat.has_one nat.has_add (@bit0.{0} nat nat.has_add (@bit0.{0} nat nat.has_add (@bit1.{0} nat nat.has_one nat.has_add (@bit1.{0} nat nat.has_one nat.has_add (@bit1.{0} nat nat.has_one nat.has_add (@has_one.one.{0} nat nat.has_one))))))))) (char.of_nat (@bit0.{0} nat nat.has_add (@bit0.{0} nat nat.has_add (@bit0.{0} nat nat.has_add (@bit0.{0} nat nat.has_add (@bit0.{0} nat nat.has_add (@bit1.{0} nat nat.has_one nat.has_add (@has_one.one.{0} nat nat.has_one))))))))) (char.of_nat (@bit0.{0} nat nat.has_add (@bit0.{0} nat nat.has_add (@bit0.{0} nat nat.has_add (@bit0.{0} nat nat.has_add (@bit0.{0} nat nat.has_add (@has_one.one.{0} nat nat.has_one)))))))) (char.of_nat (@bit1.{0} nat nat.has_one nat.has_add (@bit1.{0} nat nat.has_one nat.has_add (@bit0.{0} nat nat.has_add (@bit0.{0} nat nat.has_add (@bit1.{0} nat nat.has_one nat.has_add (@bit1.{0} nat nat.has_one nat.has_add (@has_one.one.{0} nat nat.has_one))))))))) (char.of_nat (@bit1.{0} nat nat.has_one nat.has_add (@bit0.{0} nat nat.has_add (@bit0.{0} nat nat.has_add (@bit0.{0} nat nat.has_add (@bit0.{0} nat nat.has_add (@bit1.{0} nat nat.has_one nat.has_add (@has_one.one.{0} nat nat.has_one))))))))) (char.of_nat (@bit1.{0} nat nat.has_one nat.has_add (@bit0.{0} nat nat.has_add (@bit0.{0} nat nat.has_add (@bit1.{0} nat nat.has_one nat.has_add (@bit1.{0} nat nat.has_one nat.has_add (@bit1.{0} nat nat.has_one nat.has_add (@has_one.one.{0} nat nat.has_one))))))))) (char.of_nat (@bit1.{0} nat nat.has_one nat.has_add (@bit1.{0} nat nat.has_one nat.has_add (@bit0.{0} nat nat.has_add (@bit0.{0} nat nat.has_add (@bit1.{0} nat nat.has_one nat.has_add (@bit1.{0} nat nat.has_one nat.has_add (@has_one.one.{0} nat nat.has_one))))))))) (char.of_nat (@bit0.{0} nat nat.has_add (@bit0.{0} nat nat.has_add (@bit0.{0} nat nat.has_add (@bit0.{0} nat nat.has_add (@bit0.{0} nat nat.has_add (@has_one.one.{0} nat nat.has_one)))))))) (char.of_nat (@bit1.{0} nat nat.has_one nat.has_add (@bit0.{0} nat nat.has_add (@bit1.{0} nat nat.has_one nat.has_add (@bit1.{0} nat nat.has_one nat.has_add (@bit0.{0} nat nat.has_add (@has_one.one.{0} nat nat.has_one)))))))) (char.of_nat (@bit1.{0} nat nat.has_one nat.has_add (@bit1.{0} nat nat.has_one nat.has_add (@bit1.{0} nat nat.has_one nat.has_add (@bit1.{0} nat nat.has_one nat.has_add (@bit0.{0} nat nat.has_add (@has_one.one.{0} nat nat.has_one)))))))) (char.of_nat (@bit0.{0} nat nat.has_add (@bit0.{0} nat nat.has_add (@bit0.{0} nat nat.has_add (@bit0.{0} nat nat.has_add (@bit0.{0} nat nat.has_add (@has_one.one.{0} nat nat.has_one))))))), tactics := tactic.tidy.default_tactics} → tactic.{0} unit'><code style='font-family: menlo, "Source Code Pro", monospace;'>└──┘</code></a></font>
+<font color='grey'><a title='doc'><code style='font-family: menlo, "Source Code Pro", monospace;'>doc  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>                                             </code><font color='orange'><a title='The `simp` tactic uses lemmas and hypotheses to simplify the main goal target or non-dependent hypotheses. It has many variants.
+
+`simp` simplifies the main goal target using lemmas tagged with the attribute `[simp]`.
+
+`simp [h₁ h₂ ... hₙ]` simplifies the main goal target using the lemmas tagged with the attribute `[simp]` and the given `hᵢ`&#x27;s, where the `hᵢ`&#x27;s are expressions. If an `hᵢ` is a defined constant `f`, then the equational lemmas associated with `f` are used. This provides a convenient way to unfold `f`.
+
+`simp [*]` simplifies the main goal target using the lemmas tagged with the attribute `[simp]` and all hypotheses.
+
+`simp *` is a shorthand for `simp [*]`.
+
+`simp only [h₁ h₂ ... hₙ]` is like `simp [h₁ h₂ ... hₙ]` but does not use `[simp]` lemmas
+
+`simp [-id_1, ... -id_n]` simplifies the main goal target using the lemmas tagged with the attribute `[simp]`, but removes the ones named `idᵢ`.
+
+`simp at h₁ h₂ ... hₙ` simplifies the non-dependent hypotheses `h₁ : T₁` ... `hₙ : Tₙ`. The tactic fails if the target or another hypothesis depends on one of them. The token `⊢` or `|-` can be added to the list to include the target.
+
+`simp at *` simplifies all the hypotheses and the target.
+
+`simp * at *` simplifies target and all (non-dependent propositional) hypotheses using the other hypotheses.
+
+`simp with attr₁ ... attrₙ` simplifies the main goal target using the lemmas tagged with any of the attributes `[attr₁]`, ..., `[attrₙ]` or `[simp]`.'><code style='font-family: menlo, "Source Code Pro", monospace;'>└──┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>       </code><font color='orange'><a title=' Use a variety of conservative tactics to solve goals.
+`tidy?` reports back the tactic script it found.
+The default list of tactics is stored in `tactic.tidy.default_tidy_tactics`.
+This list can be overridden using `tidy { tactics := ... }`.
+(The list must be a `list` of `tactic string`, so that `tidy?`
+can report a usable tactic script.) 
+
+Tactics can also be added to the list by tagging them (locally) with the
+`[tidy]` attribute.'><code style='font-family: menlo, "Source Code Pro", monospace;'>└──┘</code></a></font>
+<font color='grey'><a title='text'><code style='font-family: menlo, "Source Code Pro", monospace;'>txt  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>                                             </code><font color='teal'><a title='simp'><code style='font-family: menlo, "Source Code Pro", monospace;'>└──┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>       </code><font color='teal'><a title='tidy'><code style='font-family: menlo, "Source Code Pro", monospace;'>└──┘</code></a></font>
+<font color='grey'><a title='tactic_params'><code style='font-family: menlo, "Source Code Pro", monospace;'>par  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>                                             </code><font color='grey'><a title='[&#x27;!?&#x27;, &#x27;only?&#x27;, &#x27;(* | [(* | (- id | expr)), ...]?)&#x27;, &#x27;(with id*)?&#x27;, &#x27;(at (* | (⊢ | id)*))?&#x27;, &#x27;tactic.simp_config_ext?&#x27;]'><code style='font-family: menlo, "Source Code Pro", monospace;'>└──┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>       </code><font color='grey'><a title='[&#x27;??&#x27;, &#x27;tactic.tidy.cfg?&#x27;]'><code style='font-family: menlo, "Source Code Pro", monospace;'>└──┘</code></a></font>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 36    (nat_iso.of_components (λ X, eq_to_iso (by simp)) (by tidy))</code>
+<font color='grey'><a title='source'><code style='font-family: menlo, "Source Code Pro", monospace;'>src  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>                                             </code><font color='red'><a title='{&#x27;file&#x27;: &#x27;/home/ec2-user/.elan/toolchains/3.4.2/lib/lean/library/init/meta/interactive.lean&#x27;, &#x27;line&#x27;: 1209, &#x27;column&#x27;: 9}'><code style='font-family: menlo, "Source Code Pro", monospace;'>└──┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>       </code><font color='red'><a title='{&#x27;file&#x27;: &#x27;/home/ec2-user/lean_info_scrapper/_target/deps/mathlib/src/tactic/tidy.lean&#x27;, &#x27;line&#x27;: 91, &#x27;column&#x27;: 9}'><code style='font-family: menlo, "Source Code Pro", monospace;'>└──┘</code></a></font>
+<font color='grey'><a title='type'><code style='font-family: menlo, "Source Code Pro", monospace;'>typ  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>                                             </code><font color='green'><a title='@interactive.parse (option.{0} unit) (λ (a : option.{0} unit), @option.has_reflect unit (λ (a : unit), punit.reflect a) `(unit) a) (@optional.{0 0} lean.parser.{0} lean.parser.alternative unit (lean.parser.tk (string.str string.empty (char.of_nat (@bit1.{0} nat nat.has_one nat.has_add (@bit0.{0} nat nat.has_add (@bit0.{0} nat nat.has_add (@bit0.{0} nat nat.has_add (@bit0.{0} nat nat.has_add (@has_one.one.{0} nat nat.has_one)))))))))) → @interactive.parse bool (λ (a : bool), bool.has_reflect a) interactive.types.only_flag → @interactive.parse (list.{0} tactic.simp_arg_type) (λ (a : list.{0} tactic.simp_arg_type), @list.reflect tactic.simp_arg_type (λ (a : tactic.simp_arg_type), tactic.simp_arg_type.has_reflect a) `(tactic.simp_arg_type) a) tactic.simp_arg_list → @interactive.parse (list.{0} name) (λ (a : list.{0} name), @list.reflect name (λ (a : name), name.reflect a) `(name) a) interactive.types.with_ident_list → @interactive.parse interactive.loc (λ (a : interactive.loc), interactive.loc.has_reflect a) interactive.types.location → opt_param.{1} tactic.simp_config_ext {to_simp_config := {max_steps := simp.default_max_steps, contextual := bool.ff, lift_eq := bool.tt, canonize_instances := bool.tt, canonize_proofs := bool.ff, use_axioms := bool.tt, zeta := bool.tt, beta := bool.tt, eta := bool.tt, proj := bool.tt, iota := bool.tt, iota_eqn := bool.ff, constructor_eq := bool.tt, single_pass := bool.ff, fail_if_unchanged := bool.tt, memoize := bool.tt}, discharger := @tactic.failed unit} → tactic.{0} unit'><code style='font-family: menlo, "Source Code Pro", monospace;'>└──┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>       </code><font color='green'><a title='@interactive.parse (option.{0} unit) (λ (a : option.{0} unit), @option.has_reflect unit (λ (a : unit), punit.reflect a) `(unit) a) (@optional.{0 0} lean.parser.{0} lean.parser.alternative unit (lean.parser.tk (string.str string.empty (char.of_nat (@bit1.{0} nat nat.has_one nat.has_add (@bit1.{0} nat nat.has_one nat.has_add (@bit1.{0} nat nat.has_one nat.has_add (@bit1.{0} nat nat.has_one nat.has_add (@bit1.{0} nat nat.has_one nat.has_add (@has_one.one.{0} nat nat.has_one)))))))))) → opt_param.{1} tactic.tidy.cfg {trace_result := bool.ff, trace_result_prefix := string.str (string.str (string.str (string.str (string.str (string.str (string.str (string.str (string.str (string.str (string.str (string.str (string.str (string.str (string.str (string.str (string.str (string.str string.empty (char.of_nat (@bit1.{0} nat nat.has_one nat.has_add (@bit1.{0} nat nat.has_one nat.has_add (@bit1.{0} nat nat.has_one nat.has_add (@bit1.{0} nat nat.has_one nat.has_add (@bit0.{0} nat nat.has_add (@has_one.one.{0} nat nat.has_one)))))))) (char.of_nat (@bit1.{0} nat nat.has_one nat.has_add (@bit0.{0} nat nat.has_add (@bit1.{0} nat nat.has_one nat.has_add (@bit1.{0} nat nat.has_one nat.has_add (@bit0.{0} nat nat.has_add (@has_one.one.{0} nat nat.has_one)))))))) (char.of_nat (@bit0.{0} nat nat.has_add (@bit0.{0} nat nat.has_add (@bit0.{0} nat nat.has_add (@bit0.{0} nat nat.has_add (@bit0.{0} nat nat.has_add (@has_one.one.{0} nat nat.has_one)))))))) (char.of_nat (@bit0.{0} nat nat.has_add (@bit0.{0} nat nat.has_add (@bit0.{0} nat nat.has_add (@bit0.{0} nat nat.has_add (@bit0.{0} nat nat.has_add (@bit1.{0} nat nat.has_one nat.has_add (@has_one.one.{0} nat nat.has_one))))))))) (char.of_nat (@bit0.{0} nat nat.has_add (@bit0.{0} nat nat.has_add (@bit1.{0} nat nat.has_one nat.has_add (@bit0.{0} nat nat.has_add (@bit1.{0} nat nat.has_one nat.has_add (@bit1.{0} nat nat.has_one nat.has_add (@has_one.one.{0} nat nat.has_one))))))))) (char.of_nat (@bit1.{0} nat nat.has_one nat.has_add (@bit0.{0} nat nat.has_add (@bit0.{0} nat nat.has_add (@bit1.{0} nat nat.has_one nat.has_add (@bit0.{0} nat nat.has_add (@bit1.{0} nat nat.has_one nat.has_add (@has_one.one.{0} nat nat.has_one))))))))) (char.of_nat (@bit0.{0} nat nat.has_add (@bit0.{0} nat nat.has_add (@bit1.{0} nat nat.has_one nat.has_add (@bit0.{0} nat nat.has_add (@bit0.{0} nat nat.has_add (@bit1.{0} nat nat.has_one nat.has_add (@has_one.one.{0} nat nat.has_one))))))))) (char.of_nat (@bit1.{0} nat nat.has_one nat.has_add (@bit0.{0} nat nat.has_add (@bit0.{0} nat nat.has_add (@bit1.{0} nat nat.has_one nat.has_add (@bit1.{0} nat nat.has_one nat.has_add (@bit1.{0} nat nat.has_one nat.has_add (@has_one.one.{0} nat nat.has_one))))))))) (char.of_nat (@bit0.{0} nat nat.has_add (@bit0.{0} nat nat.has_add (@bit0.{0} nat nat.has_add (@bit0.{0} nat nat.has_add (@bit0.{0} nat nat.has_add (@bit1.{0} nat nat.has_one nat.has_add (@has_one.one.{0} nat nat.has_one))))))))) (char.of_nat (@bit0.{0} nat nat.has_add (@bit0.{0} nat nat.has_add (@bit0.{0} nat nat.has_add (@bit0.{0} nat nat.has_add (@bit0.{0} nat nat.has_add (@has_one.one.{0} nat nat.has_one)))))))) (char.of_nat (@bit1.{0} nat nat.has_one nat.has_add (@bit1.{0} nat nat.has_one nat.has_add (@bit0.{0} nat nat.has_add (@bit0.{0} nat nat.has_add (@bit1.{0} nat nat.has_one nat.has_add (@bit1.{0} nat nat.has_one nat.has_add (@has_one.one.{0} nat nat.has_one))))))))) (char.of_nat (@bit1.{0} nat nat.has_one nat.has_add (@bit0.{0} nat nat.has_add (@bit0.{0} nat nat.has_add (@bit0.{0} nat nat.has_add (@bit0.{0} nat nat.has_add (@bit1.{0} nat nat.has_one nat.has_add (@has_one.one.{0} nat nat.has_one))))))))) (char.of_nat (@bit1.{0} nat nat.has_one nat.has_add (@bit0.{0} nat nat.has_add (@bit0.{0} nat nat.has_add (@bit1.{0} nat nat.has_one nat.has_add (@bit1.{0} nat nat.has_one nat.has_add (@bit1.{0} nat nat.has_one nat.has_add (@has_one.one.{0} nat nat.has_one))))))))) (char.of_nat (@bit1.{0} nat nat.has_one nat.has_add (@bit1.{0} nat nat.has_one nat.has_add (@bit0.{0} nat nat.has_add (@bit0.{0} nat nat.has_add (@bit1.{0} nat nat.has_one nat.has_add (@bit1.{0} nat nat.has_one nat.has_add (@has_one.one.{0} nat nat.has_one))))))))) (char.of_nat (@bit0.{0} nat nat.has_add (@bit0.{0} nat nat.has_add (@bit0.{0} nat nat.has_add (@bit0.{0} nat nat.has_add (@bit0.{0} nat nat.has_add (@has_one.one.{0} nat nat.has_one)))))))) (char.of_nat (@bit1.{0} nat nat.has_one nat.has_add (@bit0.{0} nat nat.has_add (@bit1.{0} nat nat.has_one nat.has_add (@bit1.{0} nat nat.has_one nat.has_add (@bit0.{0} nat nat.has_add (@has_one.one.{0} nat nat.has_one)))))))) (char.of_nat (@bit1.{0} nat nat.has_one nat.has_add (@bit1.{0} nat nat.has_one nat.has_add (@bit1.{0} nat nat.has_one nat.has_add (@bit1.{0} nat nat.has_one nat.has_add (@bit0.{0} nat nat.has_add (@has_one.one.{0} nat nat.has_one)))))))) (char.of_nat (@bit0.{0} nat nat.has_add (@bit0.{0} nat nat.has_add (@bit0.{0} nat nat.has_add (@bit0.{0} nat nat.has_add (@bit0.{0} nat nat.has_add (@has_one.one.{0} nat nat.has_one))))))), tactics := tactic.tidy.default_tactics} → tactic.{0} unit'><code style='font-family: menlo, "Source Code Pro", monospace;'>└──┘</code></a></font>
+<font color='grey'><a title='doc'><code style='font-family: menlo, "Source Code Pro", monospace;'>doc  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>                                             </code><font color='orange'><a title='The `simp` tactic uses lemmas and hypotheses to simplify the main goal target or non-dependent hypotheses. It has many variants.
+
+`simp` simplifies the main goal target using lemmas tagged with the attribute `[simp]`.
+
+`simp [h₁ h₂ ... hₙ]` simplifies the main goal target using the lemmas tagged with the attribute `[simp]` and the given `hᵢ`&#x27;s, where the `hᵢ`&#x27;s are expressions. If an `hᵢ` is a defined constant `f`, then the equational lemmas associated with `f` are used. This provides a convenient way to unfold `f`.
+
+`simp [*]` simplifies the main goal target using the lemmas tagged with the attribute `[simp]` and all hypotheses.
+
+`simp *` is a shorthand for `simp [*]`.
+
+`simp only [h₁ h₂ ... hₙ]` is like `simp [h₁ h₂ ... hₙ]` but does not use `[simp]` lemmas
+
+`simp [-id_1, ... -id_n]` simplifies the main goal target using the lemmas tagged with the attribute `[simp]`, but removes the ones named `idᵢ`.
+
+`simp at h₁ h₂ ... hₙ` simplifies the non-dependent hypotheses `h₁ : T₁` ... `hₙ : Tₙ`. The tactic fails if the target or another hypothesis depends on one of them. The token `⊢` or `|-` can be added to the list to include the target.
+
+`simp at *` simplifies all the hypotheses and the target.
+
+`simp * at *` simplifies target and all (non-dependent propositional) hypotheses using the other hypotheses.
+
+`simp with attr₁ ... attrₙ` simplifies the main goal target using the lemmas tagged with any of the attributes `[attr₁]`, ..., `[attrₙ]` or `[simp]`.'><code style='font-family: menlo, "Source Code Pro", monospace;'>└──┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>       </code><font color='orange'><a title=' Use a variety of conservative tactics to solve goals.
+`tidy?` reports back the tactic script it found.
+The default list of tactics is stored in `tactic.tidy.default_tidy_tactics`.
+This list can be overridden using `tidy { tactics := ... }`.
+(The list must be a `list` of `tactic string`, so that `tidy?`
+can report a usable tactic script.) 
+
+Tactics can also be added to the list by tagging them (locally) with the
+`[tidy]` attribute.'><code style='font-family: menlo, "Source Code Pro", monospace;'>└──┘</code></a></font>
+<font color='grey'><a title='text'><code style='font-family: menlo, "Source Code Pro", monospace;'>txt  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>                                             </code><font color='teal'><a title='simp'><code style='font-family: menlo, "Source Code Pro", monospace;'>└──┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>       </code><font color='teal'><a title='tidy'><code style='font-family: menlo, "Source Code Pro", monospace;'>└──┘</code></a></font>
+<font color='grey'><a title='tactic_params'><code style='font-family: menlo, "Source Code Pro", monospace;'>par  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>                                             </code><font color='grey'><a title='[&#x27;!?&#x27;, &#x27;only?&#x27;, &#x27;(* | [(* | (- id | expr)), ...]?)&#x27;, &#x27;(with id*)?&#x27;, &#x27;(at (* | (⊢ | id)*))?&#x27;, &#x27;tactic.simp_config_ext?&#x27;]'><code style='font-family: menlo, "Source Code Pro", monospace;'>└──┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>       </code><font color='grey'><a title='[&#x27;??&#x27;, &#x27;tactic.tidy.cfg?&#x27;]'><code style='font-family: menlo, "Source Code Pro", monospace;'>└──┘</code></a></font>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 37  </code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 38  instance associator_is_equivalence : is_equivalence (associator C D E) :=</code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 39  (by apply_instance : is_equivalence (associativity C D E).functor)</code>
+<font color='grey'><a title='source'><code style='font-family: menlo, "Source Code Pro", monospace;'>src  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>    </code><font color='red'><a title='{&#x27;file&#x27;: &#x27;/home/ec2-user/.elan/toolchains/3.4.2/lib/lean/library/init/meta/interactive.lean&#x27;, &#x27;line&#x27;: 213, &#x27;column&#x27;: 9}'><code style='font-family: menlo, "Source Code Pro", monospace;'>└─────────────┘</code></a></font>
+<font color='grey'><a title='type'><code style='font-family: menlo, "Source Code Pro", monospace;'>typ  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>    </code><font color='green'><a title='tactic.{0} unit'><code style='font-family: menlo, "Source Code Pro", monospace;'>└─────────────┘</code></a></font>
+<font color='grey'><a title='doc'><code style='font-family: menlo, "Source Code Pro", monospace;'>doc  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>    </code><font color='orange'><a title='This tactic tries to close the main goal `... ⊢ t` by generating a term of type `t` using type class resolution.'><code style='font-family: menlo, "Source Code Pro", monospace;'>└─────────────┘</code></a></font>
+<font color='grey'><a title='text'><code style='font-family: menlo, "Source Code Pro", monospace;'>txt  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>    </code><font color='teal'><a title='apply_instance'><code style='font-family: menlo, "Source Code Pro", monospace;'>└─────────────┘</code></a></font>
+<font color='grey'><a title='tactic_params'><code style='font-family: menlo, "Source Code Pro", monospace;'>par  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>    </code><font color='grey'><a title='[]'><code style='font-family: menlo, "Source Code Pro", monospace;'>└─────────────┘</code></a></font>
+<font color='grey'><a title='tactic_param_idx'><code style='font-family: menlo, "Source Code Pro", monospace;'>pid  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>                  </code><font color='maroon'><a title='0'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 40  </code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 41  instance inverse_associator_is_equivalence : is_equivalence (inverse_associator C D E) :=</code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 42  (by apply_instance : is_equivalence (associativity C D E).inverse)</code>
+<font color='grey'><a title='full-id'><code style='font-family: menlo, "Source Code Pro", monospace;'>id   </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>                                                         </code><font color='blue'><a title='category_theory.equivalence.inverse'><code style='font-family: menlo, "Source Code Pro", monospace;'>└─────┘</code></a></font>
+<font color='grey'><a title='source'><code style='font-family: menlo, "Source Code Pro", monospace;'>src  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>    </code><font color='red'><a title='{&#x27;file&#x27;: &#x27;/home/ec2-user/.elan/toolchains/3.4.2/lib/lean/library/init/meta/interactive.lean&#x27;, &#x27;line&#x27;: 213, &#x27;column&#x27;: 9}'><code style='font-family: menlo, "Source Code Pro", monospace;'>└─────────────┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>                                      </code><font color='red'><a title='{&#x27;file&#x27;: &#x27;/home/ec2-user/lean_info_scrapper/_target/deps/mathlib/src/category_theory/equivalence.lean&#x27;, &#x27;line&#x27;: 24, &#x27;column&#x27;: 10}'><code style='font-family: menlo, "Source Code Pro", monospace;'>└─────┘</code></a></font>
+<font color='grey'><a title='type'><code style='font-family: menlo, "Source Code Pro", monospace;'>typ  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>    </code><font color='green'><a title='tactic.{0} unit'><code style='font-family: menlo, "Source Code Pro", monospace;'>└─────────────┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>                                      </code><font color='green'><a title='Π {C : Type (max (max u₁ u₂) u₃)} [_inst_1 : category_theory.category.{(max (max v₁ v₂) v₃) (max (max u₁ u₂) u₃)} C] {D : Type (max u₁ u₂ u₃)} [_inst_2 : category_theory.category.{(max v₁ v₂ v₃) (max u₁ u₂ u₃)} D], @category_theory.equivalence.{(max (max v₁ v₂) v₃) (max v₁ v₂ v₃) (max (max u₁ u₂) u₃) (max u₁ u₂ u₃)} C _inst_1 D _inst_2 → @category_theory.functor.{(max v₁ v₂ v₃) (max (max v₁ v₂) v₃) (max u₁ u₂ u₃) (max (max u₁ u₂) u₃)} D _inst_2 C _inst_1'><code style='font-family: menlo, "Source Code Pro", monospace;'>└─────┘</code></a></font>
+<font color='grey'><a title='doc'><code style='font-family: menlo, "Source Code Pro", monospace;'>doc  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>    </code><font color='orange'><a title='This tactic tries to close the main goal `... ⊢ t` by generating a term of type `t` using type class resolution.'><code style='font-family: menlo, "Source Code Pro", monospace;'>└─────────────┘</code></a></font>
+<font color='grey'><a title='text'><code style='font-family: menlo, "Source Code Pro", monospace;'>txt  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>    </code><font color='teal'><a title='apply_instance'><code style='font-family: menlo, "Source Code Pro", monospace;'>└─────────────┘</code></a></font>
+<font color='grey'><a title='tactic_params'><code style='font-family: menlo, "Source Code Pro", monospace;'>par  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>    </code><font color='grey'><a title='[]'><code style='font-family: menlo, "Source Code Pro", monospace;'>└─────────────┘</code></a></font>
+<font color='grey'><a title='tactic_param_idx'><code style='font-family: menlo, "Source Code Pro", monospace;'>pid  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>                  </code><font color='maroon'><a title='0'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 43  </code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 44  -- TODO unitors?</code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 45  -- TODO pentagon natural transformation? ...satisfying?</code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 46  end category_theory.prod</code>
+<font color='grey'><a title='state'><code style='font-family: menlo, "Source Code Pro", monospace;'>st   </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>    </code><font color='lime'><a title='C : Type u₁,
+𝒞 : category_theory.category.{v₁ u₁} C,
+D : Type u₂,
+𝒟 : category_theory.category.{v₂ u₂} D,
+E : Type u₃,
+ℰ : category_theory.category.{v₃ u₃} E
+⊢ ∀ {X Y : prod.{(max u₁ u₂) u₃} (prod.{u₁ u₂} C D) E}
+  (f :
+    @category_theory.has_hom.hom.{(max (max v₁ v₂) v₃) (max (max u₁ u₂) u₃)}
+      (prod.{(max u₁ u₂) u₃} (prod.{u₁ u₂} C D) E)
+      (@category_theory.category_struct.to_has_hom.{(max (max v₁ v₂) v₃) (max (max u₁ u₂) u₃)}
+         (prod.{(max u₁ u₂) u₃} (prod.{u₁ u₂} C D) E)
+         (@category_theory.category.to_category_struct.{(max (max v₁ v₂) v₃) (max (max u₁ u₂) u₃)}
+            (prod.{(max u₁ u₂) u₃} (prod.{u₁ u₂} C D) E)
+            (@category_theory.prod.{(max v₁ v₂) v₃ (max u₁ u₂) u₃} (prod.{u₁ u₂} C D)
+               (@category_theory.prod.{v₁ v₂ u₁ u₂} C 𝒞 D 𝒟)
+               E
+               ℰ)))
+      X
+      Y),
+    @eq.{(max (max v₁ v₂) v₃)+1}
+      (@category_theory.has_hom.hom.{(max (max v₁ v₂) v₃) (max (max u₁ u₂) u₃)}
+         (prod.{(max u₁ u₂) u₃} (prod.{u₁ u₂} C D) E)
+         (@category_theory.category_struct.to_has_hom.{(max (max v₁ v₂) v₃) (max (max u₁ u₂) u₃)}
+            (prod.{(max u₁ u₂) u₃} (prod.{u₁ u₂} C D) E)
+            (@category_theory.category.to_category_struct.{(max (max v₁ v₂) v₃) (max (max u₁ u₂) u₃)}
+               (prod.{(max u₁ u₂) u₃} (prod.{u₁ u₂} C D) E)
+               (@category_theory.prod.{(max v₁ v₂) v₃ (max u₁ u₂) u₃} (prod.{u₁ u₂} C D)
+                  (@category_theory.prod.{v₁ v₂ u₁ u₂} C 𝒞 D 𝒟)
+                  E
+                  ℰ)))
+         (@category_theory.functor.obj.{(max (max v₁ v₂) v₃)
+            (max (max v₁ v₂) v₃)
+            (max (max u₁ u₂) u₃)
+            (max (max u₁ u₂) u₃)}
+            (prod.{(max u₁ u₂) u₃} (prod.{u₁ u₂} C D) E)
+            (@category_theory.prod.{(max v₁ v₂) v₃ (max u₁ u₂) u₃} (prod.{u₁ u₂} C D)
+               (@category_theory.prod.{v₁ v₂ u₁ u₂} C 𝒞 D 𝒟)
+               E
+               ℰ)
+            (prod.{(max u₁ u₂) u₃} (prod.{u₁ u₂} C D) E)
+            (@category_theory.prod.{(max v₁ v₂) v₃ (max u₁ u₂) u₃} (prod.{u₁ u₂} C D)
+               (@category_theory.prod.{v₁ v₂ u₁ u₂} C 𝒞 D 𝒟)
+               E
+               ℰ)
+            (@category_theory.functor.id.{(max (max v₁ v₂) v₃) (max (max u₁ u₂) u₃)}
+               (prod.{(max u₁ u₂) u₃} (prod.{u₁ u₂} C D) E)
+               (@category_theory.prod.{(max v₁ v₂) v₃ (max u₁ u₂) u₃} (prod.{u₁ u₂} C D)
+                  (@category_theory.prod.{v₁ v₂ u₁ u₂} C 𝒞 D 𝒟)
+                  E
+                  ℰ))
+            X)
+         (@category_theory.functor.obj.{(max (max v₁ v₂) v₃)
+            (max (max v₁ v₂) v₃)
+            (max (max u₁ u₂) u₃)
+            (max (max u₁ u₂) u₃)}
+            (prod.{(max u₁ u₂) u₃} (prod.{u₁ u₂} C D) E)
+            (@category_theory.prod.{(max v₁ v₂) v₃ (max u₁ u₂) u₃} (prod.{u₁ u₂} C D)
+               (@category_theory.prod.{v₁ v₂ u₁ u₂} C 𝒞 D 𝒟)
+               E
+               ℰ)
+            (prod.{(max u₁ u₂) u₃} (prod.{u₁ u₂} C D) E)
+            (@category_theory.prod.{(max v₁ v₂) v₃ (max u₁ u₂) u₃} (prod.{u₁ u₂} C D)
+               (@category_theory.prod.{v₁ v₂ u₁ u₂} C 𝒞 D 𝒟)
+               E
+               ℰ)
+            (@category_theory.functor.comp.{(max (max v₁ v₂) v₃)
+               (max v₁ v₂ v₃)
+               (max (max v₁ v₂) v₃)
+               (max (max u₁ u₂) u₃)
+               (max u₁ u₂ u₃)
+               (max (max u₁ u₂) u₃)}
+               (prod.{(max u₁ u₂) u₃} (prod.{u₁ u₂} C D) E)
+               (@category_theory.prod.{(max v₁ v₂) v₃ (max u₁ u₂) u₃} (prod.{u₁ u₂} C D)
+                  (@category_theory.prod.{v₁ v₂ u₁ u₂} C 𝒞 D 𝒟)
+                  E
+                  ℰ)
+               (prod.{u₁ (max u₂ u₃)} C (prod.{u₂ u₃} D E))
+               (@category_theory.prod.{v₁ (max v₂ v₃) u₁ (max u₂ u₃)} C 𝒞 (prod.{u₂ u₃} D E)
+                  (@category_theory.prod.{v₂ v₃ u₂ u₃} D 𝒟 E ℰ))
+               (prod.{(max u₁ u₂) u₃} (prod.{u₁ u₂} C D) E)
+               (@category_theory.prod.{(max v₁ v₂) v₃ (max u₁ u₂) u₃} (prod.{u₁ u₂} C D)
+                  (@category_theory.prod.{v₁ v₂ u₁ u₂} C 𝒞 D 𝒟)
+                  E
+                  ℰ)
+               (@category_theory.prod.associator.{v₁ v₂ v₃ u₁ u₂ u₃} C 𝒞 D 𝒟 E ℰ)
+               (@category_theory.prod.inverse_associator.{v₁ v₂ v₃ u₁ u₂ u₃} C 𝒞 D 𝒟 E ℰ))
+            Y))
+      (@category_theory.category_struct.comp.{(max (max v₁ v₂) v₃) (max (max u₁ u₂) u₃)}
+         (prod.{(max u₁ u₂) u₃} (prod.{u₁ u₂} C D) E)
+         (@category_theory.category.to_category_struct.{(max (max v₁ v₂) v₃) (max (max u₁ u₂) u₃)}
+            (prod.{(max u₁ u₂) u₃} (prod.{u₁ u₂} C D) E)
+            (@category_theory.prod.{(max v₁ v₂) v₃ (max u₁ u₂) u₃} (prod.{u₁ u₂} C D)
+               (@category_theory.prod.{v₁ v₂ u₁ u₂} C 𝒞 D 𝒟)
+               E
+               ℰ))
+         (@category_theory.functor.obj.{(max (max v₁ v₂) v₃)
+            (max (max v₁ v₂) v₃)
+            (max (max u₁ u₂) u₃)
+            (max (max u₁ u₂) u₃)}
+            (prod.{(max u₁ u₂) u₃} (prod.{u₁ u₂} C D) E)
+            (@category_theory.prod.{(max v₁ v₂) v₃ (max u₁ u₂) u₃} (prod.{u₁ u₂} C D)
+               (@category_theory.prod.{v₁ v₂ u₁ u₂} C 𝒞 D 𝒟)
+               E
+               ℰ)
+            (prod.{(max u₁ u₂) u₃} (prod.{u₁ u₂} C D) E)
+            (@category_theory.prod.{(max v₁ v₂) v₃ (max u₁ u₂) u₃} (prod.{u₁ u₂} C D)
+               (@category_theory.prod.{v₁ v₂ u₁ u₂} C 𝒞 D 𝒟)
+               E
+               ℰ)
+            (@category_theory.functor.id.{(max (max v₁ v₂) v₃) (max (max u₁ u₂) u₃)}
+               (prod.{(max u₁ u₂) u₃} (prod.{u₁ u₂} C D) E)
+               (@category_theory.prod.{(max v₁ v₂) v₃ (max u₁ u₂) u₃} (prod.{u₁ u₂} C D)
+                  (@category_theory.prod.{v₁ v₂ u₁ u₂} C 𝒞 D 𝒟)
+                  E
+                  ℰ))
+            X)
+         (@category_theory.functor.obj.{(max (max v₁ v₂) v₃)
+            (max (max v₁ v₂) v₃)
+            (max (max u₁ u₂) u₃)
+            (max (max u₁ u₂) u₃)}
+            (prod.{(max u₁ u₂) u₃} (prod.{u₁ u₂} C D) E)
+            (@category_theory.prod.{(max v₁ v₂) v₃ (max u₁ u₂) u₃} (prod.{u₁ u₂} C D)
+               (@category_theory.prod.{v₁ v₂ u₁ u₂} C 𝒞 D 𝒟)
+               E
+               ℰ)
+            (prod.{(max u₁ u₂) u₃} (prod.{u₁ u₂} C D) E)
+            (@category_theory.prod.{(max v₁ v₂) v₃ (max u₁ u₂) u₃} (prod.{u₁ u₂} C D)
+               (@category_theory.prod.{v₁ v₂ u₁ u₂} C 𝒞 D 𝒟)
+               E
+               ℰ)
+            (@category_theory.functor.id.{(max (max v₁ v₂) v₃) (max (max u₁ u₂) u₃)}
+               (prod.{(max u₁ u₂) u₃} (prod.{u₁ u₂} C D) E)
+               (@category_theory.prod.{(max v₁ v₂) v₃ (max u₁ u₂) u₃} (prod.{u₁ u₂} C D)
+                  (@category_theory.prod.{v₁ v₂ u₁ u₂} C 𝒞 D 𝒟)
+                  E
+                  ℰ))
+            Y)
+         (@category_theory.functor.obj.{(max (max v₁ v₂) v₃)
+            (max (max v₁ v₂) v₃)
+            (max (max u₁ u₂) u₃)
+            (max (max u₁ u₂) u₃)}
+            (prod.{(max u₁ u₂) u₃} (prod.{u₁ u₂} C D) E)
+            (@category_theory.prod.{(max v₁ v₂) v₃ (max u₁ u₂) u₃} (prod.{u₁ u₂} C D)
+               (@category_theory.prod.{v₁ v₂ u₁ u₂} C 𝒞 D 𝒟)
+               E
+               ℰ)
+            (prod.{(max u₁ u₂) u₃} (prod.{u₁ u₂} C D) E)
+            (@category_theory.prod.{(max v₁ v₂) v₃ (max u₁ u₂) u₃} (prod.{u₁ u₂} C D)
+               (@category_theory.prod.{v₁ v₂ u₁ u₂} C 𝒞 D 𝒟)
+               E
+               ℰ)
+            (@category_theory.functor.comp.{(max (max v₁ v₂) v₃)
+               (max v₁ v₂ v₃)
+               (max (max v₁ v₂) v₃)
+               (max (max u₁ u₂) u₃)
+               (max u₁ u₂ u₃)
+               (max (max u₁ u₂) u₃)}
+               (prod.{(max u₁ u₂) u₃} (prod.{u₁ u₂} C D) E)
+               (@category_theory.prod.{(max v₁ v₂) v₃ (max u₁ u₂) u₃} (prod.{u₁ u₂} C D)
+                  (@category_theory.prod.{v₁ v₂ u₁ u₂} C 𝒞 D 𝒟)
+                  E
+                  ℰ)
+               (prod.{u₁ (max u₂ u₃)} C (prod.{u₂ u₃} D E))
+               (@category_theory.prod.{v₁ (max v₂ v₃) u₁ (max u₂ u₃)} C 𝒞 (prod.{u₂ u₃} D E)
+                  (@category_theory.prod.{v₂ v₃ u₂ u₃} D 𝒟 E ℰ))
+               (prod.{(max u₁ u₂) u₃} (prod.{u₁ u₂} C D) E)
+               (@category_theory.prod.{(max v₁ v₂) v₃ (max u₁ u₂) u₃} (prod.{u₁ u₂} C D)
+                  (@category_theory.prod.{v₁ v₂ u₁ u₂} C 𝒞 D 𝒟)
+                  E
+                  ℰ)
+               (@category_theory.prod.associator.{v₁ v₂ v₃ u₁ u₂ u₃} C 𝒞 D 𝒟 E ℰ)
+               (@category_theory.prod.inverse_associator.{v₁ v₂ v₃ u₁ u₂ u₃} C 𝒞 D 𝒟 E ℰ))
+            Y)
+         (@category_theory.functor.map.{(max (max v₁ v₂) v₃)
+            (max (max v₁ v₂) v₃)
+            (max (max u₁ u₂) u₃)
+            (max (max u₁ u₂) u₃)}
+            (prod.{(max u₁ u₂) u₃} (prod.{u₁ u₂} C D) E)
+            (@category_theory.prod.{(max v₁ v₂) v₃ (max u₁ u₂) u₃} (prod.{u₁ u₂} C D)
+               (@category_theory.prod.{v₁ v₂ u₁ u₂} C 𝒞 D 𝒟)
+               E
+               ℰ)
+            (prod.{(max u₁ u₂) u₃} (prod.{u₁ u₂} C D) E)
+            (@category_theory.prod.{(max v₁ v₂) v₃ (max u₁ u₂) u₃} (prod.{u₁ u₂} C D)
+               (@category_theory.prod.{v₁ v₂ u₁ u₂} C 𝒞 D 𝒟)
+               E
+               ℰ)
+            (@category_theory.functor.id.{(max (max v₁ v₂) v₃) (max (max u₁ u₂) u₃)}
+               (prod.{(max u₁ u₂) u₃} (prod.{u₁ u₂} C D) E)
+               (@category_theory.prod.{(max v₁ v₂) v₃ (max u₁ u₂) u₃} (prod.{u₁ u₂} C D)
+                  (@category_theory.prod.{v₁ v₂ u₁ u₂} C 𝒞 D 𝒟)
+                  E
+                  ℰ))
+            X
+            Y
+            f)
+         (@category_theory.iso.hom.{(max (max v₁ v₂) v₃) (max (max u₁ u₂) u₃)}
+            (prod.{(max u₁ u₂) u₃} (prod.{u₁ u₂} C D) E)
+            (@category_theory.prod.{(max v₁ v₂) v₃ (max u₁ u₂) u₃} (prod.{u₁ u₂} C D)
+               (@category_theory.prod.{v₁ v₂ u₁ u₂} C 𝒞 D 𝒟)
+               E
+               ℰ)
+            (@category_theory.functor.obj.{(max (max v₁ v₂) v₃)
+               (max (max v₁ v₂) v₃)
+               (max (max u₁ u₂) u₃)
+               (max (max u₁ u₂) u₃)}
+               (prod.{(max u₁ u₂) u₃} (prod.{u₁ u₂} C D) E)
+               (@category_theory.prod.{(max v₁ v₂) v₃ (max u₁ u₂) u₃} (prod.{u₁ u₂} C D)
+                  (@category_theory.prod.{v₁ v₂ u₁ u₂} C 𝒞 D 𝒟)
+                  E
+                  ℰ)
+               (prod.{(max u₁ u₂) u₃} (prod.{u₁ u₂} C D) E)
+               (@category_theory.prod.{(max v₁ v₂) v₃ (max u₁ u₂) u₃} (prod.{u₁ u₂} C D)
+                  (@category_theory.prod.{v₁ v₂ u₁ u₂} C 𝒞 D 𝒟)
+                  E
+                  ℰ)
+               (@category_theory.functor.id.{(max (max v₁ v₂) v₃) (max (max u₁ u₂) u₃)}
+                  (prod.{(max u₁ u₂) u₃} (prod.{u₁ u₂} C D) E)
+                  (@category_theory.prod.{(max v₁ v₂) v₃ (max u₁ u₂) u₃} (prod.{u₁ u₂} C D)
+                     (@category_theory.prod.{v₁ v₂ u₁ u₂} C 𝒞 D 𝒟)
+                     E
+                     ℰ))
+               Y)
+            (@category_theory.functor.obj.{(max (max v₁ v₂) v₃)
+               (max (max v₁ v₂) v₃)
+               (max (max u₁ u₂) u₃)
+               (max (max u₁ u₂) u₃)}
+               (prod.{(max u₁ u₂) u₃} (prod.{u₁ u₂} C D) E)
+               (@category_theory.prod.{(max v₁ v₂) v₃ (max u₁ u₂) u₃} (prod.{u₁ u₂} C D)
+                  (@category_theory.prod.{v₁ v₂ u₁ u₂} C 𝒞 D 𝒟)
+                  E
+                  ℰ)
+               (prod.{(max u₁ u₂) u₃} (prod.{u₁ u₂} C D) E)
+               (@category_theory.prod.{(max v₁ v₂) v₃ (max u₁ u₂) u₃} (prod.{u₁ u₂} C D)
+                  (@category_theory.prod.{v₁ v₂ u₁ u₂} C 𝒞 D 𝒟)
+                  E
+                  ℰ)
+               (@category_theory.functor.comp.{(max (max v₁ v₂) v₃)
+                  (max v₁ v₂ v₃)
+                  (max (max v₁ v₂) v₃)
+                  (max (max u₁ u₂) u₃)
+                  (max u₁ u₂ u₃)
+                  (max (max u₁ u₂) u₃)}
+                  (prod.{(max u₁ u₂) u₃} (prod.{u₁ u₂} C D) E)
+                  (@category_theory.prod.{(max v₁ v₂) v₃ (max u₁ u₂) u₃} (prod.{u₁ u₂} C D)
+                     (@category_theory.prod.{v₁ v₂ u₁ u₂} C 𝒞 D 𝒟)
+                     E
+                     ℰ)
+                  (prod.{u₁ (max u₂ u₃)} C (prod.{u₂ u₃} D E))
+                  (@category_theory.prod.{v₁ (max v₂ v₃) u₁ (max u₂ u₃)} C 𝒞 (prod.{u₂ u₃} D E)
+                     (@category_theory.prod.{v₂ v₃ u₂ u₃} D 𝒟 E ℰ))
+                  (prod.{(max u₁ u₂) u₃} (prod.{u₁ u₂} C D) E)
+                  (@category_theory.prod.{(max v₁ v₂) v₃ (max u₁ u₂) u₃} (prod.{u₁ u₂} C D)
+                     (@category_theory.prod.{v₁ v₂ u₁ u₂} C 𝒞 D 𝒟)
+                     E
+                     ℰ)
+                  (@category_theory.prod.associator.{v₁ v₂ v₃ u₁ u₂ u₃} C 𝒞 D 𝒟 E ℰ)
+                  (@category_theory.prod.inverse_associator.{v₁ v₂ v₃ u₁ u₂ u₃} C 𝒞 D 𝒟 E ℰ))
+               Y)
+            (@category_theory.eq_to_iso.{(max (max v₁ v₂) v₃) (max (max u₁ u₂) u₃)}
+               (prod.{(max u₁ u₂) u₃} (prod.{u₁ u₂} C D) E)
+               (@category_theory.prod.{(max v₁ v₂) v₃ (max u₁ u₂) u₃} (prod.{u₁ u₂} C D)
+                  (@category_theory.prod.{v₁ v₂ u₁ u₂} C 𝒞 D 𝒟)
+                  E
+                  ℰ)
+               (@category_theory.functor.obj.{(max (max v₁ v₂) v₃)
+                  (max (max v₁ v₂) v₃)
+                  (max (max u₁ u₂) u₃)
+                  (max (max u₁ u₂) u₃)}
+                  (prod.{(max u₁ u₂) u₃} (prod.{u₁ u₂} C D) E)
+                  (@category_theory.prod.{(max v₁ v₂) v₃ (max u₁ u₂) u₃} (prod.{u₁ u₂} C D)
+                     (@category_theory.prod.{v₁ v₂ u₁ u₂} C 𝒞 D 𝒟)
+                     E
+                     ℰ)
+                  (prod.{(max u₁ u₂) u₃} (prod.{u₁ u₂} C D) E)
+                  (@category_theory.prod.{(max v₁ v₂) v₃ (max u₁ u₂) u₃} (prod.{u₁ u₂} C D)
+                     (@category_theory.prod.{v₁ v₂ u₁ u₂} C 𝒞 D 𝒟)
+                     E
+                     ℰ)
+                  (@category_theory.functor.id.{(max (max v₁ v₂) v₃) (max (max u₁ u₂) u₃)}
+                     (prod.{(max u₁ u₂) u₃} (prod.{u₁ u₂} C D) E)
+                     (@category_theory.prod.{(max v₁ v₂) v₃ (max u₁ u₂) u₃} (prod.{u₁ u₂} C D)
+                        (@category_theory.prod.{v₁ v₂ u₁ u₂} C 𝒞 D 𝒟)
+                        E
+                        ℰ))
+                  Y)
+               (@category_theory.functor.obj.{(max (max v₁ v₂) v₃)
+                  (max (max v₁ v₂) v₃)
+                  (max (max u₁ u₂) u₃)
+                  (max (max u₁ u₂) u₃)}
+                  (prod.{(max u₁ u₂) u₃} (prod.{u₁ u₂} C D) E)
+                  (@category_theory.prod.{(max v₁ v₂) v₃ (max u₁ u₂) u₃} (prod.{u₁ u₂} C D)
+                     (@category_theory.prod.{v₁ v₂ u₁ u₂} C 𝒞 D 𝒟)
+                     E
+                     ℰ)
+                  (prod.{(max u₁ u₂) u₃} (prod.{u₁ u₂} C D) E)
+                  (@category_theory.prod.{(max v₁ v₂) v₃ (max u₁ u₂) u₃} (prod.{u₁ u₂} C D)
+                     (@category_theory.prod.{v₁ v₂ u₁ u₂} C 𝒞 D 𝒟)
+                     E
+                     ℰ)
+                  (@category_theory.functor.comp.{(max (max v₁ v₂) v₃)
+                     (max v₁ v₂ v₃)
+                     (max (max v₁ v₂) v₃)
+                     (max (max u₁ u₂) u₃)
+                     (max u₁ u₂ u₃)
+                     (max (max u₁ u₂) u₃)}
+                     (prod.{(max u₁ u₂) u₃} (prod.{u₁ u₂} C D) E)
+                     (@category_theory.prod.{(max v₁ v₂) v₃ (max u₁ u₂) u₃} (prod.{u₁ u₂} C D)
+                        (@category_theory.prod.{v₁ v₂ u₁ u₂} C 𝒞 D 𝒟)
+                        E
+                        ℰ)
+                     (prod.{u₁ (max u₂ u₃)} C (prod.{u₂ u₃} D E))
+                     (@category_theory.prod.{v₁ (max v₂ v₃) u₁ (max u₂ u₃)} C 𝒞 (prod.{u₂ u₃} D E)
+                        (@category_theory.prod.{v₂ v₃ u₂ u₃} D 𝒟 E ℰ))
+                     (prod.{(max u₁ u₂) u₃} (prod.{u₁ u₂} C D) E)
+                     (@category_theory.prod.{(max v₁ v₂) v₃ (max u₁ u₂) u₃} (prod.{u₁ u₂} C D)
+                        (@category_theory.prod.{v₁ v₂ u₁ u₂} C 𝒞 D 𝒟)
+                        E
+                        ℰ)
+                     (@category_theory.prod.associator.{v₁ v₂ v₃ u₁ u₂ u₃} C 𝒞 D 𝒟 E ℰ)
+                     (@category_theory.prod.inverse_associator.{v₁ v₂ v₃ u₁ u₂ u₃} C 𝒞 D 𝒟 E ℰ))
+                  Y)
+               (@eq.mpr.{0}
+                  (@eq.{(max (max u₁ u₂) u₃)+1} (prod.{(max u₁ u₂) u₃} (prod.{u₁ u₂} C D) E)
+                     (@category_theory.functor.obj.{(max (max v₁ v₂) v₃)
+                        (max (max v₁ v₂) v₃)
+                        (max (max u₁ u₂) u₃)
+                        (max (max u₁ u₂) u₃)}
+                        (prod.{(max u₁ u₂) u₃} (prod.{u₁ u₂} C D) E)
+                        (@category_theory.prod.{(max v₁ v₂) v₃ (max u₁ u₂) u₃} (prod.{u₁ u₂} C D)
+                           (@category_theory.prod.{v₁ v₂ u₁ u₂} C 𝒞 D 𝒟)
+                           E
+                           ℰ)
+                        (prod.{(max u₁ u₂) u₃} (prod.{u₁ u₂} C D) E)
+                        (@category_theory.prod.{(max v₁ v₂) v₃ (max u₁ u₂) u₃} (prod.{u₁ u₂} C D)
+                           (@category_theory.prod.{v₁ v₂ u₁ u₂} C 𝒞 D 𝒟)
+                           E
+                           ℰ)
+                        (@category_theory.functor.id.{(max (max v₁ v₂) v₃) (max (max u₁ u₂) u₃)}
+                           (prod.{(max u₁ u₂) u₃} (prod.{u₁ u₂} C D) E)
+                           (@category_theory.prod.{(max v₁ v₂) v₃ (max u₁ u₂) u₃} (prod.{u₁ u₂} C D)
+                              (@category_theory.prod.{v₁ v₂ u₁ u₂} C 𝒞 D 𝒟)
+                              E
+                              ℰ))
+                        Y)
+                     (@category_theory.functor.obj.{(max (max v₁ v₂) v₃)
+                        (max (max v₁ v₂) v₃)
+                        (max (max u₁ u₂) u₃)
+                        (max (max u₁ u₂) u₃)}
+                        (prod.{(max u₁ u₂) u₃} (prod.{u₁ u₂} C D) E)
+                        (@category_theory.prod.{(max v₁ v₂) v₃ (max u₁ u₂) u₃} (prod.{u₁ u₂} C D)
+                           (@category_theory.prod.{v₁ v₂ u₁ u₂} C 𝒞 D 𝒟)
+                           E
+                           ℰ)
+                        (prod.{(max u₁ u₂) u₃} (prod.{u₁ u₂} C D) E)
+                        (@category_theory.prod.{(max v₁ v₂) v₃ (max u₁ u₂) u₃} (prod.{u₁ u₂} C D)
+                           (@category_theory.prod.{v₁ v₂ u₁ u₂} C 𝒞 D 𝒟)
+                           E
+                           ℰ)
+                        (@category_theory.functor.comp.{(max (max v₁ v₂) v₃)
+                           (max v₁ v₂ v₃)
+                           (max (max v₁ v₂) v₃)
+                           (max (max u₁ u₂) u₃)
+                           (max u₁ u₂ u₃)
+                           (max (max u₁ u₂) u₃)}
+                           (prod.{(max u₁ u₂) u₃} (prod.{u₁ u₂} C D) E)
+                           (@category_theory.prod.{(max v₁ v₂) v₃ (max u₁ u₂) u₃} (prod.{u₁ u₂} C D)
+                              (@category_theory.prod.{v₁ v₂ u₁ u₂} C 𝒞 D 𝒟)
+                              E
+                              ℰ)
+                           (prod.{u₁ (max u₂ u₃)} C (prod.{u₂ u₃} D E))
+                           (@category_theory.prod.{v₁ (max v₂ v₃) u₁ (max u₂ u₃)} C 𝒞
+                              (prod.{u₂ u₃} D E)
+                              (@category_theory.prod.{v₂ v₃ u₂ u₃} D 𝒟 E ℰ))
+                           (prod.{(max u₁ u₂) u₃} (prod.{u₁ u₂} C D) E)
+                           (@category_theory.prod.{(max v₁ v₂) v₃ (max u₁ u₂) u₃} (prod.{u₁ u₂} C D)
+                              (@category_theory.prod.{v₁ v₂ u₁ u₂} C 𝒞 D 𝒟)
+                              E
+                              ℰ)
+                           (@category_theory.prod.associator.{v₁ v₂ v₃ u₁ u₂ u₃} C 𝒞 D 𝒟 E ℰ)
+                           (@category_theory.prod.inverse_associator.{v₁ v₂ v₃ u₁ u₂ u₃} C 𝒞 D 𝒟 E
+                              ℰ))
+                        Y))
+                  true
+                  (@id.{0}
+                     (@eq.{1} Prop
+                        (@eq.{(max (max u₁ u₂) u₃)+1} (prod.{(max u₁ u₂) u₃} (prod.{u₁ u₂} C D) E)
+                           (@category_theory.functor.obj.{(max (max v₁ v₂) v₃)
+                              (max (max v₁ v₂) v₃)
+                              (max (max u₁ u₂) u₃)
+                              (max (max u₁ u₂) u₃)}
+                              (prod.{(max u₁ u₂) u₃} (prod.{u₁ u₂} C D) E)
+                              (@category_theory.prod.{(max v₁ v₂) v₃ (max u₁ u₂) u₃} (prod.{u₁ u₂} C D)
+                                 (@category_theory.prod.{v₁ v₂ u₁ u₂} C 𝒞 D 𝒟)
+                                 E
+                                 ℰ)
+                              (prod.{(max u₁ u₂) u₃} (prod.{u₁ u₂} C D) E)
+                              (@category_theory.prod.{(max v₁ v₂) v₃ (max u₁ u₂) u₃} (prod.{u₁ u₂} C D)
+                                 (@category_theory.prod.{v₁ v₂ u₁ u₂} C 𝒞 D 𝒟)
+                                 E
+                                 ℰ)
+                              (@category_theory.functor.id.{(max (max v₁ v₂) v₃) (max (max u₁ u₂) u₃)}
+                                 (prod.{(max u₁ u₂) u₃} (prod.{u₁ u₂} C D) E)
+                                 (@category_theory.prod.{(max v₁ v₂) v₃ (max u₁ u₂) u₃}
+                                    (prod.{u₁ u₂} C D)
+                                    (@category_theory.prod.{v₁ v₂ u₁ u₂} C 𝒞 D 𝒟)
+                                    E
+                                    ℰ))
+                              Y)
+                           (@category_theory.functor.obj.{(max (max v₁ v₂) v₃)
+                              (max (max v₁ v₂) v₃)
+                              (max (max u₁ u₂) u₃)
+                              (max (max u₁ u₂) u₃)}
+                              (prod.{(max u₁ u₂) u₃} (prod.{u₁ u₂} C D) E)
+                              (@category_theory.prod.{(max v₁ v₂) v₃ (max u₁ u₂) u₃} (prod.{u₁ u₂} C D)
+                                 (@category_theory.prod.{v₁ v₂ u₁ u₂} C 𝒞 D 𝒟)
+                                 E
+                                 ℰ)
+                              (prod.{(max u₁ u₂) u₃} (prod.{u₁ u₂} C D) E)
+                              (@category_theory.prod.{(max v₁ v₂) v₃ (max u₁ u₂) u₃} (prod.{u₁ u₂} C D)
+                                 (@category_theory.prod.{v₁ v₂ u₁ u₂} C 𝒞 D 𝒟)
+                                 E
+                                 ℰ)
+                              (@category_theory.functor.comp.{(max (max v₁ v₂) v₃)
+                                 (max v₁ v₂ v₃)
+                                 (max (max v₁ v₂) v₃)
+                                 (max (max u₁ u₂) u₃)
+                                 (max u₁ u₂ u₃)
+                                 (max (max u₁ u₂) u₃)}
+                                 (prod.{(max u₁ u₂) u₃} (prod.{u₁ u₂} C D) E)
+                                 (@category_theory.prod.{(max v₁ v₂) v₃ (max u₁ u₂) u₃}
+                                    (prod.{u₁ u₂} C D)
+                                    (@category_theory.prod.{v₁ v₂ u₁ u₂} C 𝒞 D 𝒟)
+                                    E
+                                    ℰ)
+                                 (prod.{u₁ (max u₂ u₃)} C (prod.{u₂ u₃} D E))
+                                 (@category_theory.prod.{v₁ (max v₂ v₃) u₁ (max u₂ u₃)} C 𝒞
+                                    (prod.{u₂ u₃} D E)
+                                    (@category_theory.prod.{v₂ v₃ u₂ u₃} D 𝒟 E ℰ))
+                                 (prod.{(max u₁ u₂) u₃} (prod.{u₁ u₂} C D) E)
+                                 (@category_theory.prod.{(max v₁ v₂) v₃ (max u₁ u₂) u₃}
+                                    (prod.{u₁ u₂} C D)
+                                    (@category_theory.prod.{v₁ v₂ u₁ u₂} C 𝒞 D 𝒟)
+                                    E
+                                    ℰ)
+                                 (@category_theory.prod.associator.{v₁ v₂ v₃ u₁ u₂ u₃} C 𝒞 D 𝒟 E ℰ)
+                                 (@category_theory.prod.inverse_associator.{v₁ v₂ v₃ u₁ u₂ u₃} C 𝒞 D 𝒟
+                                    E
+                                    ℰ))
+                              Y))
+                        true)
+                     (@eq.trans.{1} Prop
+                        (@eq.{(max (max u₁ u₂) u₃)+1} (prod.{(max u₁ u₂) u₃} (prod.{u₁ u₂} C D) E)
+                           (@category_theory.functor.obj.{(max (max v₁ v₂) v₃)
+                              (max (max v₁ v₂) v₃)
+                              (max (max u₁ u₂) u₃)
+                              (max (max u₁ u₂) u₃)}
+                              (prod.{(max u₁ u₂) u₃} (prod.{u₁ u₂} C D) E)
+                              (@category_theory.prod.{(max v₁ v₂) v₃ (max u₁ u₂) u₃} (prod.{u₁ u₂} C D)
+                                 (@category_theory.prod.{v₁ v₂ u₁ u₂} C 𝒞 D 𝒟)
+                                 E
+                                 ℰ)
+                              (prod.{(max u₁ u₂) u₃} (prod.{u₁ u₂} C D) E)
+                              (@category_theory.prod.{(max v₁ v₂) v₃ (max u₁ u₂) u₃} (prod.{u₁ u₂} C D)
+                                 (@category_theory.prod.{v₁ v₂ u₁ u₂} C 𝒞 D 𝒟)
+                                 E
+                                 ℰ)
+                              (@category_theory.functor.id.{(max (max v₁ v₂) v₃) (max (max u₁ u₂) u₃)}
+                                 (prod.{(max u₁ u₂) u₃} (prod.{u₁ u₂} C D) E)
+                                 (@category_theory.prod.{(max v₁ v₂) v₃ (max u₁ u₂) u₃}
+                                    (prod.{u₁ u₂} C D)
+                                    (@category_theory.prod.{v₁ v₂ u₁ u₂} C 𝒞 D 𝒟)
+                                    E
+                                    ℰ))
+                              Y)
+                           (@category_theory.functor.obj.{(max (max v₁ v₂) v₃)
+                              (max (max v₁ v₂) v₃)
+                              (max (max u₁ u₂) u₃)
+                              (max (max u₁ u₂) u₃)}
+                              (prod.{(max u₁ u₂) u₃} (prod.{u₁ u₂} C D) E)
+                              (@category_theory.prod.{(max v₁ v₂) v₃ (max u₁ u₂) u₃} (prod.{u₁ u₂} C D)
+                                 (@category_theory.prod.{v₁ v₂ u₁ u₂} C 𝒞 D 𝒟)
+                                 E
+                                 ℰ)
+                              (prod.{(max u₁ u₂) u₃} (prod.{u₁ u₂} C D) E)
+                              (@category_theory.prod.{(max v₁ v₂) v₃ (max u₁ u₂) u₃} (prod.{u₁ u₂} C D)
+                                 (@category_theory.prod.{v₁ v₂ u₁ u₂} C 𝒞 D 𝒟)
+                                 E
+                                 ℰ)
+                              (@category_theory.functor.comp.{(max (max v₁ v₂) v₃)
+                                 (max v₁ v₂ v₃)
+                                 (max (max v₁ v₂) v₃)
+                                 (max (max u₁ u₂) u₃)
+                                 (max u₁ u₂ u₃)
+                                 (max (max u₁ u₂) u₃)}
+                                 (prod.{(max u₁ u₂) u₃} (prod.{u₁ u₂} C D) E)
+                                 (@category_theory.prod.{(max v₁ v₂) v₃ (max u₁ u₂) u₃}
+                                    (prod.{u₁ u₂} C D)
+                                    (@category_theory.prod.{v₁ v₂ u₁ u₂} C 𝒞 D 𝒟)
+                                    E
+                                    ℰ)
+                                 (prod.{u₁ (max u₂ u₃)} C (prod.{u₂ u₃} D E))
+                                 (@category_theory.prod.{v₁ (max v₂ v₃) u₁ (max u₂ u₃)} C 𝒞
+                                    (prod.{u₂ u₃} D E)
+                                    (@category_theory.prod.{v₂ v₃ u₂ u₃} D 𝒟 E ℰ))
+                                 (prod.{(max u₁ u₂) u₃} (prod.{u₁ u₂} C D) E)
+                                 (@category_theory.prod.{(max v₁ v₂) v₃ (max u₁ u₂) u₃}
+                                    (prod.{u₁ u₂} C D)
+                                    (@category_theory.prod.{v₁ v₂ u₁ u₂} C 𝒞 D 𝒟)
+                                    E
+                                    ℰ)
+                                 (@category_theory.prod.associator.{v₁ v₂ v₃ u₁ u₂ u₃} C 𝒞 D 𝒟 E ℰ)
+                                 (@category_theory.prod.inverse_associator.{v₁ v₂ v₃ u₁ u₂ u₃} C 𝒞 D 𝒟
+                                    E
+                                    ℰ))
+                              Y))
+                        (@eq.{(max (max u₁ u₂) u₃)+1} (prod.{(max u₁ u₂) u₃} (prod.{u₁ u₂} C D) E) Y Y)
+                        true
+                        ((λ (a a_1 : prod.{(max u₁ u₂) u₃} (prod.{u₁ u₂} C D) E)
+                          (e_1 :
+                            @eq.{(max ((max u₁ u₂)+1) (u₃+1))}
+                              (prod.{(max u₁ u₂) u₃} (prod.{u₁ u₂} C D) E)
+                              a
+                              a_1) (a_2 a_3 : prod.{(max u₁ u₂) u₃} (prod.{u₁ u₂} C D) E)
+                          (e_2 :
+                            @eq.{(max ((max u₁ u₂)+1) (u₃+1))}
+                              (prod.{(max u₁ u₂) u₃} (prod.{u₁ u₂} C D) E)
+                              a_2
+                              a_3),
+                            @congr.{(max ((max u₁ u₂)+1) (u₃+1)) 1}
+                              (prod.{(max u₁ u₂) u₃} (prod.{u₁ u₂} C D) E)
+                              Prop
+                              (@eq.{(max (max u₁ u₂) u₃)+1} (prod.{(max u₁ u₂) u₃} (prod.{u₁ u₂} C D) E)
+                                 a)
+                              (@eq.{(max (max u₁ u₂) u₃)+1} (prod.{(max u₁ u₂) u₃} (prod.{u₁ u₂} C D) E)
+                                 a_1)
+                              a_2
+                              a_3
+                              (@congr_arg.{(max ((max u₁ u₂)+1) (u₃+1))
+                                 (max (max ((max u₁ u₂)+1) (u₃+1)) 1)}
+                                 (prod.{(max u₁ u₂) u₃} (prod.{u₁ u₂} C D) E)
+                                 (prod.{(max u₁ u₂) u₃} (prod.{u₁ u₂} C D) E → Prop)
+                                 a
+                                 a_1
+                                 (@eq.{(max (max u₁ u₂) u₃)+1}
+                                    (prod.{(max u₁ u₂) u₃} (prod.{u₁ u₂} C D) E))
+                                 e_1)
+                              e_2)
+                           (@category_theory.functor.obj.{(max (max v₁ v₂) v₃)
+                              (max (max v₁ v₂) v₃)
+                              (max (max u₁ u₂) u₃)
+                              (max (max u₁ u₂) u₃)}
+                              (prod.{(max u₁ u₂) u₃} (prod.{u₁ u₂} C D) E)
+                              (@category_theory.prod.{(max v₁ v₂) v₃ (max u₁ u₂) u₃} (prod.{u₁ u₂} C D)
+                                 (@category_theory.prod.{v₁ v₂ u₁ u₂} C 𝒞 D 𝒟)
+                                 E
+                                 ℰ)
+                              (prod.{(max u₁ u₂) u₃} (prod.{u₁ u₂} C D) E)
+                              (@category_theory.prod.{(max v₁ v₂) v₃ (max u₁ u₂) u₃} (prod.{u₁ u₂} C D)
+                                 (@category_theory.prod.{v₁ v₂ u₁ u₂} C 𝒞 D 𝒟)
+                                 E
+                                 ℰ)
+                              (@category_theory.functor.id.{(max (max v₁ v₂) v₃) (max (max u₁ u₂) u₃)}
+                                 (prod.{(max u₁ u₂) u₃} (prod.{u₁ u₂} C D) E)
+                                 (@category_theory.prod.{(max v₁ v₂) v₃ (max u₁ u₂) u₃}
+                                    (prod.{u₁ u₂} C D)
+                                    (@category_theory.prod.{v₁ v₂ u₁ u₂} C 𝒞 D 𝒟)
+                                    E
+                                    ℰ))
+                              Y)
+                           Y
+                           (@category_theory.functor.id_obj.{(max (max v₁ v₂) v₃) (max (max u₁ u₂) u₃)}
+                              (prod.{(max u₁ u₂) u₃} (prod.{u₁ u₂} C D) E)
+                              (@category_theory.prod.{(max v₁ v₂) v₃ (max u₁ u₂) u₃} (prod.{u₁ u₂} C D)
+                                 (@category_theory.prod.{v₁ v₂ u₁ u₂} C 𝒞 D 𝒟)
+                                 E
+                                 ℰ)
+                              Y)
+                           (@category_theory.functor.obj.{(max (max v₁ v₂) v₃)
+                              (max (max v₁ v₂) v₃)
+                              (max (max u₁ u₂) u₃)
+                              (max (max u₁ u₂) u₃)}
+                              (prod.{(max u₁ u₂) u₃} (prod.{u₁ u₂} C D) E)
+                              (@category_theory.prod.{(max v₁ v₂) v₃ (max u₁ u₂) u₃} (prod.{u₁ u₂} C D)
+                                 (@category_theory.prod.{v₁ v₂ u₁ u₂} C 𝒞 D 𝒟)
+                                 E
+                                 ℰ)
+                              (prod.{(max u₁ u₂) u₃} (prod.{u₁ u₂} C D) E)
+                              (@category_theory.prod.{(max v₁ v₂) v₃ (max u₁ u₂) u₃} (prod.{u₁ u₂} C D)
+                                 (@category_theory.prod.{v₁ v₂ u₁ u₂} C 𝒞 D 𝒟)
+                                 E
+                                 ℰ)
+                              (@category_theory.functor.comp.{(max (max v₁ v₂) v₃)
+                                 (max v₁ v₂ v₃)
+                                 (max (max v₁ v₂) v₃)
+                                 (max (max u₁ u₂) u₃)
+                                 (max u₁ u₂ u₃)
+                                 (max (max u₁ u₂) u₃)}
+                                 (prod.{(max u₁ u₂) u₃} (prod.{u₁ u₂} C D) E)
+                                 (@category_theory.prod.{(max v₁ v₂) v₃ (max u₁ u₂) u₃}
+                                    (prod.{u₁ u₂} C D)
+                                    (@category_theory.prod.{v₁ v₂ u₁ u₂} C 𝒞 D 𝒟)
+                                    E
+                                    ℰ)
+                                 (prod.{u₁ (max u₂ u₃)} C (prod.{u₂ u₃} D E))
+                                 (@category_theory.prod.{v₁ (max v₂ v₃) u₁ (max u₂ u₃)} C 𝒞
+                                    (prod.{u₂ u₃} D E)
+                                    (@category_theory.prod.{v₂ v₃ u₂ u₃} D 𝒟 E ℰ))
+                                 (prod.{(max u₁ u₂) u₃} (prod.{u₁ u₂} C D) E)
+                                 (@category_theory.prod.{(max v₁ v₂) v₃ (max u₁ u₂) u₃}
+                                    (prod.{u₁ u₂} C D)
+                                    (@category_theory.prod.{v₁ v₂ u₁ u₂} C 𝒞 D 𝒟)
+                                    E
+                                    ℰ)
+                                 (@category_theory.prod.associator.{v₁ v₂ v₃ u₁ u₂ u₃} C 𝒞 D 𝒟 E ℰ)
+                                 (@category_theory.prod.inverse_associator.{v₁ v₂ v₃ u₁ u₂ u₃} C 𝒞 D 𝒟
+                                    E
+                                    ℰ))
+                              Y)
+                           Y
+                           (@eq.trans.{(max ((max u₁ u₂)+1) (u₃+1))}
+                              (prod.{(max u₁ u₂) u₃} (prod.{u₁ u₂} C D) E)
+                              (@category_theory.functor.obj.{(max (max v₁ v₂) v₃)
+                                 (max (max v₁ v₂) v₃)
+                                 (max (max u₁ u₂) u₃)
+                                 (max (max u₁ u₂) u₃)}
+                                 (prod.{(max u₁ u₂) u₃} (prod.{u₁ u₂} C D) E)
+                                 (@category_theory.prod.{(max v₁ v₂) v₃ (max u₁ u₂) u₃}
+                                    (prod.{u₁ u₂} C D)
+                                    (@category_theory.prod.{v₁ v₂ u₁ u₂} C 𝒞 D 𝒟)
+                                    E
+                                    ℰ)
+                                 (prod.{(max u₁ u₂) u₃} (prod.{u₁ u₂} C D) E)
+                                 (@category_theory.prod.{(max v₁ v₂) v₃ (max u₁ u₂) u₃}
+                                    (prod.{u₁ u₂} C D)
+                                    (@category_theory.prod.{v₁ v₂ u₁ u₂} C 𝒞 D 𝒟)
+                                    E
+                                    ℰ)
+                                 (@category_theory.functor.comp.{(max (max v₁ v₂) v₃)
+                                    (max v₁ v₂ v₃)
+                                    (max (max v₁ v₂) v₃)
+                                    (max (max u₁ u₂) u₃)
+                                    (max u₁ u₂ u₃)
+                                    (max (max u₁ u₂) u₃)}
+                                    (prod.{(max u₁ u₂) u₃} (prod.{u₁ u₂} C D) E)
+                                    (@category_theory.prod.{(max v₁ v₂) v₃ (max u₁ u₂) u₃}
+                                       (prod.{u₁ u₂} C D)
+                                       (@category_theory.prod.{v₁ v₂ u₁ u₂} C 𝒞 D 𝒟)
+                                       E
+                                       ℰ)
+                                    (prod.{u₁ (max u₂ u₃)} C (prod.{u₂ u₃} D E))
+                                    (@category_theory.prod.{v₁ (max v₂ v₃) u₁ (max u₂ u₃)} C 𝒞
+                                       (prod.{u₂ u₃} D E)
+                                       (@category_theory.prod.{v₂ v₃ u₂ u₃} D 𝒟 E ℰ))
+                                    (prod.{(max u₁ u₂) u₃} (prod.{u₁ u₂} C D) E)
+                                    (@category_theory.prod.{(max v₁ v₂) v₃ (max u₁ u₂) u₃}
+                                       (prod.{u₁ u₂} C D)
+                                       (@category_theory.prod.{v₁ v₂ u₁ u₂} C 𝒞 D 𝒟)
+                                       E
+                                       ℰ)
+                                    (@category_theory.prod.associator.{v₁ v₂ v₃ u₁ u₂ u₃} C 𝒞 D 𝒟 E
+                                       ℰ)
+                                    (@category_theory.prod.inverse_associator.{v₁ v₂ v₃ u₁ u₂ u₃} C 𝒞 D
+                                       𝒟
+                                       E
+                                       ℰ))
+                                 Y)
+                              (@prod.mk.{(max u₁ u₂) u₃} (prod.{u₁ u₂} C D) E
+                                 (@prod.fst.{(max u₁ u₂) u₃} (prod.{u₁ u₂} C D) E Y)
+                                 (@prod.snd.{(max u₁ u₂) u₃} (prod.{u₁ u₂} C D) E Y))
+                              Y
+                              (@eq.trans.{(max ((max u₁ u₂)+1) (u₃+1))}
+                                 (prod.{(max u₁ u₂) u₃} (prod.{u₁ u₂} C D) E)
+                                 (@category_theory.functor.obj.{(max (max v₁ v₂) v₃)
+                                    (max (max v₁ v₂) v₃)
+                                    (max (max u₁ u₂) u₃)
+                                    (max (max u₁ u₂) u₃)}
+                                    (prod.{(max u₁ u₂) u₃} (prod.{u₁ u₂} C D) E)
+                                    (@category_theory.prod.{(max v₁ v₂) v₃ (max u₁ u₂) u₃}
+                                       (prod.{u₁ u₂} C D)
+                                       (@category_theory.prod.{v₁ v₂ u₁ u₂} C 𝒞 D 𝒟)
+                                       E
+                                       ℰ)
+                                    (prod.{(max u₁ u₂) u₃} (prod.{u₁ u₂} C D) E)
+                                    (@category_theory.prod.{(max v₁ v₂) v₃ (max u₁ u₂) u₃}
+                                       (prod.{u₁ u₂} C D)
+                                       (@category_theory.prod.{v₁ v₂ u₁ u₂} C 𝒞 D 𝒟)
+                                       E
+                                       ℰ)
+                                    (@category_theory.functor.comp.{(max (max v₁ v₂) v₃)
+                                       (max v₁ v₂ v₃)
+                                       (max (max v₁ v₂) v₃)
+                                       (max (max u₁ u₂) u₃)
+                                       (max u₁ u₂ u₃)
+                                       (max (max u₁ u₂) u₃)}
+                                       (prod.{(max u₁ u₂) u₃} (prod.{u₁ u₂} C D) E)
+                                       (@category_theory.prod.{(max v₁ v₂) v₃ (max u₁ u₂) u₃}
+                                          (prod.{u₁ u₂} C D)
+                                          (@category_theory.prod.{v₁ v₂ u₁ u₂} C 𝒞 D 𝒟)
+                                          E
+                                          ℰ)
+                                       (prod.{u₁ (max u₂ u₃)} C (prod.{u₂ u₃} D E))
+                                       (@category_theory.prod.{v₁ (max v₂ v₃) u₁ (max u₂ u₃)} C 𝒞
+                                          (prod.{u₂ u₃} D E)
+                                          (@category_theory.prod.{v₂ v₃ u₂ u₃} D 𝒟 E ℰ))
+                                       (prod.{(max u₁ u₂) u₃} (prod.{u₁ u₂} C D) E)
+                                       (@category_theory.prod.{(max v₁ v₂) v₃ (max u₁ u₂) u₃}
+                                          (prod.{u₁ u₂} C D)
+                                          (@category_theory.prod.{v₁ v₂ u₁ u₂} C 𝒞 D 𝒟)
+                                          E
+                                          ℰ)
+                                       (@category_theory.prod.associator.{v₁ v₂ v₃ u₁ u₂ u₃} C 𝒞 D 𝒟 E
+                                          ℰ)
+                                       (@category_theory.prod.inverse_associator.{v₁ v₂ v₃ u₁ u₂ u₃} C 𝒞
+                                          D
+                                          𝒟
+                                          E
+                                          ℰ))
+                                    Y)
+                                 (@prod.mk.{(max u₁ u₂) u₃} (prod.{u₁ u₂} C D) E
+                                    (@prod.mk.{u₁ u₂} C D
+                                       (@prod.fst.{u₁ (max u₂ u₃)} C (prod.{u₂ u₃} D E)
+                                          (@prod.mk.{u₁ (max u₂ u₃)} C (prod.{u₂ u₃} D E)
+                                             (@prod.fst.{u₁ u₂} C D
+                                                (@prod.fst.{(max u₁ u₂) u₃} (prod.{u₁ u₂} C D) E Y))
+                                             (@prod.mk.{u₂ u₃} D E
+                                                (@prod.snd.{u₁ u₂} C D
+                                                   (@prod.fst.{(max u₁ u₂) u₃} (prod.{u₁ u₂} C D) E Y))
+                                                (@prod.snd.{(max u₁ u₂) u₃} (prod.{u₁ u₂} C D) E Y))))
+                                       (@prod.fst.{u₂ u₃} D E
+                                          (@prod.snd.{u₁ (max u₂ u₃)} C (prod.{u₂ u₃} D E)
+                                             (@prod.mk.{u₁ (max u₂ u₃)} C (prod.{u₂ u₃} D E)
+                                                (@prod.fst.{u₁ u₂} C D
+                                                   (@prod.fst.{(max u₁ u₂) u₃} (prod.{u₁ u₂} C D) E Y))
+                                                (@prod.mk.{u₂ u₃} D E
+                                                   (@prod.snd.{u₁ u₂} C D
+                                                      (@prod.fst.{(max u₁ u₂) u₃} (prod.{u₁ u₂} C D) E Y))
+                                                   (@prod.snd.{(max u₁ u₂) u₃} (prod.{u₁ u₂} C D) E Y))))))
+                                    (@prod.snd.{u₂ u₃} D E
+                                       (@prod.snd.{u₁ (max u₂ u₃)} C (prod.{u₂ u₃} D E)
+                                          (@prod.mk.{u₁ (max u₂ u₃)} C (prod.{u₂ u₃} D E)
+                                             (@prod.fst.{u₁ u₂} C D
+                                                (@prod.fst.{(max u₁ u₂) u₃} (prod.{u₁ u₂} C D) E Y))
+                                             (@prod.mk.{u₂ u₃} D E
+                                                (@prod.snd.{u₁ u₂} C D
+                                                   (@prod.fst.{(max u₁ u₂) u₃} (prod.{u₁ u₂} C D) E Y))
+                                                (@prod.snd.{(max u₁ u₂) u₃} (prod.{u₁ u₂} C D) E Y))))))
+                                 (@prod.mk.{(max u₁ u₂) u₃} (prod.{u₁ u₂} C D) E
+                                    (@prod.fst.{(max u₁ u₂) u₃} (prod.{u₁ u₂} C D) E Y)
+                                    (@prod.snd.{(max u₁ u₂) u₃} (prod.{u₁ u₂} C D) E Y))
+                                 (@eq.trans.{(max ((max u₁ u₂)+1) (u₃+1))}
+                                    (prod.{(max u₁ u₂) u₃} (prod.{u₁ u₂} C D) E)
+                                    (@category_theory.functor.obj.{(max (max v₁ v₂) v₃)
+                                       (max (max v₁ v₂) v₃)
+                                       (max (max u₁ u₂) u₃)
+                                       (max (max u₁ u₂) u₃)}
+                                       (prod.{(max u₁ u₂) u₃} (prod.{u₁ u₂} C D) E)
+                                       (@category_theory.prod.{(max v₁ v₂) v₃ (max u₁ u₂) u₃}
+                                          (prod.{u₁ u₂} C D)
+                                          (@category_theory.prod.{v₁ v₂ u₁ u₂} C 𝒞 D 𝒟)
+                                          E
+                                          ℰ)
+                                       (prod.{(max u₁ u₂) u₃} (prod.{u₁ u₂} C D) E)
+                                       (@category_theory.prod.{(max v₁ v₂) v₃ (max u₁ u₂) u₃}
+                                          (prod.{u₁ u₂} C D)
+                                          (@category_theory.prod.{v₁ v₂ u₁ u₂} C 𝒞 D 𝒟)
+                                          E
+                                          ℰ)
+                                       (@category_theory.functor.comp.{(max (max v₁ v₂) v₃)
+                                          (max v₁ v₂ v₃)
+                                          (max (max v₁ v₂) v₃)
+                                          (max (max u₁ u₂) u₃)
+                                          (max u₁ u₂ u₃)
+                                          (max (max u₁ u₂) u₃)}
+                                          (prod.{(max u₁ u₂) u₃} (prod.{u₁ u₂} C D) E)
+                                          (@category_theory.prod.{(max v₁ v₂) v₃ (max u₁ u₂) u₃}
+                                             (prod.{u₁ u₂} C D)
+                                             (@category_theory.prod.{v₁ v₂ u₁ u₂} C 𝒞 D 𝒟)
+                                             E
+                                             ℰ)
+                                          (prod.{u₁ (max u₂ u₃)} C (prod.{u₂ u₃} D E))
+                                          (@category_theory.prod.{v₁ (max v₂ v₃) u₁ (max u₂ u₃)} C 𝒞
+                                             (prod.{u₂ u₃} D E)
+                                             (@category_theory.prod.{v₂ v₃ u₂ u₃} D 𝒟 E ℰ))
+                                          (prod.{(max u₁ u₂) u₃} (prod.{u₁ u₂} C D) E)
+                                          (@category_theory.prod.{(max v₁ v₂) v₃ (max u₁ u₂) u₃}
+                                             (prod.{u₁ u₂} C D)
+                                             (@category_theory.prod.{v₁ v₂ u₁ u₂} C 𝒞 D 𝒟)
+                                             E
+                                             ℰ)
+                                          (@category_theory.prod.associator.{v₁ v₂ v₃ u₁ u₂ u₃} C 𝒞 D
+                                             𝒟
+                                             E
+                                             ℰ)
+                                          (@category_theory.prod.inverse_associator.{v₁ v₂ v₃ u₁ u₂ u₃} C
+                                             𝒞
+                                             D
+                                             𝒟
+                                             E
+                                             ℰ))
+                                       Y)
+                                    (@category_theory.functor.obj.{(max v₁ v₂ v₃)
+                                       (max (max v₁ v₂) v₃)
+                                       (max u₁ u₂ u₃)
+                                       (max (max u₁ u₂) u₃)}
+                                       (prod.{u₁ (max u₂ u₃)} C (prod.{u₂ u₃} D E))
+                                       (@category_theory.prod.{v₁ (max v₂ v₃) u₁ (max u₂ u₃)} C 𝒞
+                                          (prod.{u₂ u₃} D E)
+                                          (@category_theory.prod.{v₂ v₃ u₂ u₃} D 𝒟 E ℰ))
+                                       (prod.{(max u₁ u₂) u₃} (prod.{u₁ u₂} C D) E)
+                                       (@category_theory.prod.{(max v₁ v₂) v₃ (max u₁ u₂) u₃}
+                                          (prod.{u₁ u₂} C D)
+                                          (@category_theory.prod.{v₁ v₂ u₁ u₂} C 𝒞 D 𝒟)
+                                          E
+                                          ℰ)
+                                       (@category_theory.prod.inverse_associator.{v₁ v₂ v₃ u₁ u₂ u₃} C 𝒞
+                                          D
+                                          𝒟
+                                          E
+                                          ℰ)
+                                       (@prod.mk.{u₁ (max u₂ u₃)} C (prod.{u₂ u₃} D E)
+                                          (@prod.fst.{u₁ u₂} C D
+                                             (@prod.fst.{(max u₁ u₂) u₃} (prod.{u₁ u₂} C D) E Y))
+                                          (@prod.mk.{u₂ u₃} D E
+                                             (@prod.snd.{u₁ u₂} C D
+                                                (@prod.fst.{(max u₁ u₂) u₃} (prod.{u₁ u₂} C D) E Y))
+                                             (@prod.snd.{(max u₁ u₂) u₃} (prod.{u₁ u₂} C D) E Y))))
+                                    (@prod.mk.{(max u₁ u₂) u₃} (prod.{u₁ u₂} C D) E
+                                       (@prod.mk.{u₁ u₂} C D
+                                          (@prod.fst.{u₁ (max u₂ u₃)} C (prod.{u₂ u₃} D E)
+                                             (@prod.mk.{u₁ (max u₂ u₃)} C (prod.{u₂ u₃} D E)
+                                                (@prod.fst.{u₁ u₂} C D
+                                                   (@prod.fst.{(max u₁ u₂) u₃} (prod.{u₁ u₂} C D) E Y))
+                                                (@prod.mk.{u₂ u₃} D E
+                                                   (@prod.snd.{u₁ u₂} C D
+                                                      (@prod.fst.{(max u₁ u₂) u₃} (prod.{u₁ u₂} C D) E Y))
+                                                   (@prod.snd.{(max u₁ u₂) u₃} (prod.{u₁ u₂} C D) E Y))))
+                                          (@prod.fst.{u₂ u₃} D E
+                                             (@prod.snd.{u₁ (max u₂ u₃)} C (prod.{u₂ u₃} D E)
+                                                (@prod.mk.{u₁ (max u₂ u₃)} C (prod.{u₂ u₃} D E)
+                                                   (@prod.fst.{u₁ u₂} C D
+                                                      (@prod.fst.{(max u₁ u₂) u₃} (prod.{u₁ u₂} C D) E Y))
+                                                   (@prod.mk.{u₂ u₃} D E
+                                                      (@prod.snd.{u₁ u₂} C D
+                                                         (@prod.fst.{(max u₁ u₂) u₃} (prod.{u₁ u₂} C D) E Y))
+                                                      (@prod.snd.{(max u₁ u₂) u₃} (prod.{u₁ u₂} C D) E Y))))))
+                                       (@prod.snd.{u₂ u₃} D E
+                                          (@prod.snd.{u₁ (max u₂ u₃)} C (prod.{u₂ u₃} D E)
+                                             (@prod.mk.{u₁ (max u₂ u₃)} C (prod.{u₂ u₃} D E)
+                                                (@prod.fst.{u₁ u₂} C D
+                                                   (@prod.fst.{(max u₁ u₂) u₃} (prod.{u₁ u₂} C D) E Y))
+                                                (@prod.mk.{u₂ u₃} D E
+                                                   (@prod.snd.{u₁ u₂} C D
+                                                      (@prod.fst.{(max u₁ u₂) u₃} (prod.{u₁ u₂} C D) E Y))
+                                                   (@prod.snd.{(max u₁ u₂) u₃} (prod.{u₁ u₂} C D) E Y))))))
+                                    (@eq.trans.{(max ((max u₁ u₂)+1) (u₃+1))}
+                                       (prod.{(max u₁ u₂) u₃} (prod.{u₁ u₂} C D) E)
+                                       (@category_theory.functor.obj.{(max (max v₁ v₂) v₃)
+                                          (max (max v₁ v₂) v₃)
+                                          (max (max u₁ u₂) u₃)
+                                          (max (max u₁ u₂) u₃)}
+                                          (prod.{(max u₁ u₂) u₃} (prod.{u₁ u₂} C D) E)
+                                          (@category_theory.prod.{(max v₁ v₂) v₃ (max u₁ u₂) u₃}
+                                             (prod.{u₁ u₂} C D)
+                                             (@category_theory.prod.{v₁ v₂ u₁ u₂} C 𝒞 D 𝒟)
+                                             E
+                                             ℰ)
+                                          (prod.{(max u₁ u₂) u₃} (prod.{u₁ u₂} C D) E)
+                                          (@category_theory.prod.{(max v₁ v₂) v₃ (max u₁ u₂) u₃}
+                                             (prod.{u₁ u₂} C D)
+                                             (@category_theory.prod.{v₁ v₂ u₁ u₂} C 𝒞 D 𝒟)
+                                             E
+                                             ℰ)
+                                          (@category_theory.functor.comp.{(max (max v₁ v₂) v₃)
+                                             (max v₁ v₂ v₃)
+                                             (max (max v₁ v₂) v₃)
+                                             (max (max u₁ u₂) u₃)
+                                             (max u₁ u₂ u₃)
+                                             (max (max u₁ u₂) u₃)}
+                                             (prod.{(max u₁ u₂) u₃} (prod.{u₁ u₂} C D) E)
+                                             (@category_theory.prod.{(max v₁ v₂) v₃ (max u₁ u₂) u₃}
+                                                (prod.{u₁ u₂} C D)
+                                                (@category_theory.prod.{v₁ v₂ u₁ u₂} C 𝒞 D 𝒟)
+                                                E
+                                                ℰ)
+                                             (prod.{u₁ (max u₂ u₃)} C (prod.{u₂ u₃} D E))
+                                             (@category_theory.prod.{v₁ (max v₂ v₃) u₁ (max u₂ u₃)} C 𝒞
+                                                (prod.{u₂ u₃} D E)
+                                                (@category_theory.prod.{v₂ v₃ u₂ u₃} D 𝒟 E ℰ))
+                                             (prod.{(max u₁ u₂) u₃} (prod.{u₁ u₂} C D) E)
+                                             (@category_theory.prod.{(max v₁ v₂) v₃ (max u₁ u₂) u₃}
+                                                (prod.{u₁ u₂} C D)
+                                                (@category_theory.prod.{v₁ v₂ u₁ u₂} C 𝒞 D 𝒟)
+                                                E
+                                                ℰ)
+                                             (@category_theory.prod.associator.{v₁ v₂ v₃ u₁ u₂ u₃} C 𝒞 D
+                                                𝒟
+                                                E
+                                                ℰ)
+                                             (@category_theory.prod.inverse_associator.{v₁ v₂ v₃ u₁ u₂ u₃} C
+                                                𝒞
+                                                D
+                                                𝒟
+                                                E
+                                                ℰ))
+                                          Y)
+                                       (@category_theory.functor.obj.{(max v₁ v₂ v₃)
+                                          (max (max v₁ v₂) v₃)
+                                          (max u₁ u₂ u₃)
+                                          (max (max u₁ u₂) u₃)}
+                                          (prod.{u₁ (max u₂ u₃)} C (prod.{u₂ u₃} D E))
+                                          (@category_theory.prod.{v₁ (max v₂ v₃) u₁ (max u₂ u₃)} C 𝒞
+                                             (prod.{u₂ u₃} D E)
+                                             (@category_theory.prod.{v₂ v₃ u₂ u₃} D 𝒟 E ℰ))
+                                          (prod.{(max u₁ u₂) u₃} (prod.{u₁ u₂} C D) E)
+                                          (@category_theory.prod.{(max v₁ v₂) v₃ (max u₁ u₂) u₃}
+                                             (prod.{u₁ u₂} C D)
+                                             (@category_theory.prod.{v₁ v₂ u₁ u₂} C 𝒞 D 𝒟)
+                                             E
+                                             ℰ)
+                                          (@category_theory.prod.inverse_associator.{v₁ v₂ v₃ u₁ u₂ u₃} C
+                                             𝒞
+                                             D
+                                             𝒟
+                                             E
+                                             ℰ)
+                                          (@category_theory.functor.obj.{(max (max v₁ v₂) v₃)
+                                             (max v₁ v₂ v₃)
+                                             (max (max u₁ u₂) u₃)
+                                             (max u₁ u₂ u₃)}
+                                             (prod.{(max u₁ u₂) u₃} (prod.{u₁ u₂} C D) E)
+                                             (@category_theory.prod.{(max v₁ v₂) v₃ (max u₁ u₂) u₃}
+                                                (prod.{u₁ u₂} C D)
+                                                (@category_theory.prod.{v₁ v₂ u₁ u₂} C 𝒞 D 𝒟)
+                                                E
+                                                ℰ)
+                                             (prod.{u₁ (max u₂ u₃)} C (prod.{u₂ u₃} D E))
+                                             (@category_theory.prod.{v₁ (max v₂ v₃) u₁ (max u₂ u₃)} C 𝒞
+                                                (prod.{u₂ u₃} D E)
+                                                (@category_theory.prod.{v₂ v₃ u₂ u₃} D 𝒟 E ℰ))
+                                             (@category_theory.prod.associator.{v₁ v₂ v₃ u₁ u₂ u₃} C 𝒞 D
+                                                𝒟
+                                                E
+                                                ℰ)
+                                             Y))
+                                       (@category_theory.functor.obj.{(max v₁ v₂ v₃)
+                                          (max (max v₁ v₂) v₃)
+                                          (max u₁ u₂ u₃)
+                                          (max (max u₁ u₂) u₃)}
+                                          (prod.{u₁ (max u₂ u₃)} C (prod.{u₂ u₃} D E))
+                                          (@category_theory.prod.{v₁ (max v₂ v₃) u₁ (max u₂ u₃)} C 𝒞
+                                             (prod.{u₂ u₃} D E)
+                                             (@category_theory.prod.{v₂ v₃ u₂ u₃} D 𝒟 E ℰ))
+                                          (prod.{(max u₁ u₂) u₃} (prod.{u₁ u₂} C D) E)
+                                          (@category_theory.prod.{(max v₁ v₂) v₃ (max u₁ u₂) u₃}
+                                             (prod.{u₁ u₂} C D)
+                                             (@category_theory.prod.{v₁ v₂ u₁ u₂} C 𝒞 D 𝒟)
+                                             E
+                                             ℰ)
+                                          (@category_theory.prod.inverse_associator.{v₁ v₂ v₃ u₁ u₂ u₃} C
+                                             𝒞
+                                             D
+                                             𝒟
+                                             E
+                                             ℰ)
+                                          (@prod.mk.{u₁ (max u₂ u₃)} C (prod.{u₂ u₃} D E)
+                                             (@prod.fst.{u₁ u₂} C D
+                                                (@prod.fst.{(max u₁ u₂) u₃} (prod.{u₁ u₂} C D) E Y))
+                                             (@prod.mk.{u₂ u₃} D E
+                                                (@prod.snd.{u₁ u₂} C D
+                                                   (@prod.fst.{(max u₁ u₂) u₃} (prod.{u₁ u₂} C D) E Y))
+                                                (@prod.snd.{(max u₁ u₂) u₃} (prod.{u₁ u₂} C D) E Y))))
+                                       (@category_theory.functor.comp_obj.{(max (max v₁ v₂) v₃)
+                                          (max v₁ v₂ v₃)
+                                          (max (max v₁ v₂) v₃)
+                                          (max (max u₁ u₂) u₃)
+                                          (max u₁ u₂ u₃)
+                                          (max (max u₁ u₂) u₃)}
+                                          (prod.{(max u₁ u₂) u₃} (prod.{u₁ u₂} C D) E)
+                                          (@category_theory.prod.{(max v₁ v₂) v₃ (max u₁ u₂) u₃}
+                                             (prod.{u₁ u₂} C D)
+                                             (@category_theory.prod.{v₁ v₂ u₁ u₂} C 𝒞 D 𝒟)
+                                             E
+                                             ℰ)
+                                          (prod.{u₁ (max u₂ u₃)} C (prod.{u₂ u₃} D E))
+                                          (@category_theory.prod.{v₁ (max v₂ v₃) u₁ (max u₂ u₃)} C 𝒞
+                                             (prod.{u₂ u₃} D E)
+                                             (@category_theory.prod.{v₂ v₃ u₂ u₃} D 𝒟 E ℰ))
+                                          (prod.{(max u₁ u₂) u₃} (prod.{u₁ u₂} C D) E)
+                                          (… ℰ)
+                                          …
+                                          …
+                                          Y)
+                                       …)
+                                    …)
+                                 …)
+                              …))
+                        …))
+                  trivial))))
+      …'><code style='font-family: menlo, "Source Code Pro", monospace;'>└──────────────────┘</code></a></font></pre>
+</body>

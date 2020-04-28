@@ -1,0 +1,104 @@
+<head>
+<meta charset="UTF-8">
+<link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro&display=swap" rel="stylesheet">
+</head>
+
+<body>
+<pre>
+<code style='font-family: menlo, "Source Code Pro", monospace;'>  1  /-</code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'>  2  Copyright (c) 2019 Scott Morrison. All rights reserved.</code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'>  3  Released under Apache 2.0 license as described in the file LICENSE.</code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'>  4  Authors: Scott Morrison, Johannes Hölzl</code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'>  5  -/</code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'>  6  import algebra.category.CommRing.basic</code>
+<font color='grey'><a title='source'><code style='font-family: menlo, "Source Code Pro", monospace;'>src  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>       </code><font color='red'><a title='{&#x27;file&#x27;: &#x27;/home/ec2-user/lean_info_scrapper/_target/deps/mathlib/src/algebra/category/CommRing/basic.lean&#x27;, &#x27;line&#x27;: 1, &#x27;column&#x27;: 0}'><code style='font-family: menlo, "Source Code Pro", monospace;'>└─────────────────────────────┘</code></a></font>
+<code style='font-family: menlo, "Source Code Pro", monospace;'>  7  import category_theory.adjunction.basic</code>
+<font color='grey'><a title='source'><code style='font-family: menlo, "Source Code Pro", monospace;'>src  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>       </code><font color='red'><a title='{&#x27;file&#x27;: &#x27;/home/ec2-user/lean_info_scrapper/_target/deps/mathlib/src/category_theory/adjunction/basic.lean&#x27;, &#x27;line&#x27;: 1, &#x27;column&#x27;: 0}'><code style='font-family: menlo, "Source Code Pro", monospace;'>└──────────────────────────────┘</code></a></font>
+<code style='font-family: menlo, "Source Code Pro", monospace;'>  8  import data.mv_polynomial</code>
+<font color='grey'><a title='source'><code style='font-family: menlo, "Source Code Pro", monospace;'>src  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>       </code><font color='red'><a title='{&#x27;file&#x27;: &#x27;/home/ec2-user/lean_info_scrapper/_target/deps/mathlib/src/data/mv_polynomial.lean&#x27;, &#x27;line&#x27;: 1, &#x27;column&#x27;: 0}'><code style='font-family: menlo, "Source Code Pro", monospace;'>└────────────────┘</code></a></font>
+<code style='font-family: menlo, "Source Code Pro", monospace;'>  9  </code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 10  /-!</code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 11  Multivariable polynomials on a type is the left adjoint of the</code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 12  forgetful functor from commutative rings to types.</code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 13  -/</code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 14  </code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 15  noncomputable theory</code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 16  </code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 17  universe u</code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 18  </code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 19  open mv_polynomial</code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 20  open category_theory</code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 21  </code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 22  namespace CommRing</code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 23  </code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 24  open_locale classical</code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 25  </code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 26  /--</code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 27  The free functor `Type u ⥤ CommRing.{u}` sending a type `X` to the multivariable (commutative)</code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 28  polynomials with variables `x : X`.</code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 29  -/</code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 30  def free : Type u ⥤ CommRing.{u} :=</code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 31  { obj := λ α, of (mv_polynomial α ℤ),</code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 32    -- TODO this should just be `ring_hom.of (rename f)`, but this causes a mysterious deterministic timeout!</code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 33    map := λ X Y f, @ring_hom.of _ _ _ _ (rename f) (by apply_instance),</code>
+<font color='grey'><a title='source'><code style='font-family: menlo, "Source Code Pro", monospace;'>src  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>                                                      </code><font color='red'><a title='{&#x27;file&#x27;: &#x27;/home/ec2-user/.elan/toolchains/3.4.2/lib/lean/library/init/meta/interactive.lean&#x27;, &#x27;line&#x27;: 213, &#x27;column&#x27;: 9}'><code style='font-family: menlo, "Source Code Pro", monospace;'>└────────────┘</code></a></font>
+<font color='grey'><a title='type'><code style='font-family: menlo, "Source Code Pro", monospace;'>typ  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>                                                      </code><font color='green'><a title='tactic.{0} unit'><code style='font-family: menlo, "Source Code Pro", monospace;'>└────────────┘</code></a></font>
+<font color='grey'><a title='doc'><code style='font-family: menlo, "Source Code Pro", monospace;'>doc  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>                                                      </code><font color='orange'><a title='This tactic tries to close the main goal `... ⊢ t` by generating a term of type `t` using type class resolution.'><code style='font-family: menlo, "Source Code Pro", monospace;'>└────────────┘</code></a></font>
+<font color='grey'><a title='text'><code style='font-family: menlo, "Source Code Pro", monospace;'>txt  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>                                                      </code><font color='teal'><a title='apply_instance'><code style='font-family: menlo, "Source Code Pro", monospace;'>└────────────┘</code></a></font>
+<font color='grey'><a title='tactic_params'><code style='font-family: menlo, "Source Code Pro", monospace;'>par  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>                                                      </code><font color='grey'><a title='[]'><code style='font-family: menlo, "Source Code Pro", monospace;'>└────────────┘</code></a></font>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 34    -- TODO these next two fields can be done by `tidy`, but the calls in `dsimp` and `simp` it generates are too slow.</code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 35    map_id&#x27; := λ X, ring_hom.ext $ rename_id,</code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 36    map_comp&#x27; := λ X Y Z f g, ring_hom.ext $ λ p, (rename_rename f g p).symm }</code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 37  </code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 38  @[simp] lemma free_obj_coe {α : Type u} :</code>
+<font color='grey'><a title='doc'><code style='font-family: menlo, "Source Code Pro", monospace;'>doc  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>  </code><font color='orange'><a title='simplification lemma'><code style='font-family: menlo, "Source Code Pro", monospace;'>└──┘</code></a></font>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 39    (free.obj α : Type u) = mv_polynomial α ℤ := rfl</code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 40  </code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 41  @[simp] lemma free_map_coe {α β : Type u} {f : α → β} :</code>
+<font color='grey'><a title='doc'><code style='font-family: menlo, "Source Code Pro", monospace;'>doc  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>  </code><font color='orange'><a title='simplification lemma'><code style='font-family: menlo, "Source Code Pro", monospace;'>└──┘</code></a></font>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 42    ⇑(free.map f) = rename f := rfl</code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 43  </code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 44  /--</code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 45  The free-forgetful adjunction for commutative rings.</code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 46  -/</code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 47  def adj : free ⊣ forget CommRing :=</code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 48  adjunction.mk_of_hom_equiv</code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 49  { hom_equiv := λ X R, hom_equiv,</code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 50    hom_equiv_naturality_left_symm&#x27; := by {intros, ext, dsimp, apply eval₂_cast_comp} }</code>
+<font color='grey'><a title='source'><code style='font-family: menlo, "Source Code Pro", monospace;'>src  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>                                         </code><font color='red'><a title='{&#x27;file&#x27;: &#x27;/home/ec2-user/.elan/toolchains/3.4.2/lib/lean/library/init/meta/interactive.lean&#x27;, &#x27;line&#x27;: 131, &#x27;column&#x27;: 9}'><code style='font-family: menlo, "Source Code Pro", monospace;'>└────┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>  </code><font color='red'><a title='{&#x27;file&#x27;: &#x27;/home/ec2-user/lean_info_scrapper/_target/deps/mathlib/src/tactic/ext.lean&#x27;, &#x27;line&#x27;: 342, &#x27;column&#x27;: 9}'><code style='font-family: menlo, "Source Code Pro", monospace;'>└─┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>  </code><font color='red'><a title='{&#x27;file&#x27;: &#x27;/home/ec2-user/.elan/toolchains/3.4.2/lib/lean/library/init/meta/interactive.lean&#x27;, &#x27;line&#x27;: 1239, &#x27;column&#x27;: 9}'><code style='font-family: menlo, "Source Code Pro", monospace;'>└───┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>  </code><font color='red'><a title='{&#x27;file&#x27;: &#x27;/home/ec2-user/.elan/toolchains/3.4.2/lib/lean/library/init/meta/interactive.lean&#x27;, &#x27;line&#x27;: 182, &#x27;column&#x27;: 9}'><code style='font-family: menlo, "Source Code Pro", monospace;'>└────┘</code></a></font>
+<font color='grey'><a title='type'><code style='font-family: menlo, "Source Code Pro", monospace;'>typ  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>                                         </code><font color='green'><a title='@interactive.parse (list.{0} name) (λ (a : list.{0} name), @list.reflect name (λ (a : name), name.reflect a) `(name) a) (@lean.parser.many.{0 0} lean.parser.{0} (@interaction_monad.monad.{0} lean.parser_state) lean.parser.alternative name interactive.types.ident_) → tactic.{0} unit'><code style='font-family: menlo, "Source Code Pro", monospace;'>└────┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>  </code><font color='green'><a title='@interactive.parse tactic.ext_patt (λ (a : tactic.ext_patt), @list.reflect tactic.rcases_patt (λ (a : tactic.rcases_patt), tactic.rcases_patt.has_reflect a) `(tactic.rcases_patt) a) tactic.ext_parse → @interactive.parse (option.{0} nat) (λ (a : option.{0} nat), @option.has_reflect nat (λ (a : nat), nat.reflect a) `(nat) a) (@optional.{0 0} lean.parser.{0} lean.parser.alternative nat (@has_seq_right.seq_right.{0 0} lean.parser.{0} (@applicative.to_has_seq_right.{0 0} lean.parser.{0} (@monad.to_applicative.{0 0} lean.parser.{0} (@interaction_monad.monad.{0} lean.parser_state))) unit nat (lean.parser.tk (string.str string.empty (char.of_nat (@bit0.{0} nat nat.has_add (@bit1.{0} nat nat.has_one nat.has_add (@bit0.{0} nat nat.has_add (@bit1.{0} nat nat.has_one nat.has_add (@bit1.{0} nat nat.has_one nat.has_add (@has_one.one.{0} nat nat.has_one))))))))) lean.parser.small_nat)) → tactic.{0} unit'><code style='font-family: menlo, "Source Code Pro", monospace;'>└─┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>  </code><font color='green'><a title='@interactive.parse bool (λ (a : bool), bool.has_reflect a) interactive.types.only_flag → @interactive.parse (list.{0} tactic.simp_arg_type) (λ (a : list.{0} tactic.simp_arg_type), @list.reflect tactic.simp_arg_type (λ (a : tactic.simp_arg_type), tactic.simp_arg_type.has_reflect a) `(tactic.simp_arg_type) a) tactic.simp_arg_list → @interactive.parse (list.{0} name) (λ (a : list.{0} name), @list.reflect name (λ (a : name), name.reflect a) `(name) a) interactive.types.with_ident_list → @interactive.parse interactive.loc (λ (a : interactive.loc), interactive.loc.has_reflect a) interactive.types.location → opt_param.{1} tactic.dsimp_config {md := tactic.transparency.reducible, max_steps := simp.default_max_steps, canonize_instances := bool.tt, single_pass := bool.ff, fail_if_unchanged := bool.tt, eta := bool.tt, zeta := bool.tt, beta := bool.tt, proj := bool.tt, iota := bool.tt, unfold_reducible := bool.ff, memoize := bool.tt} → tactic.{0} unit'><code style='font-family: menlo, "Source Code Pro", monospace;'>└───┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>  </code><font color='green'><a title='@interactive.parse pexpr (λ (a : pexpr), @expr.reflect bool.ff a) interactive.types.texpr → tactic.{0} unit'><code style='font-family: menlo, "Source Code Pro", monospace;'>└────┘</code></a></font>
+<font color='grey'><a title='doc'><code style='font-family: menlo, "Source Code Pro", monospace;'>doc  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>                                         </code><font color='orange'><a title='Similar to `intro` tactic. The tactic `intros` will keep introducing new hypotheses until the goal target is not a Pi/forall or let binder.
+
+The variant `intros h₁ ... hₙ` introduces `n` new hypotheses using the given identifiers to name them.'><code style='font-family: menlo, "Source Code Pro", monospace;'>└────┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>  </code><font color='orange'><a title='- `ext` applies as many extensionality lemmas as possible;
+- `ext ids`, with `ids` a list of identifiers, finds extentionality and applies them
+  until it runs out of identifiers in `ids` to name the local constants.
+
+When trying to prove:
+
+```lean
+α β : Type,
+f g : α → set β
+⊢ f = g
+```
+
+applying `ext x y` yields:
+
+```lean
+α β : Type,
+f g : α → set β,
+x : α,
+y : β
+⊢ y ∈ f x ↔ y ∈ f x
+```
+
+by applying functional extensionality and set extensionality.
+
+A maximum depth can be provided with `ext x y z : 3`.'><code style='font-family: menlo, "Source Code Pro", monospace;'>└─┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>  </code><font color='orange'><a title='`dsimp` is similar to `simp`, except that it only uses definitional equalities.'><code style='font-family: menlo, "Source Code Pro", monospace;'>└───┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>  </code><font color='orange'><a title='The `apply` tactic tries to match the current goal against the conclusion of the type of term. The argument term should be a term well-formed in the local context of the main goal. If it succeeds, then the tactic returns as many subgoals as the number of premises that have not been fixed by type inference or type class resolution. Non-dependent premises are added before dependent ones.
+
+The `apply` tactic uses higher-order pattern matching, type class resolution, and first-order unification with dependent types.'><code style='font-family: menlo, "Source Code Pro", monospace;'>└────┘</code></a></font>
+<font color='grey'><a title='text'><code style='font-family: menlo, "Source Code Pro", monospace;'>txt  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>                                         </code><font color='teal'><a title='intros'><code style='font-family: menlo, "Source Code Pro", monospace;'>└────┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>  </code><font color='teal'><a title='ext'><code style='font-family: menlo, "Source Code Pro", monospace;'>└─┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>  </code><font color='teal'><a title='dsimp'><code style='font-family: menlo, "Source Code Pro", monospace;'>└───┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>  </code><font color='teal'><a title='apply'><code style='font-family: menlo, "Source Code Pro", monospace;'>└────┘</code></a></font>
+<font color='grey'><a title='tactic_params'><code style='font-family: menlo, "Source Code Pro", monospace;'>par  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>                                         </code><font color='grey'><a title='[&#x27;id*&#x27;]'><code style='font-family: menlo, "Source Code Pro", monospace;'>└────┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>  </code><font color='grey'><a title='[&#x27;((patt) | patt_list)*&#x27;, &quot;&lt;error while executing interactive.param_desc: don&#x27;t know how to pretty print lean.parser.small_nat&gt;&quot;]'><code style='font-family: menlo, "Source Code Pro", monospace;'>└─┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>  </code><font color='grey'><a title='[&#x27;only?&#x27;, &#x27;(* | [(* | (- id | expr)), ...]?)&#x27;, &#x27;(with id*)?&#x27;, &#x27;(at (* | (⊢ | id)*))?&#x27;, &#x27;tactic.dsimp_config?&#x27;]'><code style='font-family: menlo, "Source Code Pro", monospace;'>└───┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>  </code><font color='grey'><a title='[&#x27;expr&#x27;]'><code style='font-family: menlo, "Source Code Pro", monospace;'>└────┘</code></a></font>
+<font color='grey'><a title='tactic_param_idx'><code style='font-family: menlo, "Source Code Pro", monospace;'>pid  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>                                                                  </code><font color='maroon'><a title='0'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 51  </code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 52  end CommRing</code></pre>
+</body>

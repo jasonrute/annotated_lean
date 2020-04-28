@@ -1,0 +1,962 @@
+<head>
+<meta charset="UTF-8">
+<link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro&display=swap" rel="stylesheet">
+</head>
+
+<body>
+<pre>
+<code style='font-family: menlo, "Source Code Pro", monospace;'>  1  /-</code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'>  2  Copyright (c) 2019 Yury Kudryashov. All rights reserved.</code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'>  3  Released under Apache 2.0 license as described in the file LICENSE.</code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'>  4  Authors: Yury Kudryashov</code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'>  5  -/</code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'>  6  </code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'>  7  import category_theory.concrete_category</code>
+<font color='grey'><a title='source'><code style='font-family: menlo, "Source Code Pro", monospace;'>src  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>       </code><font color='red'><a title='{&#x27;file&#x27;: &#x27;/home/ec2-user/lean_info_scrapper/_target/deps/mathlib/src/category_theory/concrete_category/default.lean&#x27;, &#x27;line&#x27;: 1, &#x27;column&#x27;: 0}'><code style='font-family: menlo, "Source Code Pro", monospace;'>└───────────────────────────────┘</code></a></font>
+<code style='font-family: menlo, "Source Code Pro", monospace;'>  8  </code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'>  9  /-!</code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 10  # Category of categories</code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 11  </code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 12  This file contains definition of category `Cat` of all categories.  In</code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 13  this category objects are categories and morphisms are functors</code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 14  between these categories.</code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 15  </code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 16  ## Implementation notes</code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 17  </code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 18  Though `Cat` is not a concrete category, we use `bundled` to define</code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 19  its carrier type.</code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 20  -/</code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 21  </code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 22  universes v u</code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 23  </code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 24  namespace category_theory</code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 25  </code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 26  /-- Category of categories. -/</code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 27  def Cat := bundled category.{v u}</code>
+<font color='grey'><a title='full-id'><code style='font-family: menlo, "Source Code Pro", monospace;'>id   </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>           </code><font color='blue'><a title='category_theory.bundled'><code style='font-family: menlo, "Source Code Pro", monospace;'>└─────┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'> </code><font color='blue'><a title='category_theory.category'><code style='font-family: menlo, "Source Code Pro", monospace;'>└──────┘</code></a></font>
+<font color='grey'><a title='source'><code style='font-family: menlo, "Source Code Pro", monospace;'>src  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>           </code><font color='red'><a title='{&#x27;file&#x27;: &#x27;/home/ec2-user/lean_info_scrapper/_target/deps/mathlib/src/category_theory/concrete_category/bundled.lean&#x27;, &#x27;line&#x27;: 24, &#x27;column&#x27;: 10}'><code style='font-family: menlo, "Source Code Pro", monospace;'>└─────┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'> </code><font color='red'><a title='{&#x27;file&#x27;: &#x27;/home/ec2-user/lean_info_scrapper/_target/deps/mathlib/src/category_theory/category/default.lean&#x27;, &#x27;line&#x27;: 61, &#x27;column&#x27;: 6}'><code style='font-family: menlo, "Source Code Pro", monospace;'>└──────┘</code></a></font>
+<font color='grey'><a title='type'><code style='font-family: menlo, "Source Code Pro", monospace;'>typ  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>           </code><font color='green'><a title='(Type u → Type v) → Type (max (u+1) v)'><code style='font-family: menlo, "Source Code Pro", monospace;'>└─────┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'> </code><font color='green'><a title='Type u → Type (max u (v+1))'><code style='font-family: menlo, "Source Code Pro", monospace;'>└──────┘</code></a></font>
+<font color='grey'><a title='doc'><code style='font-family: menlo, "Source Code Pro", monospace;'>doc  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>           </code><font color='orange'><a title=' `bundled` is a type bundled with a type class instance for that type. Only
+the type class is exposed as a parameter.'><code style='font-family: menlo, "Source Code Pro", monospace;'>└─────┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'> </code><font color='orange'><a title='The typeclass `category C` describes morphisms associated to objects of type `C`.
+The universe levels of the objects and morphisms are unconstrained, and will often need to be
+specified explicitly, as `category.{v} C`. (See also `large_category` and `small_category`.)'><code style='font-family: menlo, "Source Code Pro", monospace;'>└──────┘</code></a></font>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 28  </code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 29  namespace Cat</code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 30  </code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 31  instance str (C : Cat.{v u}) : category.{v u} C.α := C.str</code>
+<font color='grey'><a title='full-id'><code style='font-family: menlo, "Source Code Pro", monospace;'>id   </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>                  </code><font color='blue'><a title='category_theory.Cat'><code style='font-family: menlo, "Source Code Pro", monospace;'>└─┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>          </code><font color='blue'><a title='category_theory.category'><code style='font-family: menlo, "Source Code Pro", monospace;'>└──────┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>       </code><font color='blue'><a title='C'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'></code><font color='blue'><a title='category_theory.bundled.α'><code style='font-family: menlo, "Source Code Pro", monospace;'>└┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>    </code><font color='blue'><a title='C'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'></code><font color='blue'><a title='category_theory.bundled.str'><code style='font-family: menlo, "Source Code Pro", monospace;'>└──┘</code></a></font>
+<font color='grey'><a title='source'><code style='font-family: menlo, "Source Code Pro", monospace;'>src  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>                  </code><font color='red'><a title='{&#x27;line&#x27;: 27, &#x27;column&#x27;: 4}'><code style='font-family: menlo, "Source Code Pro", monospace;'>└─┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>          </code><font color='red'><a title='{&#x27;file&#x27;: &#x27;/home/ec2-user/lean_info_scrapper/_target/deps/mathlib/src/category_theory/category/default.lean&#x27;, &#x27;line&#x27;: 61, &#x27;column&#x27;: 6}'><code style='font-family: menlo, "Source Code Pro", monospace;'>└──────┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>        </code><font color='red'><a title='{&#x27;file&#x27;: &#x27;/home/ec2-user/lean_info_scrapper/_target/deps/mathlib/src/category_theory/concrete_category/bundled.lean&#x27;, &#x27;line&#x27;: 24, &#x27;column&#x27;: 10}'><code style='font-family: menlo, "Source Code Pro", monospace;'>└┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>     </code><font color='red'><a title='{&#x27;file&#x27;: &#x27;/home/ec2-user/lean_info_scrapper/_target/deps/mathlib/src/category_theory/concrete_category/bundled.lean&#x27;, &#x27;line&#x27;: 24, &#x27;column&#x27;: 10}'><code style='font-family: menlo, "Source Code Pro", monospace;'>└──┘</code></a></font>
+<font color='grey'><a title='type'><code style='font-family: menlo, "Source Code Pro", monospace;'>typ  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>                  </code><font color='green'><a title='Type (max (u+1) u (v+1))'><code style='font-family: menlo, "Source Code Pro", monospace;'>└─┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>          </code><font color='green'><a title='Type u → Type (max u (v+1))'><code style='font-family: menlo, "Source Code Pro", monospace;'>└──────┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>       </code><font color='green'><a title='category_theory.Cat.{v u}'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'></code><font color='green'><a title='Π {c : Type u → Type (max u (v+1))}, category_theory.bundled.{u (max u (v+1))} c → Type u'><code style='font-family: menlo, "Source Code Pro", monospace;'>└┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>    </code><font color='green'><a title='category_theory.Cat.{v u}'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'></code><font color='green'><a title='Π {c : Type u → Type (max u (v+1))} (c_1 : category_theory.bundled.{u (max u (v+1))} c), auto_param.{(max u (v+1))+1} (c (@category_theory.bundled.α.{u (max u (v+1))} c c_1)) (name.mk_string (string.str (string.str (string.str (string.str (string.str (string.str (string.str (string.str (string.str (string.str (string.str (string.str (string.str (string.str string.empty (char.of_nat (@bit1.{0} nat nat.has_one nat.has_add (@bit0.{0} nat nat.has_add (@bit0.{0} nat nat.has_add (@bit0.{0} nat nat.has_add (@bit0.{0} nat nat.has_add (@bit1.{0} nat nat.has_one nat.has_add (@has_one.one.{0} nat nat.has_one))))))))) (char.of_nat (@bit0.{0} nat nat.has_add (@bit0.{0} nat nat.has_add (@bit0.{0} nat nat.has_add (@bit0.{0} nat nat.has_add (@bit1.{0} nat nat.has_one nat.has_add (@bit1.{0} nat nat.has_one nat.has_add (@has_one.one.{0} nat nat.has_one))))))))) (char.of_nat (@bit0.{0} nat nat.has_add (@bit0.{0} nat nat.has_add (@bit0.{0} nat nat.has_add (@bit0.{0} nat nat.has_add (@bit1.{0} nat nat.has_one nat.has_add (@bit1.{0} nat nat.has_one nat.has_add (@has_one.one.{0} nat nat.has_one))))))))) (char.of_nat (@bit0.{0} nat nat.has_add (@bit0.{0} nat nat.has_add (@bit1.{0} nat nat.has_one nat.has_add (@bit1.{0} nat nat.has_one nat.has_add (@bit0.{0} nat nat.has_add (@bit1.{0} nat nat.has_one nat.has_add (@has_one.one.{0} nat nat.has_one))))))))) (char.of_nat (@bit1.{0} nat nat.has_one nat.has_add (@bit0.{0} nat nat.has_add (@bit0.{0} nat nat.has_add (@bit1.{0} nat nat.has_one nat.has_add (@bit1.{0} nat nat.has_one nat.has_add (@bit1.{0} nat nat.has_one nat.has_add (@has_one.one.{0} nat nat.has_one))))))))) (char.of_nat (@bit1.{0} nat nat.has_one nat.has_add (@bit1.{0} nat nat.has_one nat.has_add (@bit1.{0} nat nat.has_one nat.has_add (@bit1.{0} nat nat.has_one nat.has_add (@bit1.{0} nat nat.has_one nat.has_add (@bit0.{0} nat nat.has_add (@has_one.one.{0} nat nat.has_one))))))))) (char.of_nat (@bit1.{0} nat nat.has_one nat.has_add (@bit0.{0} nat nat.has_add (@bit0.{0} nat nat.has_add (@bit1.{0} nat nat.has_one nat.has_add (@bit0.{0} nat nat.has_add (@bit1.{0} nat nat.has_one nat.has_add (@has_one.one.{0} nat nat.has_one))))))))) (char.of_nat (@bit0.{0} nat nat.has_add (@bit1.{0} nat nat.has_one nat.has_add (@bit1.{0} nat nat.has_one nat.has_add (@bit1.{0} nat nat.has_one nat.has_add (@bit0.{0} nat nat.has_add (@bit1.{0} nat nat.has_one nat.has_add (@has_one.one.{0} nat nat.has_one))))))))) (char.of_nat (@bit1.{0} nat nat.has_one nat.has_add (@bit1.{0} nat nat.has_one nat.has_add (@bit0.{0} nat nat.has_add (@bit0.{0} nat nat.has_add (@bit1.{0} nat nat.has_one nat.has_add (@bit1.{0} nat nat.has_one nat.has_add (@has_one.one.{0} nat nat.has_one))))))))) (char.of_nat (@bit0.{0} nat nat.has_add (@bit0.{0} nat nat.has_add (@bit1.{0} nat nat.has_one nat.has_add (@bit0.{0} nat nat.has_add (@bit1.{0} nat nat.has_one nat.has_add (@bit1.{0} nat nat.has_one nat.has_add (@has_one.one.{0} nat nat.has_one))))))))) (char.of_nat (@bit1.{0} nat nat.has_one nat.has_add (@bit0.{0} nat nat.has_add (@bit0.{0} nat nat.has_add (@bit0.{0} nat nat.has_add (@bit0.{0} nat nat.has_add (@bit1.{0} nat nat.has_one nat.has_add (@has_one.one.{0} nat nat.has_one))))))))) (char.of_nat (@bit0.{0} nat nat.has_add (@bit1.{0} nat nat.has_one nat.has_add (@bit1.{0} nat nat.has_one nat.has_add (@bit1.{0} nat nat.has_one nat.has_add (@bit0.{0} nat nat.has_add (@bit1.{0} nat nat.has_one nat.has_add (@has_one.one.{0} nat nat.has_one))))))))) (char.of_nat (@bit1.{0} nat nat.has_one nat.has_add (@bit1.{0} nat nat.has_one nat.has_add (@bit0.{0} nat nat.has_add (@bit0.{0} nat nat.has_add (@bit0.{0} nat nat.has_add (@bit1.{0} nat nat.has_one nat.has_add (@has_one.one.{0} nat nat.has_one))))))))) (char.of_nat (@bit1.{0} nat nat.has_one nat.has_add (@bit0.{0} nat nat.has_add (@bit1.{0} nat nat.has_one nat.has_add (@bit0.{0} nat nat.has_add (@bit0.{0} nat nat.has_add (@bit1.{0} nat nat.has_one nat.has_add (@has_one.one.{0} nat nat.has_one))))))))) (name.mk_string (string.str (string.str (string.str (string.str (string.str (string.str string.empty (char.of_nat (@bit0.{0} nat nat.has_add (@bit0.{0} nat nat.has_add (@bit1.{0} nat nat.has_one nat.has_add (@bit0.{0} nat nat.has_add (@bit1.{0} nat nat.has_one nat.has_add (@bit1.{0} nat nat.has_one nat.has_add (@has_one.one.{0} nat nat.has_one))))))))) (char.of_nat (@bit1.{0} nat nat.has_one nat.has_add (@bit0.{0} nat nat.has_add (@bit0.{0} nat nat.has_add (@bit0.{0} nat nat.has_add (@bit0.{0} nat nat.has_add (@bit1.{0} nat nat.has_one nat.has_add (@has_one.one.{0} nat nat.has_one))))))))) (char.of_nat (@bit1.{0} nat nat.has_one nat.has_add (@bit1.{0} nat nat.has_one nat.has_add (@bit0.{0} nat nat.has_add (@bit0.{0} nat nat.has_add (@bit0.{0} nat nat.has_add (@bit1.{0} nat nat.has_one nat.has_add (@has_one.one.{0} nat nat.has_one))))))))) (char.of_nat (@bit0.{0} nat nat.has_add (@bit0.{0} nat nat.has_add (@bit1.{0} nat nat.has_one nat.has_add (@bit0.{0} nat nat.has_add (@bit1.{0} nat nat.has_one nat.has_add (@bit1.{0} nat nat.has_one nat.has_add (@has_one.one.{0} nat nat.has_one))))))))) (char.of_nat (@bit1.{0} nat nat.has_one nat.has_add (@bit0.{0} nat nat.has_add (@bit0.{0} nat nat.has_add (@bit1.{0} nat nat.has_one nat.has_add (@bit0.{0} nat nat.has_add (@bit1.{0} nat nat.has_one nat.has_add (@has_one.one.{0} nat nat.has_one))))))))) (char.of_nat (@bit1.{0} nat nat.has_one nat.has_add (@bit1.{0} nat nat.has_one nat.has_add (@bit0.{0} nat nat.has_add (@bit0.{0} nat nat.has_add (@bit0.{0} nat nat.has_add (@bit1.{0} nat nat.has_one nat.has_add (@has_one.one.{0} nat nat.has_one))))))))) name.anonymous))'><code style='font-family: menlo, "Source Code Pro", monospace;'>└──┘</code></a></font>
+<font color='grey'><a title='doc'><code style='font-family: menlo, "Source Code Pro", monospace;'>doc  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>                  </code><font color='orange'><a title='Category of categories.'><code style='font-family: menlo, "Source Code Pro", monospace;'>└─┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>          </code><font color='orange'><a title='The typeclass `category C` describes morphisms associated to objects of type `C`.
+The universe levels of the objects and morphisms are unconstrained, and will often need to be
+specified explicitly, as `category.{v} C`. (See also `large_category` and `small_category`.)'><code style='font-family: menlo, "Source Code Pro", monospace;'>└──────┘</code></a></font>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 32  </code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 33  /-- Construct a bundled `Cat` from the underlying type and the typeclass. -/</code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 34  def of (C : Type u) [category.{v} C] : Cat.{v u} := bundled.of C</code>
+<font color='grey'><a title='full-id'><code style='font-family: menlo, "Source Code Pro", monospace;'>id   </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>                     </code><font color='blue'><a title='category_theory.category'><code style='font-family: menlo, "Source Code Pro", monospace;'>└──────┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>     </code><font color='blue'><a title='C'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>    </code><font color='blue'><a title='category_theory.Cat'><code style='font-family: menlo, "Source Code Pro", monospace;'>└─┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>          </code><font color='blue'><a title='category_theory.bundled.of'><code style='font-family: menlo, "Source Code Pro", monospace;'>└────────┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'> </code><font color='blue'><a title='C'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font>
+<font color='grey'><a title='source'><code style='font-family: menlo, "Source Code Pro", monospace;'>src  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>                     </code><font color='red'><a title='{&#x27;file&#x27;: &#x27;/home/ec2-user/lean_info_scrapper/_target/deps/mathlib/src/category_theory/category/default.lean&#x27;, &#x27;line&#x27;: 61, &#x27;column&#x27;: 6}'><code style='font-family: menlo, "Source Code Pro", monospace;'>└──────┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>          </code><font color='red'><a title='{&#x27;line&#x27;: 27, &#x27;column&#x27;: 4}'><code style='font-family: menlo, "Source Code Pro", monospace;'>└─┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>          </code><font color='red'><a title='{&#x27;file&#x27;: &#x27;/home/ec2-user/lean_info_scrapper/_target/deps/mathlib/src/category_theory/concrete_category/bundled.lean&#x27;, &#x27;line&#x27;: 32, &#x27;column&#x27;: 4}'><code style='font-family: menlo, "Source Code Pro", monospace;'>└────────┘</code></a></font>
+<font color='grey'><a title='type'><code style='font-family: menlo, "Source Code Pro", monospace;'>typ  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>                     </code><font color='green'><a title='Type u → Type (max u (v+1))'><code style='font-family: menlo, "Source Code Pro", monospace;'>└──────┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>     </code><font color='green'><a title='Type u'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>    </code><font color='green'><a title='Type (max (u+1) u (v+1))'><code style='font-family: menlo, "Source Code Pro", monospace;'>└─┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>          </code><font color='green'><a title='Π {c : Type u → Type v} (α : Type u) [str : c α], category_theory.bundled.{u v} c'><code style='font-family: menlo, "Source Code Pro", monospace;'>└────────┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'> </code><font color='green'><a title='Type u'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font>
+<font color='grey'><a title='doc'><code style='font-family: menlo, "Source Code Pro", monospace;'>doc  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>                     </code><font color='orange'><a title='The typeclass `category C` describes morphisms associated to objects of type `C`.
+The universe levels of the objects and morphisms are unconstrained, and will often need to be
+specified explicitly, as `category.{v} C`. (See also `large_category` and `small_category`.)'><code style='font-family: menlo, "Source Code Pro", monospace;'>└──────┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>          </code><font color='orange'><a title='Category of categories.'><code style='font-family: menlo, "Source Code Pro", monospace;'>└─┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>          </code><font color='orange'><a title='A generic function for lifting a type equipped with an instance to a bundled object.'><code style='font-family: menlo, "Source Code Pro", monospace;'>└────────┘</code></a></font>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 35  </code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 36  /-- Category structure on `Cat` -/</code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 37  instance category : large_category.{max v u} Cat.{v u} :=</code>
+<font color='grey'><a title='full-id'><code style='font-family: menlo, "Source Code Pro", monospace;'>id   </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>                    </code><font color='blue'><a title='category_theory.large_category'><code style='font-family: menlo, "Source Code Pro", monospace;'>└────────────┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>           </code><font color='blue'><a title='category_theory.Cat'><code style='font-family: menlo, "Source Code Pro", monospace;'>└─┘</code></a></font>
+<font color='grey'><a title='source'><code style='font-family: menlo, "Source Code Pro", monospace;'>src  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>                    </code><font color='red'><a title='{&#x27;file&#x27;: &#x27;/home/ec2-user/lean_info_scrapper/_target/deps/mathlib/src/category_theory/category/default.lean&#x27;, &#x27;line&#x27;: 83, &#x27;column&#x27;: 13}'><code style='font-family: menlo, "Source Code Pro", monospace;'>└────────────┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>           </code><font color='red'><a title='{&#x27;line&#x27;: 27, &#x27;column&#x27;: 4}'><code style='font-family: menlo, "Source Code Pro", monospace;'>└─┘</code></a></font>
+<font color='grey'><a title='type'><code style='font-family: menlo, "Source Code Pro", monospace;'>typ  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>                    </code><font color='green'><a title='Type (u+1) → Type (u+1)'><code style='font-family: menlo, "Source Code Pro", monospace;'>└────────────┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>           </code><font color='green'><a title='Type (max (u+1) u (v+1))'><code style='font-family: menlo, "Source Code Pro", monospace;'>└─┘</code></a></font>
+<font color='grey'><a title='doc'><code style='font-family: menlo, "Source Code Pro", monospace;'>doc  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>                    </code><font color='orange'><a title='A `large_category` has objects in one universe level higher than the universe level of
+the morphisms. It is useful for examples such as the category of types, or the category
+of groups, etc.'><code style='font-family: menlo, "Source Code Pro", monospace;'>└────────────┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>           </code><font color='orange'><a title='Category of categories.'><code style='font-family: menlo, "Source Code Pro", monospace;'>└─┘</code></a></font>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 38  { hom := λ C D, C.α ⥤ D.α,</code>
+<font color='grey'><a title='full-id'><code style='font-family: menlo, "Source Code Pro", monospace;'>id   </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>           </code><font color='blue'><a title='C'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'> </code><font color='blue'><a title='D'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>  </code><font color='blue'><a title='C'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'></code><font color='blue'><a title='category_theory.bundled.α'><code style='font-family: menlo, "Source Code Pro", monospace;'>└┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'> </code><font color='blue'><a title='category_theory.functor'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'> </code><font color='blue'><a title='D'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'></code><font color='blue'><a title='category_theory.bundled.α'><code style='font-family: menlo, "Source Code Pro", monospace;'>└┘</code></a></font>
+<font color='grey'><a title='source'><code style='font-family: menlo, "Source Code Pro", monospace;'>src  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>                 </code><font color='red'><a title='{&#x27;file&#x27;: &#x27;/home/ec2-user/lean_info_scrapper/_target/deps/mathlib/src/category_theory/concrete_category/bundled.lean&#x27;, &#x27;line&#x27;: 24, &#x27;column&#x27;: 10}'><code style='font-family: menlo, "Source Code Pro", monospace;'>└┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'> </code><font color='red'><a title='{&#x27;file&#x27;: &#x27;/home/ec2-user/lean_info_scrapper/_target/deps/mathlib/src/category_theory/functor.lean&#x27;, &#x27;line&#x27;: 30, &#x27;column&#x27;: 10}'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>  </code><font color='red'><a title='{&#x27;file&#x27;: &#x27;/home/ec2-user/lean_info_scrapper/_target/deps/mathlib/src/category_theory/concrete_category/bundled.lean&#x27;, &#x27;line&#x27;: 24, &#x27;column&#x27;: 10}'><code style='font-family: menlo, "Source Code Pro", monospace;'>└┘</code></a></font>
+<font color='grey'><a title='type'><code style='font-family: menlo, "Source Code Pro", monospace;'>typ  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>           </code><font color='green'><a title='category_theory.Cat.{v u}'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'> </code><font color='green'><a title='category_theory.Cat.{v u}'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>  </code><font color='green'><a title='category_theory.Cat.{v u}'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'></code><font color='green'><a title='Π {c : Type u → Type (max u (v+1))}, category_theory.bundled.{u (max u (v+1))} c → Type u'><code style='font-family: menlo, "Source Code Pro", monospace;'>└┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'> </code><font color='green'><a title='Π (C : Type u) [_inst_1 : category_theory.category.{v u} C] (D : Type u) [_inst_2 : category_theory.category.{v u} D], Type (max v u)'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'> </code><font color='green'><a title='category_theory.Cat.{v u}'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'></code><font color='green'><a title='Π {c : Type u → Type (max u (v+1))}, category_theory.bundled.{u (max u (v+1))} c → Type u'><code style='font-family: menlo, "Source Code Pro", monospace;'>└┘</code></a></font>
+<font color='grey'><a title='doc'><code style='font-family: menlo, "Source Code Pro", monospace;'>doc  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>                    </code><font color='orange'><a title='`functor C D` represents a functor between categories `C` and `D`.
+
+To apply a functor `F` to an object use `F.obj X`, and to a morphism use `F.map f`.
+
+The axiom `map_id_lemma` expresses preservation of identities, and
+`map_comp_lemma` expresses functoriality.'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 39    id := λ C, 𝟭 C.α,</code>
+<font color='grey'><a title='full-id'><code style='font-family: menlo, "Source Code Pro", monospace;'>id   </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>          </code><font color='blue'><a title='C'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>  </code><font color='blue'><a title='category_theory.functor.id'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'> </code><font color='blue'><a title='C'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'></code><font color='blue'><a title='category_theory.bundled.α'><code style='font-family: menlo, "Source Code Pro", monospace;'>└┘</code></a></font>
+<font color='grey'><a title='source'><code style='font-family: menlo, "Source Code Pro", monospace;'>src  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>             </code><font color='red'><a title='{&#x27;file&#x27;: &#x27;/home/ec2-user/lean_info_scrapper/_target/deps/mathlib/src/category_theory/functor.lean&#x27;, &#x27;line&#x27;: 53, &#x27;column&#x27;: 14}'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>  </code><font color='red'><a title='{&#x27;file&#x27;: &#x27;/home/ec2-user/lean_info_scrapper/_target/deps/mathlib/src/category_theory/concrete_category/bundled.lean&#x27;, &#x27;line&#x27;: 24, &#x27;column&#x27;: 10}'><code style='font-family: menlo, "Source Code Pro", monospace;'>└┘</code></a></font>
+<font color='grey'><a title='type'><code style='font-family: menlo, "Source Code Pro", monospace;'>typ  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>          </code><font color='green'><a title='category_theory.Cat.{v u}'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>  </code><font color='green'><a title='Π (C : Type u) [𝒞 : category_theory.category.{v u} C], @category_theory.functor.{v v u u} C 𝒞 C 𝒞'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'> </code><font color='green'><a title='category_theory.Cat.{v u}'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'></code><font color='green'><a title='Π {c : Type u → Type (max u (v+1))}, category_theory.bundled.{u (max u (v+1))} c → Type u'><code style='font-family: menlo, "Source Code Pro", monospace;'>└┘</code></a></font>
+<font color='grey'><a title='doc'><code style='font-family: menlo, "Source Code Pro", monospace;'>doc  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>             </code><font color='orange'><a title='`𝟭 C` is the identity functor on a category `C`.'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 40    comp := λ C D E F G, F ⋙ G,</code>
+<font color='grey'><a title='full-id'><code style='font-family: menlo, "Source Code Pro", monospace;'>id   </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>            </code><font color='blue'><a title='C'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'> </code><font color='blue'><a title='D'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'> </code><font color='blue'><a title='E'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'> </code><font color='blue'><a title='F'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'> </code><font color='blue'><a title='G'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>  </code><font color='blue'><a title='F'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'> </code><font color='blue'><a title='category_theory.functor.comp'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'> </code><font color='blue'><a title='G'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font>
+<font color='grey'><a title='source'><code style='font-family: menlo, "Source Code Pro", monospace;'>src  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>                         </code><font color='red'><a title='{&#x27;file&#x27;: &#x27;/home/ec2-user/lean_info_scrapper/_target/deps/mathlib/src/category_theory/functor.lean&#x27;, &#x27;line&#x27;: 74, &#x27;column&#x27;: 4}'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font>
+<font color='grey'><a title='type'><code style='font-family: menlo, "Source Code Pro", monospace;'>typ  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>            </code><font color='green'><a title='category_theory.Cat.{v u}'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'> </code><font color='green'><a title='category_theory.Cat.{v u}'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'> </code><font color='green'><a title='category_theory.Cat.{v u}'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'> </code><font color='green'><a title='@category_theory.has_hom.hom.{(max v u) (max v u)+1} category_theory.Cat.{v u} (@category_theory.has_hom.mk.{(max v u) (max v u)+1} category_theory.Cat.{v u} (λ (C D : category_theory.Cat.{v u}), @category_theory.functor.{v v u u} (@category_theory.bundled.α.{u (max u (v+1))} category_theory.category.{v u} C) (category_theory.Cat.str.{v u} C) (@category_theory.bundled.α.{u (max u (v+1))} category_theory.category.{v u} D) (category_theory.Cat.str.{v u} D))) C D'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'> </code><font color='green'><a title='@category_theory.has_hom.hom.{(max v u) (max v u)+1} category_theory.Cat.{v u} (@category_theory.has_hom.mk.{(max v u) (max v u)+1} category_theory.Cat.{v u} (λ (C D : category_theory.Cat.{v u}), @category_theory.functor.{v v u u} (@category_theory.bundled.α.{u (max u (v+1))} category_theory.category.{v u} C) (category_theory.Cat.str.{v u} C) (@category_theory.bundled.α.{u (max u (v+1))} category_theory.category.{v u} D) (category_theory.Cat.str.{v u} D))) D E'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>  </code><font color='green'><a title='@category_theory.has_hom.hom.{(max v u) (max v u)+1} category_theory.Cat.{v u} (@category_theory.has_hom.mk.{(max v u) (max v u)+1} category_theory.Cat.{v u} (λ (C D : category_theory.Cat.{v u}), @category_theory.functor.{v v u u} (@category_theory.bundled.α.{u (max u (v+1))} category_theory.category.{v u} C) (category_theory.Cat.str.{v u} C) (@category_theory.bundled.α.{u (max u (v+1))} category_theory.category.{v u} D) (category_theory.Cat.str.{v u} D))) C D'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'> </code><font color='green'><a title='Π {C : Type u} [𝒞 : category_theory.category.{v u} C] {D : Type u} [𝒟 : category_theory.category.{v u} D] {E : Type u} [ℰ : category_theory.category.{v u} E], @category_theory.functor.{v v u u} C 𝒞 D 𝒟 → @category_theory.functor.{v v u u} D 𝒟 E ℰ → @category_theory.functor.{v v u u} C 𝒞 E ℰ'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'> </code><font color='green'><a title='@category_theory.has_hom.hom.{(max v u) (max v u)+1} category_theory.Cat.{v u} (@category_theory.has_hom.mk.{(max v u) (max v u)+1} category_theory.Cat.{v u} (λ (C D : category_theory.Cat.{v u}), @category_theory.functor.{v v u u} (@category_theory.bundled.α.{u (max u (v+1))} category_theory.category.{v u} C) (category_theory.Cat.str.{v u} C) (@category_theory.bundled.α.{u (max u (v+1))} category_theory.category.{v u} D) (category_theory.Cat.str.{v u} D))) D E'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font>
+<font color='grey'><a title='doc'><code style='font-family: menlo, "Source Code Pro", monospace;'>doc  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>                         </code><font color='orange'><a title='`F ⋙ G` is the composition of a functor `F` and a functor `G` (`F` first, then `G`).'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 41    id_comp&#x27; := λ C D F, by cases F; refl,</code>
+<font color='grey'><a title='full-id'><code style='font-family: menlo, "Source Code Pro", monospace;'>id   </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>                </code><font color='blue'><a title='C'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'> </code><font color='blue'><a title='D'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'> </code><font color='blue'><a title='F'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>           </code><font color='blue'><a title='F'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font>
+<font color='grey'><a title='source'><code style='font-family: menlo, "Source Code Pro", monospace;'>src  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>                          </code><font color='red'><a title='{&#x27;file&#x27;: &#x27;/home/ec2-user/.elan/toolchains/3.4.2/lib/lean/library/init/meta/interactive.lean&#x27;, &#x27;line&#x27;: 745, &#x27;column&#x27;: 9}'><code style='font-family: menlo, "Source Code Pro", monospace;'>└────┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>   </code><font color='red'><a title='{&#x27;file&#x27;: &#x27;/home/ec2-user/.elan/toolchains/3.4.2/lib/lean/library/init/meta/interactive.lean&#x27;, &#x27;line&#x27;: 1263, &#x27;column&#x27;: 9}'><code style='font-family: menlo, "Source Code Pro", monospace;'>└──┘</code></a></font>
+<font color='grey'><a title='type'><code style='font-family: menlo, "Source Code Pro", monospace;'>typ  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>                </code><font color='green'><a title='category_theory.Cat.{v u}'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'> </code><font color='green'><a title='category_theory.Cat.{v u}'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'> </code><font color='green'><a title='@category_theory.has_hom.hom.{(max v u) (max v u)+1} category_theory.Cat.{v u} (@category_theory.category_struct.to_has_hom.{(max v u) (max v u)+1} category_theory.Cat.{v u} (@category_theory.category_struct.mk.{(max v u) (max v u)+1} category_theory.Cat.{v u} (@category_theory.has_hom.mk.{(max v u) (max v u)+1} category_theory.Cat.{v u} (λ (C D : category_theory.Cat.{v u}), @category_theory.functor.{v v u u} (@category_theory.bundled.α.{u (max u (v+1))} category_theory.category.{v u} C) (category_theory.Cat.str.{v u} C) (@category_theory.bundled.α.{u (max u (v+1))} category_theory.category.{v u} D) (category_theory.Cat.str.{v u} D))) (λ (C : category_theory.Cat.{v u}), @category_theory.functor.id.{v u} (@category_theory.bundled.α.{u (max u (v+1))} category_theory.category.{v u} C) (category_theory.Cat.str.{v u} C)) (λ (C D E : category_theory.Cat.{v u}) (F : @category_theory.has_hom.hom.{(max v u) (max v u)+1} category_theory.Cat.{v u} (@category_theory.has_hom.mk.{(max v u) (max v u)+1} category_theory.Cat.{v u} (λ (C D : category_theory.Cat.{v u}), @category_theory.functor.{v v u u} (@category_theory.bundled.α.{u (max u (v+1))} category_theory.category.{v u} C) (category_theory.Cat.str.{v u} C) (@category_theory.bundled.α.{u (max u (v+1))} category_theory.category.{v u} D) (category_theory.Cat.str.{v u} D))) C D) (G : @category_theory.has_hom.hom.{(max v u) (max v u)+1} category_theory.Cat.{v u} (@category_theory.has_hom.mk.{(max v u) (max v u)+1} category_theory.Cat.{v u} (λ (C D : category_theory.Cat.{v u}), @category_theory.functor.{v v u u} (@category_theory.bundled.α.{u (max u (v+1))} category_theory.category.{v u} C) (category_theory.Cat.str.{v u} C) (@category_theory.bundled.α.{u (max u (v+1))} category_theory.category.{v u} D) (category_theory.Cat.str.{v u} D))) D E), @category_theory.functor.comp.{v v v u u u} (@category_theory.bundled.α.{u (max u (v+1))} category_theory.category.{v u} C) (category_theory.Cat.str.{v u} C) (@category_theory.bundled.α.{u (max u (v+1))} category_theory.category.{v u} D) (category_theory.Cat.str.{v u} D) (@category_theory.bundled.α.{u (max u (v+1))} category_theory.category.{v u} E) (category_theory.Cat.str.{v u} E) F G))) C D'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>     </code><font color='green'><a title='@interactive.parse (prod.{0 0} (option.{0} name) pexpr) (λ (a : prod.{0 0} (option.{0} name) pexpr), @prod.has_reflect (option.{0} name) (λ (a : option.{0} name), @option.has_reflect name (λ (a : name), name.reflect a) `(name) a) pexpr (λ (a : pexpr), @expr.reflect bool.ff a) `(option.{0} name) `(pexpr) a) tactic.interactive.cases_arg_p → @interactive.parse (list.{0} name) (λ (a : list.{0} name), @list.reflect name (λ (a : name), name.reflect a) `(name) a) interactive.types.with_ident_list → tactic.{0} unit'><code style='font-family: menlo, "Source Code Pro", monospace;'>└────┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'></code><font color='green'><a title='@category_theory.has_hom.hom.{(max v u) (max v u)+1} category_theory.Cat.{v u} (@category_theory.category_struct.to_has_hom.{(max v u) (max v u)+1} category_theory.Cat.{v u} (@category_theory.category_struct.mk.{(max v u) (max v u)+1} category_theory.Cat.{v u} (@category_theory.has_hom.mk.{(max v u) (max v u)+1} category_theory.Cat.{v u} (λ (C D : category_theory.Cat.{v u}), @category_theory.functor.{v v u u} (@category_theory.bundled.α.{u (max u (v+1))} category_theory.category.{v u} C) (category_theory.Cat.str.{v u} C) (@category_theory.bundled.α.{u (max u (v+1))} category_theory.category.{v u} D) (category_theory.Cat.str.{v u} D))) (λ (C : category_theory.Cat.{v u}), @category_theory.functor.id.{v u} (@category_theory.bundled.α.{u (max u (v+1))} category_theory.category.{v u} C) (category_theory.Cat.str.{v u} C)) (λ (C D E : category_theory.Cat.{v u}) (F : @category_theory.has_hom.hom.{(max v u) (max v u)+1} category_theory.Cat.{v u} (@category_theory.has_hom.mk.{(max v u) (max v u)+1} category_theory.Cat.{v u} (λ (C D : category_theory.Cat.{v u}), @category_theory.functor.{v v u u} (@category_theory.bundled.α.{u (max u (v+1))} category_theory.category.{v u} C) (category_theory.Cat.str.{v u} C) (@category_theory.bundled.α.{u (max u (v+1))} category_theory.category.{v u} D) (category_theory.Cat.str.{v u} D))) C D) (G : @category_theory.has_hom.hom.{(max v u) (max v u)+1} category_theory.Cat.{v u} (@category_theory.has_hom.mk.{(max v u) (max v u)+1} category_theory.Cat.{v u} (λ (C D : category_theory.Cat.{v u}), @category_theory.functor.{v v u u} (@category_theory.bundled.α.{u (max u (v+1))} category_theory.category.{v u} C) (category_theory.Cat.str.{v u} C) (@category_theory.bundled.α.{u (max u (v+1))} category_theory.category.{v u} D) (category_theory.Cat.str.{v u} D))) D E), @category_theory.functor.comp.{v v v u u u} (@category_theory.bundled.α.{u (max u (v+1))} category_theory.category.{v u} C) (category_theory.Cat.str.{v u} C) (@category_theory.bundled.α.{u (max u (v+1))} category_theory.category.{v u} D) (category_theory.Cat.str.{v u} D) (@category_theory.bundled.α.{u (max u (v+1))} category_theory.category.{v u} E) (category_theory.Cat.str.{v u} E) F G))) C D'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>  </code><font color='green'><a title='tactic.{0} unit'><code style='font-family: menlo, "Source Code Pro", monospace;'>└──┘</code></a></font>
+<font color='grey'><a title='doc'><code style='font-family: menlo, "Source Code Pro", monospace;'>doc  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>                          </code><font color='orange'><a title='Assuming `x` is a variable in the local context with an inductive type, `cases x` splits the main goal, producing one goal for each constructor of the inductive type, in which the target is replaced by a general instance of that constructor. If the type of an element in the local context depends on `x`, that element is reverted and reintroduced afterward, so that the case split affects that hypothesis as well.
+
+For example, given `n : nat` and a goal with a hypothesis `h : P n` and target `Q n`, `cases n` produces one goal with hypothesis `h : P 0` and target `Q 0`, and one goal with hypothesis `h : P (nat.succ a)` and target `Q (nat.succ a)`. Here the name `a` is chosen automatically.
+
+`cases e`, where `e` is an expression instead of a variable, generalizes `e` in the goal, and then cases on the resulting variable.
+
+`cases e with y₁ ... yₙ`, where `e` is a variable or an expression, specifies that the sequence of names `y₁ ... yₙ` should be used for the arguments to the constructors, including implicit arguments. If the list does not include enough names for all of the arguments, additional names are generated automatically. If too many names are given, the extra ones are ignored. Underscores can be used in the list, in which case the corresponding names are generated automatically.
+
+`cases h : e`, where `e` is a variable or an expression, performs cases on `e` as above, but also adds a hypothesis `h : e = ...` to each hypothesis, where `...` is the constructor instance for that particular case.'><code style='font-family: menlo, "Source Code Pro", monospace;'>└────┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>   </code><font color='orange'><a title='Shorter name for the tactic `reflexivity`.'><code style='font-family: menlo, "Source Code Pro", monospace;'>└──┘</code></a></font>
+<font color='grey'><a title='text'><code style='font-family: menlo, "Source Code Pro", monospace;'>txt  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>                          </code><font color='teal'><a title='cases'><code style='font-family: menlo, "Source Code Pro", monospace;'>└────┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>   </code><font color='teal'><a title='refl'><code style='font-family: menlo, "Source Code Pro", monospace;'>└──┘</code></a></font>
+<font color='grey'><a title='tactic_params'><code style='font-family: menlo, "Source Code Pro", monospace;'>par  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>                          </code><font color='grey'><a title='[&#x27;(id :)? expr&#x27;, &#x27;(with id*)?&#x27;]'><code style='font-family: menlo, "Source Code Pro", monospace;'>└────┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>   </code><font color='grey'><a title='[]'><code style='font-family: menlo, "Source Code Pro", monospace;'>└──┘</code></a></font>
+<font color='grey'><a title='tactic_param_idx'><code style='font-family: menlo, "Source Code Pro", monospace;'>pid  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>                               </code><font color='maroon'><a title='0'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font>
+<font color='grey'><a title='state'><code style='font-family: menlo, "Source Code Pro", monospace;'>st   </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>                         </code><font color='lime'><a title='C D : category_theory.Cat.{v u},
+F :
+  @category_theory.has_hom.hom.{(max v u) (max v u)+1} category_theory.Cat.{v u}
+    (@category_theory.category_struct.to_has_hom.{(max v u) (max v u)+1} category_theory.Cat.{v u}
+       (@category_theory.category_struct.mk.{(max v u) (max v u)+1} category_theory.Cat.{v u}
+          (@category_theory.has_hom.mk.{(max v u) (max v u)+1} category_theory.Cat.{v u}
+             (λ (C D : category_theory.Cat.{v u}),
+                @category_theory.functor.{v v u u}
+                  (@category_theory.bundled.α.{u (max u (v+1))} category_theory.category.{v u} C)
+                  (category_theory.Cat.str.{v u} C)
+                  (@category_theory.bundled.α.{u (max u (v+1))} category_theory.category.{v u} D)
+                  (category_theory.Cat.str.{v u} D)))
+          (λ (C : category_theory.Cat.{v u}),
+             @category_theory.functor.id.{v u}
+               (@category_theory.bundled.α.{u (max u (v+1))} category_theory.category.{v u} C)
+               (category_theory.Cat.str.{v u} C))
+          (λ (C D E : category_theory.Cat.{v u})
+           (F :
+             @category_theory.has_hom.hom.{(max v u) (max v u)+1} category_theory.Cat.{v u}
+               (@category_theory.has_hom.mk.{(max v u) (max v u)+1} category_theory.Cat.{v u}
+                  (λ (C D : category_theory.Cat.{v u}),
+                     @category_theory.functor.{v v u u}
+                       (@category_theory.bundled.α.{u (max u (v+1))} category_theory.category.{v u} C)
+                       (category_theory.Cat.str.{v u} C)
+                       (@category_theory.bundled.α.{u (max u (v+1))} category_theory.category.{v u} D)
+                       (category_theory.Cat.str.{v u} D)))
+               C
+               D)
+           (G :
+             @category_theory.has_hom.hom.{(max v u) (max v u)+1} category_theory.Cat.{v u}
+               (@category_theory.has_hom.mk.{(max v u) (max v u)+1} category_theory.Cat.{v u}
+                  (λ (C D : category_theory.Cat.{v u}),
+                     @category_theory.functor.{v v u u}
+                       (@category_theory.bundled.α.{u (max u (v+1))} category_theory.category.{v u} C)
+                       (category_theory.Cat.str.{v u} C)
+                       (@category_theory.bundled.α.{u (max u (v+1))} category_theory.category.{v u} D)
+                       (category_theory.Cat.str.{v u} D)))
+               D
+               E),
+             @category_theory.functor.comp.{v v v u u u}
+               (@category_theory.bundled.α.{u (max u (v+1))} category_theory.category.{v u} C)
+               (category_theory.Cat.str.{v u} C)
+               (@category_theory.bundled.α.{u (max u (v+1))} category_theory.category.{v u} D)
+               (category_theory.Cat.str.{v u} D)
+               (@category_theory.bundled.α.{u (max u (v+1))} category_theory.category.{v u} E)
+               (category_theory.Cat.str.{v u} E)
+               F
+               G)))
+    C
+    D
+⊢ @eq.{(max v u)+1}
+    (@category_theory.has_hom.hom.{(max v u) (max v u)+1} category_theory.Cat.{v u}
+       (@category_theory.category_struct.to_has_hom.{(max v u) (max v u)+1} category_theory.Cat.{v u}
+          (@category_theory.category_struct.mk.{(max v u) (max v u)+1} category_theory.Cat.{v u}
+             (@category_theory.has_hom.mk.{(max v u) (max v u)+1} category_theory.Cat.{v u}
+                (λ (C D : category_theory.Cat.{v u}),
+                   @category_theory.functor.{v v u u}
+                     (@category_theory.bundled.α.{u (max u (v+1))} category_theory.category.{v u} C)
+                     (category_theory.Cat.str.{v u} C)
+                     (@category_theory.bundled.α.{u (max u (v+1))} category_theory.category.{v u} D)
+                     (category_theory.Cat.str.{v u} D)))
+             (λ (C : category_theory.Cat.{v u}),
+                @category_theory.functor.id.{v u}
+                  (@category_theory.bundled.α.{u (max u (v+1))} category_theory.category.{v u} C)
+                  (category_theory.Cat.str.{v u} C))
+             (λ (C D E : category_theory.Cat.{v u})
+              (F :
+                @category_theory.has_hom.hom.{(max v u) (max v u)+1} category_theory.Cat.{v u}
+                  (@category_theory.has_hom.mk.{(max v u) (max v u)+1} category_theory.Cat.{v u}
+                     (λ (C D : category_theory.Cat.{v u}),
+                        @category_theory.functor.{v v u u}
+                          (@category_theory.bundled.α.{u (max u (v+1))} category_theory.category.{v u} C)
+                          (category_theory.Cat.str.{v u} C)
+                          (@category_theory.bundled.α.{u (max u (v+1))} category_theory.category.{v u} D)
+                          (category_theory.Cat.str.{v u} D)))
+                  C
+                  D)
+              (G :
+                @category_theory.has_hom.hom.{(max v u) (max v u)+1} category_theory.Cat.{v u}
+                  (@category_theory.has_hom.mk.{(max v u) (max v u)+1} category_theory.Cat.{v u}
+                     (λ (C D : category_theory.Cat.{v u}),
+                        @category_theory.functor.{v v u u}
+                          (@category_theory.bundled.α.{u (max u (v+1))} category_theory.category.{v u} C)
+                          (category_theory.Cat.str.{v u} C)
+                          (@category_theory.bundled.α.{u (max u (v+1))} category_theory.category.{v u} D)
+                          (category_theory.Cat.str.{v u} D)))
+                  D
+                  E),
+                @category_theory.functor.comp.{v v v u u u}
+                  (@category_theory.bundled.α.{u (max u (v+1))} category_theory.category.{v u} C)
+                  (category_theory.Cat.str.{v u} C)
+                  (@category_theory.bundled.α.{u (max u (v+1))} category_theory.category.{v u} D)
+                  (category_theory.Cat.str.{v u} D)
+                  (@category_theory.bundled.α.{u (max u (v+1))} category_theory.category.{v u} E)
+                  (category_theory.Cat.str.{v u} E)
+                  F
+                  G)))
+       C
+       D)
+    (@category_theory.category_struct.comp.{(max v u) (max v u)+1} category_theory.Cat.{v u}
+       (@category_theory.category_struct.mk.{(max v u) (max v u)+1} category_theory.Cat.{v u}
+          (@category_theory.has_hom.mk.{(max v u) (max v u)+1} category_theory.Cat.{v u}
+             (λ (C D : category_theory.Cat.{v u}),
+                @category_theory.functor.{v v u u}
+                  (@category_theory.bundled.α.{u (max u (v+1))} category_theory.category.{v u} C)
+                  (category_theory.Cat.str.{v u} C)
+                  (@category_theory.bundled.α.{u (max u (v+1))} category_theory.category.{v u} D)
+                  (category_theory.Cat.str.{v u} D)))
+          (λ (C : category_theory.Cat.{v u}),
+             @category_theory.functor.id.{v u}
+               (@category_theory.bundled.α.{u (max u (v+1))} category_theory.category.{v u} C)
+               (category_theory.Cat.str.{v u} C))
+          (λ (C D E : category_theory.Cat.{v u})
+           (F :
+             @category_theory.has_hom.hom.{(max v u) (max v u)+1} category_theory.Cat.{v u}
+               (@category_theory.has_hom.mk.{(max v u) (max v u)+1} category_theory.Cat.{v u}
+                  (λ (C D : category_theory.Cat.{v u}),
+                     @category_theory.functor.{v v u u}
+                       (@category_theory.bundled.α.{u (max u (v+1))} category_theory.category.{v u} C)
+                       (category_theory.Cat.str.{v u} C)
+                       (@category_theory.bundled.α.{u (max u (v+1))} category_theory.category.{v u} D)
+                       (category_theory.Cat.str.{v u} D)))
+               C
+               D)
+           (G :
+             @category_theory.has_hom.hom.{(max v u) (max v u)+1} category_theory.Cat.{v u}
+               (@category_theory.has_hom.mk.{(max v u) (max v u)+1} category_theory.Cat.{v u}
+                  (λ (C D : category_theory.Cat.{v u}),
+                     @category_theory.functor.{v v u u}
+                       (@category_theory.bundled.α.{u (max u (v+1))} category_theory.category.{v u} C)
+                       (category_theory.Cat.str.{v u} C)
+                       (@category_theory.bundled.α.{u (max u (v+1))} category_theory.category.{v u} D)
+                       (category_theory.Cat.str.{v u} D)))
+               D
+               E),
+             @category_theory.functor.comp.{v v v u u u}
+               (@category_theory.bundled.α.{u (max u (v+1))} category_theory.category.{v u} C)
+               (category_theory.Cat.str.{v u} C)
+               (@category_theory.bundled.α.{u (max u (v+1))} category_theory.category.{v u} D)
+               (category_theory.Cat.str.{v u} D)
+               (@category_theory.bundled.α.{u (max u (v+1))} category_theory.category.{v u} E)
+               (category_theory.Cat.str.{v u} E)
+               F
+               G))
+       C
+       C
+       D
+       (@category_theory.category_struct.id.{(max v u) (max v u)+1} category_theory.Cat.{v u}
+          (@category_theory.category_struct.mk.{(max v u) (max v u)+1} category_theory.Cat.{v u}
+             (@category_theory.has_hom.mk.{(max v u) (max v u)+1} category_theory.Cat.{v u}
+                (λ (C D : category_theory.Cat.{v u}),
+                   @category_theory.functor.{v v u u}
+                     (@category_theory.bundled.α.{u (max u (v+1))} category_theory.category.{v u} C)
+                     (category_theory.Cat.str.{v u} C)
+                     (@category_theory.bundled.α.{u (max u (v+1))} category_theory.category.{v u} D)
+                     (category_theory.Cat.str.{v u} D)))
+             (λ (C : category_theory.Cat.{v u}),
+                @category_theory.functor.id.{v u}
+                  (@category_theory.bundled.α.{u (max u (v+1))} category_theory.category.{v u} C)
+                  (category_theory.Cat.str.{v u} C))
+             (λ (C D E : category_theory.Cat.{v u})
+              (F :
+                @category_theory.has_hom.hom.{(max v u) (max v u)+1} category_theory.Cat.{v u}
+                  (@category_theory.has_hom.mk.{(max v u) (max v u)+1} category_theory.Cat.{v u}
+                     (λ (C D : category_theory.Cat.{v u}),
+                        @category_theory.functor.{v v u u}
+                          (@category_theory.bundled.α.{u (max u (v+1))} category_theory.category.{v u} C)
+                          (category_theory.Cat.str.{v u} C)
+                          (@category_theory.bundled.α.{u (max u (v+1))} category_theory.category.{v u} D)
+                          (category_theory.Cat.str.{v u} D)))
+                  C
+                  D)
+              (G :
+                @category_theory.has_hom.hom.{(max v u) (max v u)+1} category_theory.Cat.{v u}
+                  (@category_theory.has_hom.mk.{(max v u) (max v u)+1} category_theory.Cat.{v u}
+                     (λ (C D : category_theory.Cat.{v u}),
+                        @category_theory.functor.{v v u u}
+                          (@category_theory.bundled.α.{u (max u (v+1))} category_theory.category.{v u} C)
+                          (category_theory.Cat.str.{v u} C)
+                          (@category_theory.bundled.α.{u (max u (v+1))} category_theory.category.{v u} D)
+                          (category_theory.Cat.str.{v u} D)))
+                  D
+                  E),
+                @category_theory.functor.comp.{v v v u u u}
+                  (@category_theory.bundled.α.{u (max u (v+1))} category_theory.category.{v u} C)
+                  (category_theory.Cat.str.{v u} C)
+                  (@category_theory.bundled.α.{u (max u (v+1))} category_theory.category.{v u} D)
+                  (category_theory.Cat.str.{v u} D)
+                  (@category_theory.bundled.α.{u (max u (v+1))} category_theory.category.{v u} E)
+                  (category_theory.Cat.str.{v u} E)
+                  F
+                  G))
+          C)
+       F)
+    F'><code style='font-family: menlo, "Source Code Pro", monospace;'>└────────────┘</code></a></font>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 42    comp_id&#x27; := λ C D F, by cases F; refl,</code>
+<font color='grey'><a title='full-id'><code style='font-family: menlo, "Source Code Pro", monospace;'>id   </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>                </code><font color='blue'><a title='C'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'> </code><font color='blue'><a title='D'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'> </code><font color='blue'><a title='F'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>           </code><font color='blue'><a title='F'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font>
+<font color='grey'><a title='source'><code style='font-family: menlo, "Source Code Pro", monospace;'>src  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>                          </code><font color='red'><a title='{&#x27;file&#x27;: &#x27;/home/ec2-user/.elan/toolchains/3.4.2/lib/lean/library/init/meta/interactive.lean&#x27;, &#x27;line&#x27;: 745, &#x27;column&#x27;: 9}'><code style='font-family: menlo, "Source Code Pro", monospace;'>└────┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>   </code><font color='red'><a title='{&#x27;file&#x27;: &#x27;/home/ec2-user/.elan/toolchains/3.4.2/lib/lean/library/init/meta/interactive.lean&#x27;, &#x27;line&#x27;: 1263, &#x27;column&#x27;: 9}'><code style='font-family: menlo, "Source Code Pro", monospace;'>└──┘</code></a></font>
+<font color='grey'><a title='type'><code style='font-family: menlo, "Source Code Pro", monospace;'>typ  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>                </code><font color='green'><a title='category_theory.Cat.{v u}'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'> </code><font color='green'><a title='category_theory.Cat.{v u}'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'> </code><font color='green'><a title='@category_theory.has_hom.hom.{(max v u) (max v u)+1} category_theory.Cat.{v u} (@category_theory.category_struct.to_has_hom.{(max v u) (max v u)+1} category_theory.Cat.{v u} (@category_theory.category_struct.mk.{(max v u) (max v u)+1} category_theory.Cat.{v u} (@category_theory.has_hom.mk.{(max v u) (max v u)+1} category_theory.Cat.{v u} (λ (C D : category_theory.Cat.{v u}), @category_theory.functor.{v v u u} (@category_theory.bundled.α.{u (max u (v+1))} category_theory.category.{v u} C) (category_theory.Cat.str.{v u} C) (@category_theory.bundled.α.{u (max u (v+1))} category_theory.category.{v u} D) (category_theory.Cat.str.{v u} D))) (λ (C : category_theory.Cat.{v u}), @category_theory.functor.id.{v u} (@category_theory.bundled.α.{u (max u (v+1))} category_theory.category.{v u} C) (category_theory.Cat.str.{v u} C)) (λ (C D E : category_theory.Cat.{v u}) (F : @category_theory.has_hom.hom.{(max v u) (max v u)+1} category_theory.Cat.{v u} (@category_theory.has_hom.mk.{(max v u) (max v u)+1} category_theory.Cat.{v u} (λ (C D : category_theory.Cat.{v u}), @category_theory.functor.{v v u u} (@category_theory.bundled.α.{u (max u (v+1))} category_theory.category.{v u} C) (category_theory.Cat.str.{v u} C) (@category_theory.bundled.α.{u (max u (v+1))} category_theory.category.{v u} D) (category_theory.Cat.str.{v u} D))) C D) (G : @category_theory.has_hom.hom.{(max v u) (max v u)+1} category_theory.Cat.{v u} (@category_theory.has_hom.mk.{(max v u) (max v u)+1} category_theory.Cat.{v u} (λ (C D : category_theory.Cat.{v u}), @category_theory.functor.{v v u u} (@category_theory.bundled.α.{u (max u (v+1))} category_theory.category.{v u} C) (category_theory.Cat.str.{v u} C) (@category_theory.bundled.α.{u (max u (v+1))} category_theory.category.{v u} D) (category_theory.Cat.str.{v u} D))) D E), @category_theory.functor.comp.{v v v u u u} (@category_theory.bundled.α.{u (max u (v+1))} category_theory.category.{v u} C) (category_theory.Cat.str.{v u} C) (@category_theory.bundled.α.{u (max u (v+1))} category_theory.category.{v u} D) (category_theory.Cat.str.{v u} D) (@category_theory.bundled.α.{u (max u (v+1))} category_theory.category.{v u} E) (category_theory.Cat.str.{v u} E) F G))) C D'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>     </code><font color='green'><a title='@interactive.parse (prod.{0 0} (option.{0} name) pexpr) (λ (a : prod.{0 0} (option.{0} name) pexpr), @prod.has_reflect (option.{0} name) (λ (a : option.{0} name), @option.has_reflect name (λ (a : name), name.reflect a) `(name) a) pexpr (λ (a : pexpr), @expr.reflect bool.ff a) `(option.{0} name) `(pexpr) a) tactic.interactive.cases_arg_p → @interactive.parse (list.{0} name) (λ (a : list.{0} name), @list.reflect name (λ (a : name), name.reflect a) `(name) a) interactive.types.with_ident_list → tactic.{0} unit'><code style='font-family: menlo, "Source Code Pro", monospace;'>└────┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'></code><font color='green'><a title='@category_theory.has_hom.hom.{(max v u) (max v u)+1} category_theory.Cat.{v u} (@category_theory.category_struct.to_has_hom.{(max v u) (max v u)+1} category_theory.Cat.{v u} (@category_theory.category_struct.mk.{(max v u) (max v u)+1} category_theory.Cat.{v u} (@category_theory.has_hom.mk.{(max v u) (max v u)+1} category_theory.Cat.{v u} (λ (C D : category_theory.Cat.{v u}), @category_theory.functor.{v v u u} (@category_theory.bundled.α.{u (max u (v+1))} category_theory.category.{v u} C) (category_theory.Cat.str.{v u} C) (@category_theory.bundled.α.{u (max u (v+1))} category_theory.category.{v u} D) (category_theory.Cat.str.{v u} D))) (λ (C : category_theory.Cat.{v u}), @category_theory.functor.id.{v u} (@category_theory.bundled.α.{u (max u (v+1))} category_theory.category.{v u} C) (category_theory.Cat.str.{v u} C)) (λ (C D E : category_theory.Cat.{v u}) (F : @category_theory.has_hom.hom.{(max v u) (max v u)+1} category_theory.Cat.{v u} (@category_theory.has_hom.mk.{(max v u) (max v u)+1} category_theory.Cat.{v u} (λ (C D : category_theory.Cat.{v u}), @category_theory.functor.{v v u u} (@category_theory.bundled.α.{u (max u (v+1))} category_theory.category.{v u} C) (category_theory.Cat.str.{v u} C) (@category_theory.bundled.α.{u (max u (v+1))} category_theory.category.{v u} D) (category_theory.Cat.str.{v u} D))) C D) (G : @category_theory.has_hom.hom.{(max v u) (max v u)+1} category_theory.Cat.{v u} (@category_theory.has_hom.mk.{(max v u) (max v u)+1} category_theory.Cat.{v u} (λ (C D : category_theory.Cat.{v u}), @category_theory.functor.{v v u u} (@category_theory.bundled.α.{u (max u (v+1))} category_theory.category.{v u} C) (category_theory.Cat.str.{v u} C) (@category_theory.bundled.α.{u (max u (v+1))} category_theory.category.{v u} D) (category_theory.Cat.str.{v u} D))) D E), @category_theory.functor.comp.{v v v u u u} (@category_theory.bundled.α.{u (max u (v+1))} category_theory.category.{v u} C) (category_theory.Cat.str.{v u} C) (@category_theory.bundled.α.{u (max u (v+1))} category_theory.category.{v u} D) (category_theory.Cat.str.{v u} D) (@category_theory.bundled.α.{u (max u (v+1))} category_theory.category.{v u} E) (category_theory.Cat.str.{v u} E) F G))) C D'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>  </code><font color='green'><a title='tactic.{0} unit'><code style='font-family: menlo, "Source Code Pro", monospace;'>└──┘</code></a></font>
+<font color='grey'><a title='doc'><code style='font-family: menlo, "Source Code Pro", monospace;'>doc  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>                          </code><font color='orange'><a title='Assuming `x` is a variable in the local context with an inductive type, `cases x` splits the main goal, producing one goal for each constructor of the inductive type, in which the target is replaced by a general instance of that constructor. If the type of an element in the local context depends on `x`, that element is reverted and reintroduced afterward, so that the case split affects that hypothesis as well.
+
+For example, given `n : nat` and a goal with a hypothesis `h : P n` and target `Q n`, `cases n` produces one goal with hypothesis `h : P 0` and target `Q 0`, and one goal with hypothesis `h : P (nat.succ a)` and target `Q (nat.succ a)`. Here the name `a` is chosen automatically.
+
+`cases e`, where `e` is an expression instead of a variable, generalizes `e` in the goal, and then cases on the resulting variable.
+
+`cases e with y₁ ... yₙ`, where `e` is a variable or an expression, specifies that the sequence of names `y₁ ... yₙ` should be used for the arguments to the constructors, including implicit arguments. If the list does not include enough names for all of the arguments, additional names are generated automatically. If too many names are given, the extra ones are ignored. Underscores can be used in the list, in which case the corresponding names are generated automatically.
+
+`cases h : e`, where `e` is a variable or an expression, performs cases on `e` as above, but also adds a hypothesis `h : e = ...` to each hypothesis, where `...` is the constructor instance for that particular case.'><code style='font-family: menlo, "Source Code Pro", monospace;'>└────┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>   </code><font color='orange'><a title='Shorter name for the tactic `reflexivity`.'><code style='font-family: menlo, "Source Code Pro", monospace;'>└──┘</code></a></font>
+<font color='grey'><a title='text'><code style='font-family: menlo, "Source Code Pro", monospace;'>txt  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>                          </code><font color='teal'><a title='cases'><code style='font-family: menlo, "Source Code Pro", monospace;'>└────┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>   </code><font color='teal'><a title='refl'><code style='font-family: menlo, "Source Code Pro", monospace;'>└──┘</code></a></font>
+<font color='grey'><a title='tactic_params'><code style='font-family: menlo, "Source Code Pro", monospace;'>par  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>                          </code><font color='grey'><a title='[&#x27;(id :)? expr&#x27;, &#x27;(with id*)?&#x27;]'><code style='font-family: menlo, "Source Code Pro", monospace;'>└────┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>   </code><font color='grey'><a title='[]'><code style='font-family: menlo, "Source Code Pro", monospace;'>└──┘</code></a></font>
+<font color='grey'><a title='tactic_param_idx'><code style='font-family: menlo, "Source Code Pro", monospace;'>pid  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>                               </code><font color='maroon'><a title='0'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font>
+<font color='grey'><a title='state'><code style='font-family: menlo, "Source Code Pro", monospace;'>st   </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>                         </code><font color='lime'><a title='C D : category_theory.Cat.{v u},
+F :
+  @category_theory.has_hom.hom.{(max v u) (max v u)+1} category_theory.Cat.{v u}
+    (@category_theory.category_struct.to_has_hom.{(max v u) (max v u)+1} category_theory.Cat.{v u}
+       (@category_theory.category_struct.mk.{(max v u) (max v u)+1} category_theory.Cat.{v u}
+          (@category_theory.has_hom.mk.{(max v u) (max v u)+1} category_theory.Cat.{v u}
+             (λ (C D : category_theory.Cat.{v u}),
+                @category_theory.functor.{v v u u}
+                  (@category_theory.bundled.α.{u (max u (v+1))} category_theory.category.{v u} C)
+                  (category_theory.Cat.str.{v u} C)
+                  (@category_theory.bundled.α.{u (max u (v+1))} category_theory.category.{v u} D)
+                  (category_theory.Cat.str.{v u} D)))
+          (λ (C : category_theory.Cat.{v u}),
+             @category_theory.functor.id.{v u}
+               (@category_theory.bundled.α.{u (max u (v+1))} category_theory.category.{v u} C)
+               (category_theory.Cat.str.{v u} C))
+          (λ (C D E : category_theory.Cat.{v u})
+           (F :
+             @category_theory.has_hom.hom.{(max v u) (max v u)+1} category_theory.Cat.{v u}
+               (@category_theory.has_hom.mk.{(max v u) (max v u)+1} category_theory.Cat.{v u}
+                  (λ (C D : category_theory.Cat.{v u}),
+                     @category_theory.functor.{v v u u}
+                       (@category_theory.bundled.α.{u (max u (v+1))} category_theory.category.{v u} C)
+                       (category_theory.Cat.str.{v u} C)
+                       (@category_theory.bundled.α.{u (max u (v+1))} category_theory.category.{v u} D)
+                       (category_theory.Cat.str.{v u} D)))
+               C
+               D)
+           (G :
+             @category_theory.has_hom.hom.{(max v u) (max v u)+1} category_theory.Cat.{v u}
+               (@category_theory.has_hom.mk.{(max v u) (max v u)+1} category_theory.Cat.{v u}
+                  (λ (C D : category_theory.Cat.{v u}),
+                     @category_theory.functor.{v v u u}
+                       (@category_theory.bundled.α.{u (max u (v+1))} category_theory.category.{v u} C)
+                       (category_theory.Cat.str.{v u} C)
+                       (@category_theory.bundled.α.{u (max u (v+1))} category_theory.category.{v u} D)
+                       (category_theory.Cat.str.{v u} D)))
+               D
+               E),
+             @category_theory.functor.comp.{v v v u u u}
+               (@category_theory.bundled.α.{u (max u (v+1))} category_theory.category.{v u} C)
+               (category_theory.Cat.str.{v u} C)
+               (@category_theory.bundled.α.{u (max u (v+1))} category_theory.category.{v u} D)
+               (category_theory.Cat.str.{v u} D)
+               (@category_theory.bundled.α.{u (max u (v+1))} category_theory.category.{v u} E)
+               (category_theory.Cat.str.{v u} E)
+               F
+               G)))
+    C
+    D
+⊢ @eq.{(max v u)+1}
+    (@category_theory.has_hom.hom.{(max v u) (max v u)+1} category_theory.Cat.{v u}
+       (@category_theory.category_struct.to_has_hom.{(max v u) (max v u)+1} category_theory.Cat.{v u}
+          (@category_theory.category_struct.mk.{(max v u) (max v u)+1} category_theory.Cat.{v u}
+             (@category_theory.has_hom.mk.{(max v u) (max v u)+1} category_theory.Cat.{v u}
+                (λ (C D : category_theory.Cat.{v u}),
+                   @category_theory.functor.{v v u u}
+                     (@category_theory.bundled.α.{u (max u (v+1))} category_theory.category.{v u} C)
+                     (category_theory.Cat.str.{v u} C)
+                     (@category_theory.bundled.α.{u (max u (v+1))} category_theory.category.{v u} D)
+                     (category_theory.Cat.str.{v u} D)))
+             (λ (C : category_theory.Cat.{v u}),
+                @category_theory.functor.id.{v u}
+                  (@category_theory.bundled.α.{u (max u (v+1))} category_theory.category.{v u} C)
+                  (category_theory.Cat.str.{v u} C))
+             (λ (C D E : category_theory.Cat.{v u})
+              (F :
+                @category_theory.has_hom.hom.{(max v u) (max v u)+1} category_theory.Cat.{v u}
+                  (@category_theory.has_hom.mk.{(max v u) (max v u)+1} category_theory.Cat.{v u}
+                     (λ (C D : category_theory.Cat.{v u}),
+                        @category_theory.functor.{v v u u}
+                          (@category_theory.bundled.α.{u (max u (v+1))} category_theory.category.{v u} C)
+                          (category_theory.Cat.str.{v u} C)
+                          (@category_theory.bundled.α.{u (max u (v+1))} category_theory.category.{v u} D)
+                          (category_theory.Cat.str.{v u} D)))
+                  C
+                  D)
+              (G :
+                @category_theory.has_hom.hom.{(max v u) (max v u)+1} category_theory.Cat.{v u}
+                  (@category_theory.has_hom.mk.{(max v u) (max v u)+1} category_theory.Cat.{v u}
+                     (λ (C D : category_theory.Cat.{v u}),
+                        @category_theory.functor.{v v u u}
+                          (@category_theory.bundled.α.{u (max u (v+1))} category_theory.category.{v u} C)
+                          (category_theory.Cat.str.{v u} C)
+                          (@category_theory.bundled.α.{u (max u (v+1))} category_theory.category.{v u} D)
+                          (category_theory.Cat.str.{v u} D)))
+                  D
+                  E),
+                @category_theory.functor.comp.{v v v u u u}
+                  (@category_theory.bundled.α.{u (max u (v+1))} category_theory.category.{v u} C)
+                  (category_theory.Cat.str.{v u} C)
+                  (@category_theory.bundled.α.{u (max u (v+1))} category_theory.category.{v u} D)
+                  (category_theory.Cat.str.{v u} D)
+                  (@category_theory.bundled.α.{u (max u (v+1))} category_theory.category.{v u} E)
+                  (category_theory.Cat.str.{v u} E)
+                  F
+                  G)))
+       C
+       D)
+    (@category_theory.category_struct.comp.{(max v u) (max v u)+1} category_theory.Cat.{v u}
+       (@category_theory.category_struct.mk.{(max v u) (max v u)+1} category_theory.Cat.{v u}
+          (@category_theory.has_hom.mk.{(max v u) (max v u)+1} category_theory.Cat.{v u}
+             (λ (C D : category_theory.Cat.{v u}),
+                @category_theory.functor.{v v u u}
+                  (@category_theory.bundled.α.{u (max u (v+1))} category_theory.category.{v u} C)
+                  (category_theory.Cat.str.{v u} C)
+                  (@category_theory.bundled.α.{u (max u (v+1))} category_theory.category.{v u} D)
+                  (category_theory.Cat.str.{v u} D)))
+          (λ (C : category_theory.Cat.{v u}),
+             @category_theory.functor.id.{v u}
+               (@category_theory.bundled.α.{u (max u (v+1))} category_theory.category.{v u} C)
+               (category_theory.Cat.str.{v u} C))
+          (λ (C D E : category_theory.Cat.{v u})
+           (F :
+             @category_theory.has_hom.hom.{(max v u) (max v u)+1} category_theory.Cat.{v u}
+               (@category_theory.has_hom.mk.{(max v u) (max v u)+1} category_theory.Cat.{v u}
+                  (λ (C D : category_theory.Cat.{v u}),
+                     @category_theory.functor.{v v u u}
+                       (@category_theory.bundled.α.{u (max u (v+1))} category_theory.category.{v u} C)
+                       (category_theory.Cat.str.{v u} C)
+                       (@category_theory.bundled.α.{u (max u (v+1))} category_theory.category.{v u} D)
+                       (category_theory.Cat.str.{v u} D)))
+               C
+               D)
+           (G :
+             @category_theory.has_hom.hom.{(max v u) (max v u)+1} category_theory.Cat.{v u}
+               (@category_theory.has_hom.mk.{(max v u) (max v u)+1} category_theory.Cat.{v u}
+                  (λ (C D : category_theory.Cat.{v u}),
+                     @category_theory.functor.{v v u u}
+                       (@category_theory.bundled.α.{u (max u (v+1))} category_theory.category.{v u} C)
+                       (category_theory.Cat.str.{v u} C)
+                       (@category_theory.bundled.α.{u (max u (v+1))} category_theory.category.{v u} D)
+                       (category_theory.Cat.str.{v u} D)))
+               D
+               E),
+             @category_theory.functor.comp.{v v v u u u}
+               (@category_theory.bundled.α.{u (max u (v+1))} category_theory.category.{v u} C)
+               (category_theory.Cat.str.{v u} C)
+               (@category_theory.bundled.α.{u (max u (v+1))} category_theory.category.{v u} D)
+               (category_theory.Cat.str.{v u} D)
+               (@category_theory.bundled.α.{u (max u (v+1))} category_theory.category.{v u} E)
+               (category_theory.Cat.str.{v u} E)
+               F
+               G))
+       C
+       D
+       D
+       F
+       (@category_theory.category_struct.id.{(max v u) (max v u)+1} category_theory.Cat.{v u}
+          (@category_theory.category_struct.mk.{(max v u) (max v u)+1} category_theory.Cat.{v u}
+             (@category_theory.has_hom.mk.{(max v u) (max v u)+1} category_theory.Cat.{v u}
+                (λ (C D : category_theory.Cat.{v u}),
+                   @category_theory.functor.{v v u u}
+                     (@category_theory.bundled.α.{u (max u (v+1))} category_theory.category.{v u} C)
+                     (category_theory.Cat.str.{v u} C)
+                     (@category_theory.bundled.α.{u (max u (v+1))} category_theory.category.{v u} D)
+                     (category_theory.Cat.str.{v u} D)))
+             (λ (C : category_theory.Cat.{v u}),
+                @category_theory.functor.id.{v u}
+                  (@category_theory.bundled.α.{u (max u (v+1))} category_theory.category.{v u} C)
+                  (category_theory.Cat.str.{v u} C))
+             (λ (C D E : category_theory.Cat.{v u})
+              (F :
+                @category_theory.has_hom.hom.{(max v u) (max v u)+1} category_theory.Cat.{v u}
+                  (@category_theory.has_hom.mk.{(max v u) (max v u)+1} category_theory.Cat.{v u}
+                     (λ (C D : category_theory.Cat.{v u}),
+                        @category_theory.functor.{v v u u}
+                          (@category_theory.bundled.α.{u (max u (v+1))} category_theory.category.{v u} C)
+                          (category_theory.Cat.str.{v u} C)
+                          (@category_theory.bundled.α.{u (max u (v+1))} category_theory.category.{v u} D)
+                          (category_theory.Cat.str.{v u} D)))
+                  C
+                  D)
+              (G :
+                @category_theory.has_hom.hom.{(max v u) (max v u)+1} category_theory.Cat.{v u}
+                  (@category_theory.has_hom.mk.{(max v u) (max v u)+1} category_theory.Cat.{v u}
+                     (λ (C D : category_theory.Cat.{v u}),
+                        @category_theory.functor.{v v u u}
+                          (@category_theory.bundled.α.{u (max u (v+1))} category_theory.category.{v u} C)
+                          (category_theory.Cat.str.{v u} C)
+                          (@category_theory.bundled.α.{u (max u (v+1))} category_theory.category.{v u} D)
+                          (category_theory.Cat.str.{v u} D)))
+                  D
+                  E),
+                @category_theory.functor.comp.{v v v u u u}
+                  (@category_theory.bundled.α.{u (max u (v+1))} category_theory.category.{v u} C)
+                  (category_theory.Cat.str.{v u} C)
+                  (@category_theory.bundled.α.{u (max u (v+1))} category_theory.category.{v u} D)
+                  (category_theory.Cat.str.{v u} D)
+                  (@category_theory.bundled.α.{u (max u (v+1))} category_theory.category.{v u} E)
+                  (category_theory.Cat.str.{v u} E)
+                  F
+                  G))
+          D))
+    F'><code style='font-family: menlo, "Source Code Pro", monospace;'>└────────────┘</code></a></font>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 43    assoc&#x27; := by intros; refl }</code>
+<font color='grey'><a title='source'><code style='font-family: menlo, "Source Code Pro", monospace;'>src  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>               </code><font color='red'><a title='{&#x27;file&#x27;: &#x27;/home/ec2-user/.elan/toolchains/3.4.2/lib/lean/library/init/meta/interactive.lean&#x27;, &#x27;line&#x27;: 131, &#x27;column&#x27;: 9}'><code style='font-family: menlo, "Source Code Pro", monospace;'>└────┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>  </code><font color='red'><a title='{&#x27;file&#x27;: &#x27;/home/ec2-user/.elan/toolchains/3.4.2/lib/lean/library/init/meta/interactive.lean&#x27;, &#x27;line&#x27;: 1263, &#x27;column&#x27;: 9}'><code style='font-family: menlo, "Source Code Pro", monospace;'>└───┘</code></a></font>
+<font color='grey'><a title='type'><code style='font-family: menlo, "Source Code Pro", monospace;'>typ  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>               </code><font color='green'><a title='@interactive.parse (list.{0} name) (λ (a : list.{0} name), @list.reflect name (λ (a : name), name.reflect a) `(name) a) (@lean.parser.many.{0 0} lean.parser.{0} (@interaction_monad.monad.{0} lean.parser_state) lean.parser.alternative name interactive.types.ident_) → tactic.{0} unit'><code style='font-family: menlo, "Source Code Pro", monospace;'>└────┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>  </code><font color='green'><a title='tactic.{0} unit'><code style='font-family: menlo, "Source Code Pro", monospace;'>└───┘</code></a></font>
+<font color='grey'><a title='doc'><code style='font-family: menlo, "Source Code Pro", monospace;'>doc  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>               </code><font color='orange'><a title='Similar to `intro` tactic. The tactic `intros` will keep introducing new hypotheses until the goal target is not a Pi/forall or let binder.
+
+The variant `intros h₁ ... hₙ` introduces `n` new hypotheses using the given identifiers to name them.'><code style='font-family: menlo, "Source Code Pro", monospace;'>└────┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>  </code><font color='orange'><a title='Shorter name for the tactic `reflexivity`.'><code style='font-family: menlo, "Source Code Pro", monospace;'>└───┘</code></a></font>
+<font color='grey'><a title='text'><code style='font-family: menlo, "Source Code Pro", monospace;'>txt  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>               </code><font color='teal'><a title='intros'><code style='font-family: menlo, "Source Code Pro", monospace;'>└────┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>  </code><font color='teal'><a title='refl'><code style='font-family: menlo, "Source Code Pro", monospace;'>└───┘</code></a></font>
+<font color='grey'><a title='tactic_params'><code style='font-family: menlo, "Source Code Pro", monospace;'>par  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>               </code><font color='grey'><a title='[&#x27;id*&#x27;]'><code style='font-family: menlo, "Source Code Pro", monospace;'>└────┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>  </code><font color='grey'><a title='[]'><code style='font-family: menlo, "Source Code Pro", monospace;'>└───┘</code></a></font>
+<font color='grey'><a title='tactic_param_idx'><code style='font-family: menlo, "Source Code Pro", monospace;'>pid  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>                           </code><font color='maroon'><a title='0'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font>
+<font color='grey'><a title='state'><code style='font-family: menlo, "Source Code Pro", monospace;'>st   </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>              </code><font color='lime'><a title='⊢ ∀ {W X Y Z : category_theory.Cat.{v u}}
+  (f :
+    @category_theory.has_hom.hom.{(max v u) (max v u)+1} category_theory.Cat.{v u}
+      (@category_theory.category_struct.to_has_hom.{(max v u) (max v u)+1} category_theory.Cat.{v u}
+         (@category_theory.category_struct.mk.{(max v u) (max v u)+1} category_theory.Cat.{v u}
+            (@category_theory.has_hom.mk.{(max v u) (max v u)+1} category_theory.Cat.{v u}
+               (λ (C D : category_theory.Cat.{v u}),
+                  @category_theory.functor.{v v u u}
+                    (@category_theory.bundled.α.{u (max u (v+1))} category_theory.category.{v u} C)
+                    (category_theory.Cat.str.{v u} C)
+                    (@category_theory.bundled.α.{u (max u (v+1))} category_theory.category.{v u} D)
+                    (category_theory.Cat.str.{v u} D)))
+            (λ (C : category_theory.Cat.{v u}),
+               @category_theory.functor.id.{v u}
+                 (@category_theory.bundled.α.{u (max u (v+1))} category_theory.category.{v u} C)
+                 (category_theory.Cat.str.{v u} C))
+            (λ (C D E : category_theory.Cat.{v u})
+             (F :
+               @category_theory.has_hom.hom.{(max v u) (max v u)+1} category_theory.Cat.{v u}
+                 (@category_theory.has_hom.mk.{(max v u) (max v u)+1} category_theory.Cat.{v u}
+                    (λ (C D : category_theory.Cat.{v u}),
+                       @category_theory.functor.{v v u u}
+                         (@category_theory.bundled.α.{u (max u (v+1))} category_theory.category.{v u} C)
+                         (category_theory.Cat.str.{v u} C)
+                         (@category_theory.bundled.α.{u (max u (v+1))} category_theory.category.{v u} D)
+                         (category_theory.Cat.str.{v u} D)))
+                 C
+                 D)
+             (G :
+               @category_theory.has_hom.hom.{(max v u) (max v u)+1} category_theory.Cat.{v u}
+                 (@category_theory.has_hom.mk.{(max v u) (max v u)+1} category_theory.Cat.{v u}
+                    (λ (C D : category_theory.Cat.{v u}),
+                       @category_theory.functor.{v v u u}
+                         (@category_theory.bundled.α.{u (max u (v+1))} category_theory.category.{v u} C)
+                         (category_theory.Cat.str.{v u} C)
+                         (@category_theory.bundled.α.{u (max u (v+1))} category_theory.category.{v u} D)
+                         (category_theory.Cat.str.{v u} D)))
+                 D
+                 E),
+               @category_theory.functor.comp.{v v v u u u}
+                 (@category_theory.bundled.α.{u (max u (v+1))} category_theory.category.{v u} C)
+                 (category_theory.Cat.str.{v u} C)
+                 (@category_theory.bundled.α.{u (max u (v+1))} category_theory.category.{v u} D)
+                 (category_theory.Cat.str.{v u} D)
+                 (@category_theory.bundled.α.{u (max u (v+1))} category_theory.category.{v u} E)
+                 (category_theory.Cat.str.{v u} E)
+                 F
+                 G)))
+      W
+      X)
+  (g :
+    @category_theory.has_hom.hom.{(max v u) (max v u)+1} category_theory.Cat.{v u}
+      (@category_theory.category_struct.to_has_hom.{(max v u) (max v u)+1} category_theory.Cat.{v u}
+         (@category_theory.category_struct.mk.{(max v u) (max v u)+1} category_theory.Cat.{v u}
+            (@category_theory.has_hom.mk.{(max v u) (max v u)+1} category_theory.Cat.{v u}
+               (λ (C D : category_theory.Cat.{v u}),
+                  @category_theory.functor.{v v u u}
+                    (@category_theory.bundled.α.{u (max u (v+1))} category_theory.category.{v u} C)
+                    (category_theory.Cat.str.{v u} C)
+                    (@category_theory.bundled.α.{u (max u (v+1))} category_theory.category.{v u} D)
+                    (category_theory.Cat.str.{v u} D)))
+            (λ (C : category_theory.Cat.{v u}),
+               @category_theory.functor.id.{v u}
+                 (@category_theory.bundled.α.{u (max u (v+1))} category_theory.category.{v u} C)
+                 (category_theory.Cat.str.{v u} C))
+            (λ (C D E : category_theory.Cat.{v u})
+             (F :
+               @category_theory.has_hom.hom.{(max v u) (max v u)+1} category_theory.Cat.{v u}
+                 (@category_theory.has_hom.mk.{(max v u) (max v u)+1} category_theory.Cat.{v u}
+                    (λ (C D : category_theory.Cat.{v u}),
+                       @category_theory.functor.{v v u u}
+                         (@category_theory.bundled.α.{u (max u (v+1))} category_theory.category.{v u} C)
+                         (category_theory.Cat.str.{v u} C)
+                         (@category_theory.bundled.α.{u (max u (v+1))} category_theory.category.{v u} D)
+                         (category_theory.Cat.str.{v u} D)))
+                 C
+                 D)
+             (G :
+               @category_theory.has_hom.hom.{(max v u) (max v u)+1} category_theory.Cat.{v u}
+                 (@category_theory.has_hom.mk.{(max v u) (max v u)+1} category_theory.Cat.{v u}
+                    (λ (C D : category_theory.Cat.{v u}),
+                       @category_theory.functor.{v v u u}
+                         (@category_theory.bundled.α.{u (max u (v+1))} category_theory.category.{v u} C)
+                         (category_theory.Cat.str.{v u} C)
+                         (@category_theory.bundled.α.{u (max u (v+1))} category_theory.category.{v u} D)
+                         (category_theory.Cat.str.{v u} D)))
+                 D
+                 E),
+               @category_theory.functor.comp.{v v v u u u}
+                 (@category_theory.bundled.α.{u (max u (v+1))} category_theory.category.{v u} C)
+                 (category_theory.Cat.str.{v u} C)
+                 (@category_theory.bundled.α.{u (max u (v+1))} category_theory.category.{v u} D)
+                 (category_theory.Cat.str.{v u} D)
+                 (@category_theory.bundled.α.{u (max u (v+1))} category_theory.category.{v u} E)
+                 (category_theory.Cat.str.{v u} E)
+                 F
+                 G)))
+      X
+      Y)
+  (h :
+    @category_theory.has_hom.hom.{(max v u) (max v u)+1} category_theory.Cat.{v u}
+      (@category_theory.category_struct.to_has_hom.{(max v u) (max v u)+1} category_theory.Cat.{v u}
+         (@category_theory.category_struct.mk.{(max v u) (max v u)+1} category_theory.Cat.{v u}
+            (@category_theory.has_hom.mk.{(max v u) (max v u)+1} category_theory.Cat.{v u}
+               (λ (C D : category_theory.Cat.{v u}),
+                  @category_theory.functor.{v v u u}
+                    (@category_theory.bundled.α.{u (max u (v+1))} category_theory.category.{v u} C)
+                    (category_theory.Cat.str.{v u} C)
+                    (@category_theory.bundled.α.{u (max u (v+1))} category_theory.category.{v u} D)
+                    (category_theory.Cat.str.{v u} D)))
+            (λ (C : category_theory.Cat.{v u}),
+               @category_theory.functor.id.{v u}
+                 (@category_theory.bundled.α.{u (max u (v+1))} category_theory.category.{v u} C)
+                 (category_theory.Cat.str.{v u} C))
+            (λ (C D E : category_theory.Cat.{v u})
+             (F :
+               @category_theory.has_hom.hom.{(max v u) (max v u)+1} category_theory.Cat.{v u}
+                 (@category_theory.has_hom.mk.{(max v u) (max v u)+1} category_theory.Cat.{v u}
+                    (λ (C D : category_theory.Cat.{v u}),
+                       @category_theory.functor.{v v u u}
+                         (@category_theory.bundled.α.{u (max u (v+1))} category_theory.category.{v u} C)
+                         (category_theory.Cat.str.{v u} C)
+                         (@category_theory.bundled.α.{u (max u (v+1))} category_theory.category.{v u} D)
+                         (category_theory.Cat.str.{v u} D)))
+                 C
+                 D)
+             (G :
+               @category_theory.has_hom.hom.{(max v u) (max v u)+1} category_theory.Cat.{v u}
+                 (@category_theory.has_hom.mk.{(max v u) (max v u)+1} category_theory.Cat.{v u}
+                    (λ (C D : category_theory.Cat.{v u}),
+                       @category_theory.functor.{v v u u}
+                         (@category_theory.bundled.α.{u (max u (v+1))} category_theory.category.{v u} C)
+                         (category_theory.Cat.str.{v u} C)
+                         (@category_theory.bundled.α.{u (max u (v+1))} category_theory.category.{v u} D)
+                         (category_theory.Cat.str.{v u} D)))
+                 D
+                 E),
+               @category_theory.functor.comp.{v v v u u u}
+                 (@category_theory.bundled.α.{u (max u (v+1))} category_theory.category.{v u} C)
+                 (category_theory.Cat.str.{v u} C)
+                 (@category_theory.bundled.α.{u (max u (v+1))} category_theory.category.{v u} D)
+                 (category_theory.Cat.str.{v u} D)
+                 (@category_theory.bundled.α.{u (max u (v+1))} category_theory.category.{v u} E)
+                 (category_theory.Cat.str.{v u} E)
+                 F
+                 G)))
+      Y
+      Z),
+    @eq.{(max v u)+1}
+      (@category_theory.has_hom.hom.{(max v u) (max v u)+1} category_theory.Cat.{v u}
+         (@category_theory.category_struct.to_has_hom.{(max v u) (max v u)+1} category_theory.Cat.{v u}
+            (@category_theory.category_struct.mk.{(max v u) (max v u)+1} category_theory.Cat.{v u}
+               (@category_theory.has_hom.mk.{(max v u) (max v u)+1} category_theory.Cat.{v u}
+                  (λ (C D : category_theory.Cat.{v u}),
+                     @category_theory.functor.{v v u u}
+                       (@category_theory.bundled.α.{u (max u (v+1))} category_theory.category.{v u} C)
+                       (category_theory.Cat.str.{v u} C)
+                       (@category_theory.bundled.α.{u (max u (v+1))} category_theory.category.{v u} D)
+                       (category_theory.Cat.str.{v u} D)))
+               (λ (C : category_theory.Cat.{v u}),
+                  @category_theory.functor.id.{v u}
+                    (@category_theory.bundled.α.{u (max u (v+1))} category_theory.category.{v u} C)
+                    (category_theory.Cat.str.{v u} C))
+               (λ (C D E : category_theory.Cat.{v u})
+                (F :
+                  @category_theory.has_hom.hom.{(max v u) (max v u)+1} category_theory.Cat.{v u}
+                    (@category_theory.has_hom.mk.{(max v u) (max v u)+1} category_theory.Cat.{v u}
+                       (λ (C D : category_theory.Cat.{v u}),
+                          @category_theory.functor.{v v u u}
+                            (@category_theory.bundled.α.{u (max u (v+1))} category_theory.category.{v u} C)
+                            (category_theory.Cat.str.{v u} C)
+                            (@category_theory.bundled.α.{u (max u (v+1))} category_theory.category.{v u} D)
+                            (category_theory.Cat.str.{v u} D)))
+                    C
+                    D)
+                (G :
+                  @category_theory.has_hom.hom.{(max v u) (max v u)+1} category_theory.Cat.{v u}
+                    (@category_theory.has_hom.mk.{(max v u) (max v u)+1} category_theory.Cat.{v u}
+                       (λ (C D : category_theory.Cat.{v u}),
+                          @category_theory.functor.{v v u u}
+                            (@category_theory.bundled.α.{u (max u (v+1))} category_theory.category.{v u} C)
+                            (category_theory.Cat.str.{v u} C)
+                            (@category_theory.bundled.α.{u (max u (v+1))} category_theory.category.{v u} D)
+                            (category_theory.Cat.str.{v u} D)))
+                    D
+                    E),
+                  @category_theory.functor.comp.{v v v u u u}
+                    (@category_theory.bundled.α.{u (max u (v+1))} category_theory.category.{v u} C)
+                    (category_theory.Cat.str.{v u} C)
+                    (@category_theory.bundled.α.{u (max u (v+1))} category_theory.category.{v u} D)
+                    (category_theory.Cat.str.{v u} D)
+                    (@category_theory.bundled.α.{u (max u (v+1))} category_theory.category.{v u} E)
+                    (category_theory.Cat.str.{v u} E)
+                    F
+                    G)))
+         W
+         Z)
+      (@category_theory.category_struct.comp.{(max v u) (max v u)+1} category_theory.Cat.{v u}
+         (@category_theory.category_struct.mk.{(max v u) (max v u)+1} category_theory.Cat.{v u}
+            (@category_theory.has_hom.mk.{(max v u) (max v u)+1} category_theory.Cat.{v u}
+               (λ (C D : category_theory.Cat.{v u}),
+                  @category_theory.functor.{v v u u}
+                    (@category_theory.bundled.α.{u (max u (v+1))} category_theory.category.{v u} C)
+                    (category_theory.Cat.str.{v u} C)
+                    (@category_theory.bundled.α.{u (max u (v+1))} category_theory.category.{v u} D)
+                    (category_theory.Cat.str.{v u} D)))
+            (λ (C : category_theory.Cat.{v u}),
+               @category_theory.functor.id.{v u}
+                 (@category_theory.bundled.α.{u (max u (v+1))} category_theory.category.{v u} C)
+                 (category_theory.Cat.str.{v u} C))
+            (λ (C D E : category_theory.Cat.{v u})
+             (F :
+               @category_theory.has_hom.hom.{(max v u) (max v u)+1} category_theory.Cat.{v u}
+                 (@category_theory.has_hom.mk.{(max v u) (max v u)+1} category_theory.Cat.{v u}
+                    (λ (C D : category_theory.Cat.{v u}),
+                       @category_theory.functor.{v v u u}
+                         (@category_theory.bundled.α.{u (max u (v+1))} category_theory.category.{v u} C)
+                         (category_theory.Cat.str.{v u} C)
+                         (@category_theory.bundled.α.{u (max u (v+1))} category_theory.category.{v u} D)
+                         (category_theory.Cat.str.{v u} D)))
+                 C
+                 D)
+             (G :
+               @category_theory.has_hom.hom.{(max v u) (max v u)+1} category_theory.Cat.{v u}
+                 (@category_theory.has_hom.mk.{(max v u) (max v u)+1} category_theory.Cat.{v u}
+                    (λ (C D : category_theory.Cat.{v u}),
+                       @category_theory.functor.{v v u u}
+                         (@category_theory.bundled.α.{u (max u (v+1))} category_theory.category.{v u} C)
+                         (category_theory.Cat.str.{v u} C)
+                         (@category_theory.bundled.α.{u (max u (v+1))} category_theory.category.{v u} D)
+                         (category_theory.Cat.str.{v u} D)))
+                 D
+                 E),
+               @category_theory.functor.comp.{v v v u u u}
+                 (@category_theory.bundled.α.{u (max u (v+1))} category_theory.category.{v u} C)
+                 (category_theory.Cat.str.{v u} C)
+                 (@category_theory.bundled.α.{u (max u (v+1))} category_theory.category.{v u} D)
+                 (category_theory.Cat.str.{v u} D)
+                 (@category_theory.bundled.α.{u (max u (v+1))} category_theory.category.{v u} E)
+                 (category_theory.Cat.str.{v u} E)
+                 F
+                 G))
+         W
+         Y
+         Z
+         (@category_theory.category_struct.comp.{(max v u) (max v u)+1} category_theory.Cat.{v u}
+            (@category_theory.category_struct.mk.{(max v u) (max v u)+1} category_theory.Cat.{v u}
+               (@category_theory.has_hom.mk.{(max v u) (max v u)+1} category_theory.Cat.{v u}
+                  (λ (C D : category_theory.Cat.{v u}),
+                     @category_theory.functor.{v v u u}
+                       (@category_theory.bundled.α.{u (max u (v+1))} category_theory.category.{v u} C)
+                       (category_theory.Cat.str.{v u} C)
+                       (@category_theory.bundled.α.{u (max u (v+1))} category_theory.category.{v u} D)
+                       (category_theory.Cat.str.{v u} D)))
+               (λ (C : category_theory.Cat.{v u}),
+                  @category_theory.functor.id.{v u}
+                    (@category_theory.bundled.α.{u (max u (v+1))} category_theory.category.{v u} C)
+                    (category_theory.Cat.str.{v u} C))
+               (λ (C D E : category_theory.Cat.{v u})
+                (F :
+                  @category_theory.has_hom.hom.{(max v u) (max v u)+1} category_theory.Cat.{v u}
+                    (@category_theory.has_hom.mk.{(max v u) (max v u)+1} category_theory.Cat.{v u}
+                       (λ (C D : category_theory.Cat.{v u}),
+                          @category_theory.functor.{v v u u}
+                            (@category_theory.bundled.α.{u (max u (v+1))} category_theory.category.{v u} C)
+                            (category_theory.Cat.str.{v u} C)
+                            (@category_theory.bundled.α.{u (max u (v+1))} category_theory.category.{v u} D)
+                            (category_theory.Cat.str.{v u} D)))
+                    C
+                    D)
+                (G :
+                  @category_theory.has_hom.hom.{(max v u) (max v u)+1} category_theory.Cat.{v u}
+                    (@category_theory.has_hom.mk.{(max v u) (max v u)+1} category_theory.Cat.{v u}
+                       (λ (C D : category_theory.Cat.{v u}),
+                          @category_theory.functor.{v v u u}
+                            (@category_theory.bundled.α.{u (max u (v+1))} category_theory.category.{v u} C)
+                            (category_theory.Cat.str.{v u} C)
+                            (@category_theory.bundled.α.{u (max u (v+1))} category_theory.category.{v u} D)
+                            (category_theory.Cat.str.{v u} D)))
+                    D
+                    E),
+                  @category_theory.functor.comp.{v v v u u u}
+                    (@category_theory.bundled.α.{u (max u (v+1))} category_theory.category.{v u} C)
+                    (category_theory.Cat.str.{v u} C)
+                    (@category_theory.bundled.α.{u (max u (v+1))} category_theory.category.{v u} D)
+                    (category_theory.Cat.str.{v u} D)
+                    (@category_theory.bundled.α.{u (max u (v+1))} category_theory.category.{v u} E)
+                    (category_theory.Cat.str.{v u} E)
+                    F
+                    G))
+            W
+            X
+            Y
+            f
+            g)
+         h)
+      (@category_theory.category_struct.comp.{(max v u) (max v u)+1} category_theory.Cat.{v u}
+         (@category_theory.category_struct.mk.{(max v u) (max v u)+1} category_theory.Cat.{v u}
+            (@category_theory.has_hom.mk.{(max v u) (max v u)+1} category_theory.Cat.{v u}
+               (λ (C D : category_theory.Cat.{v u}),
+                  @category_theory.functor.{v v u u}
+                    (@category_theory.bundled.α.{u (max u (v+1))} category_theory.category.{v u} C)
+                    (category_theory.Cat.str.{v u} C)
+                    (@category_theory.bundled.α.{u (max u (v+1))} category_theory.category.{v u} D)
+                    (category_theory.Cat.str.{v u} D)))
+            (λ (C : category_theory.Cat.{v u}),
+               @category_theory.functor.id.{v u}
+                 (@category_theory.bundled.α.{u (max u (v+1))} category_theory.category.{v u} C)
+                 (category_theory.Cat.str.{v u} C))
+            (λ (C D E : category_theory.Cat.{v u})
+             (F :
+               @category_theory.has_hom.hom.{(max v u) (max v u)+1} category_theory.Cat.{v u}
+                 (@category_theory.has_hom.mk.{(max v u) (max v u)+1} category_theory.Cat.{v u}
+                    (λ (C D : category_theory.Cat.{v u}),
+                       @category_theory.functor.{v v u u}
+                         (@category_theory.bundled.α.{u (max u (v+1))} category_theory.category.{v u} C)
+                         (category_theory.Cat.str.{v u} C)
+                         (@category_theory.bundled.α.{u (max u (v+1))} category_theory.category.{v u} D)
+                         (category_theory.Cat.str.{v u} D)))
+                 C
+                 D)
+             (G :
+               @category_theory.has_hom.hom.{(max v u) (max v u)+1} category_theory.Cat.{v u}
+                 (@category_theory.has_hom.mk.{(max v u) (max v u)+1} category_theory.Cat.{v u}
+                    (λ (C D : category_theory.Cat.{v u}),
+                       @category_theory.functor.{v v u u}
+                         (@category_theory.bundled.α.{u (max u (v+1))} category_theory.category.{v u} C)
+                         (category_theory.Cat.str.{v u} C)
+                         (@category_theory.bundled.α.{u (max u (v+1))} category_theory.category.{v u} D)
+                         (category_theory.Cat.str.{v u} D)))
+                 D
+                 E),
+               @category_theory.functor.comp.{v v v u u u}
+                 (@category_theory.bundled.α.{u (max u (v+1))} category_theory.category.{v u} C)
+                 (category_theory.Cat.str.{v u} C)
+                 (@category_theory.bundled.α.{u (max u (v+1))} category_theory.category.{v u} D)
+                 (category_theory.Cat.str.{v u} D)
+                 (@category_theory.bundled.α.{u (max u (v+1))} category_theory.category.{v u} E)
+                 (category_theory.Cat.str.{v u} E)
+                 F
+                 G))
+         W
+         X
+         Z
+         f
+         (@category_theory.category_struct.comp.{(max v u) (max v u)+1} category_theory.Cat.{v u}
+            (@category_theory.category_struct.mk.{(max v u) (max v u)+1} category_theory.Cat.{v u}
+               (@category_theory.has_hom.mk.{(max v u) (max v u)+1} category_theory.Cat.{v u}
+                  (λ (C D : category_theory.Cat.{v u}),
+                     @category_theory.functor.{v v u u}
+                       (@category_theory.bundled.α.{u (max u (v+1))} category_theory.category.{v u} C)
+                       (category_theory.Cat.str.{v u} C)
+                       (@category_theory.bundled.α.{u (max u (v+1))} category_theory.category.{v u} D)
+                       (category_theory.Cat.str.{v u} D)))
+               (λ (C : category_theory.Cat.{v u}),
+                  @category_theory.functor.id.{v u}
+                    (@category_theory.bundled.α.{u (max u (v+1))} category_theory.category.{v u} C)
+                    (category_theory.Cat.str.{v u} C))
+               (λ (C D E : category_theory.Cat.{v u})
+                (F :
+                  @category_theory.has_hom.hom.{(max v u) (max v u)+1} category_theory.Cat.{v u}
+                    (@category_theory.has_hom.mk.{(max v u) (max v u)+1} category_theory.Cat.{v u}
+                       (λ (C D : category_theory.Cat.{v u}),
+                          @category_theory.functor.{v v u u}
+                            (@category_theory.bundled.α.{u (max u (v+1))} category_theory.category.{v u} C)
+                            (category_theory.Cat.str.{v u} C)
+                            (@category_theory.bundled.α.{u (max u (v+1))} category_theory.category.{v u} D)
+                            (category_theory.Cat.str.{v u} D)))
+                    C
+                    D)
+                (G :
+                  @category_theory.has_hom.hom.{(max v u) (max v u)+1} category_theory.Cat.{v u}
+                    (@category_theory.has_hom.mk.{(max v u) (max v u)+1} category_theory.Cat.{v u}
+                       (λ (C D : category_theory.Cat.{v u}),
+                          @category_theory.functor.{v v u u}
+                            (@category_theory.bundled.α.{u (max u (v+1))} category_theory.category.{v u} C)
+                            (category_theory.Cat.str.{v u} C)
+                            (@category_theory.bundled.α.{u (max u (v+1))} category_theory.category.{v u} D)
+                            (category_theory.Cat.str.{v u} D)))
+                    D
+                    E),
+                  @category_theory.functor.comp.{v v v u u u}
+                    (@category_theory.bundled.α.{u (max u (v+1))} category_theory.category.{v u} C)
+                    (category_theory.Cat.str.{v u} C)
+                    (@category_theory.bundled.α.{u (max u (v+1))} category_theory.category.{v u} D)
+                    (category_theory.Cat.str.{v u} D)
+                    (@category_theory.bundled.α.{u (max u (v+1))} category_theory.category.{v u} E)
+                    (category_theory.Cat.str.{v u} E)
+                    F
+                    G))
+            X
+            Y
+            Z
+            g
+            h))'><code style='font-family: menlo, "Source Code Pro", monospace;'>└────────────┘</code></a></font>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 44  </code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 45  /-- Functor that gets the set of objects of a category. It is not</code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 46  called `forget`, because it is not a faithful functor. -/</code>
+<font color='grey'><a title='state'><code style='font-family: menlo, "Source Code Pro", monospace;'>st   </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>    </code><font color='lime'><a title='⊢ ∀ (X : category_theory.Cat.{v u}),
+    @eq.{u+1}
+      (@category_theory.has_hom.hom.{u u+1} (Type u)
+         (@category_theory.category_struct.to_has_hom.{u u+1} (Type u)
+            (@category_theory.category.to_category_struct.{u u+1} (Type u) category_theory.types.{u}))
+         (@category_theory.bundled.α.{u (max u (v+1))} category_theory.category.{v u} X)
+         (@category_theory.bundled.α.{u (max u (v+1))} category_theory.category.{v u} X))
+      (@category_theory.functor.obj.{v v u u}
+         (@category_theory.bundled.α.{u (max u (v+1))} category_theory.category.{v u} X)
+         (category_theory.Cat.str.{v u} X)
+         (@category_theory.bundled.α.{u (max u (v+1))} category_theory.category.{v u} X)
+         (category_theory.Cat.str.{v u} X)
+         (@category_theory.category_struct.id.{(max v u) (max (u+1) u (v+1))} category_theory.Cat.{v u}
+            (@category_theory.category.to_category_struct.{(max v u) (max (u+1) u (v+1))} category_theory.Cat.{v u}
+               category_theory.Cat.category.{v u})
+            X))
+      (@category_theory.category_struct.id.{u u+1} (Type u)
+         (@category_theory.category.to_category_struct.{u u+1} (Type u) category_theory.types.{u})
+         (@category_theory.bundled.α.{u (max u (v+1))} category_theory.category.{v u} X))'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 47  def objects : Cat.{v u} ⥤ Type u :=</code>
+<font color='grey'><a title='full-id'><code style='font-family: menlo, "Source Code Pro", monospace;'>id   </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>              </code><font color='blue'><a title='category_theory.Cat'><code style='font-family: menlo, "Source Code Pro", monospace;'>└─┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>       </code><font color='blue'><a title='category_theory.functor'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font>
+<font color='grey'><a title='source'><code style='font-family: menlo, "Source Code Pro", monospace;'>src  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>              </code><font color='red'><a title='{&#x27;line&#x27;: 27, &#x27;column&#x27;: 4}'><code style='font-family: menlo, "Source Code Pro", monospace;'>└─┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>       </code><font color='red'><a title='{&#x27;file&#x27;: &#x27;/home/ec2-user/lean_info_scrapper/_target/deps/mathlib/src/category_theory/functor.lean&#x27;, &#x27;line&#x27;: 30, &#x27;column&#x27;: 10}'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font>
+<font color='grey'><a title='type'><code style='font-family: menlo, "Source Code Pro", monospace;'>typ  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>              </code><font color='green'><a title='Type (max (u+1) u (v+1))'><code style='font-family: menlo, "Source Code Pro", monospace;'>└─┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>       </code><font color='green'><a title='Π (C : Type (max (u+1) u (v+1))) [_inst_1 : category_theory.category.{(max v u) (max (u+1) u (v+1))} C] (D : Type (u+1)) [_inst_2 : category_theory.category.{u u+1} D], Type (max (max v u) u (u+1) u (v+1))'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font>
+<font color='grey'><a title='doc'><code style='font-family: menlo, "Source Code Pro", monospace;'>doc  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>              </code><font color='orange'><a title='Category of categories.'><code style='font-family: menlo, "Source Code Pro", monospace;'>└─┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>       </code><font color='orange'><a title='`functor C D` represents a functor between categories `C` and `D`.
+
+To apply a functor `F` to an object use `F.obj X`, and to a morphism use `F.map f`.
+
+The axiom `map_id_lemma` expresses preservation of identities, and
+`map_comp_lemma` expresses functoriality.'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 48  { obj := bundled.α,</code>
+<font color='grey'><a title='full-id'><code style='font-family: menlo, "Source Code Pro", monospace;'>id   </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'></code><font color='blue'><a title='obviously'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>        </code><font color='blue'><a title='category_theory.bundled.α'><code style='font-family: menlo, "Source Code Pro", monospace;'>└───────┘</code></a></font>
+<font color='grey'><a title='source'><code style='font-family: menlo, "Source Code Pro", monospace;'>src  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'></code><font color='red'><a title='{&#x27;file&#x27;: &#x27;/home/ec2-user/lean_info_scrapper/_target/deps/mathlib/src/category_theory/category/default.lean&#x27;}'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>        </code><font color='red'><a title='{&#x27;file&#x27;: &#x27;/home/ec2-user/lean_info_scrapper/_target/deps/mathlib/src/category_theory/concrete_category/bundled.lean&#x27;, &#x27;line&#x27;: 24, &#x27;column&#x27;: 10}'><code style='font-family: menlo, "Source Code Pro", monospace;'>└───────┘</code></a></font>
+<font color='grey'><a title='type'><code style='font-family: menlo, "Source Code Pro", monospace;'>typ  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'></code><font color='green'><a title='tactic.{0} unit'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>        </code><font color='green'><a title='Π {c : Type u → Type v}, category_theory.bundled.{u v} c → Type u'><code style='font-family: menlo, "Source Code Pro", monospace;'>└───────┘</code></a></font>
+<font color='grey'><a title='doc'><code style='font-family: menlo, "Source Code Pro", monospace;'>doc  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'></code><font color='orange'><a title='The `obviously` tactic is a &quot;replaceable&quot; tactic, which means that its meaning is defined by tactics that are defined later with the `@[obviously]` attribute. It is intended for use with `auto_param`s for structure fields.'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 49    map := λ C D F, F.obj }</code>
+<font color='grey'><a title='full-id'><code style='font-family: menlo, "Source Code Pro", monospace;'>id   </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>           </code><font color='blue'><a title='C'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'> </code><font color='blue'><a title='D'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'> </code><font color='blue'><a title='F'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>  </code><font color='blue'><a title='F'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'></code><font color='blue'><a title='category_theory.functor.obj'><code style='font-family: menlo, "Source Code Pro", monospace;'>└──┘</code></a></font>
+<font color='grey'><a title='source'><code style='font-family: menlo, "Source Code Pro", monospace;'>src  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>                   </code><font color='red'><a title='{&#x27;file&#x27;: &#x27;/home/ec2-user/lean_info_scrapper/_target/deps/mathlib/src/category_theory/functor.lean&#x27;, &#x27;line&#x27;: 30, &#x27;column&#x27;: 10}'><code style='font-family: menlo, "Source Code Pro", monospace;'>└──┘</code></a></font>
+<font color='grey'><a title='type'><code style='font-family: menlo, "Source Code Pro", monospace;'>typ  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>           </code><font color='green'><a title='category_theory.Cat.{v u}'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'> </code><font color='green'><a title='category_theory.Cat.{v u}'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'> </code><font color='green'><a title='@category_theory.has_hom.hom.{(max v u) (max (u+1) u (v+1))} category_theory.Cat.{v u} (@category_theory.category_struct.to_has_hom.{(max v u) (max (u+1) u (v+1))} category_theory.Cat.{v u} (@category_theory.category.to_category_struct.{(max v u) (max (u+1) u (v+1))} category_theory.Cat.{v u} category_theory.Cat.category.{v u})) C D'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>  </code><font color='green'><a title='@category_theory.has_hom.hom.{(max v u) (max (u+1) u (v+1))} category_theory.Cat.{v u} (@category_theory.category_struct.to_has_hom.{(max v u) (max (u+1) u (v+1))} category_theory.Cat.{v u} (@category_theory.category.to_category_struct.{(max v u) (max (u+1) u (v+1))} category_theory.Cat.{v u} category_theory.Cat.category.{v u})) C D'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'></code><font color='green'><a title='Π {C : Type u} [_inst_1 : category_theory.category.{v u} C] {D : Type u} [_inst_2 : category_theory.category.{v u} D], @category_theory.functor.{v v u u} C _inst_1 D _inst_2 → C → D'><code style='font-family: menlo, "Source Code Pro", monospace;'>└──┘</code></a></font>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 50  </code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 51  end Cat</code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 52  </code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 53  end category_theory</code></pre>
+</body>

@@ -1,0 +1,747 @@
+<head>
+<meta charset="UTF-8">
+<link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro&display=swap" rel="stylesheet">
+</head>
+
+<body>
+<pre>
+<code style='font-family: menlo, "Source Code Pro", monospace;'>  1  /-</code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'>  2  Copyright (c) 2019 Floris van Doorn. All rights reserved.</code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'>  3  Released under Apache 2.0 license as described in the file LICENSE.</code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'>  4  Authors: Floris van Doorn, Yury Kudryashov</code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'>  5  -/</code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'>  6  import data.set.intervals.basic data.set.lattice</code>
+<font color='grey'><a title='source'><code style='font-family: menlo, "Source Code Pro", monospace;'>src  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>       </code><font color='red'><a title='{&#x27;file&#x27;: &#x27;/home/ec2-user/lean_info_scrapper/_target/deps/mathlib/src/data/set/intervals/basic.lean&#x27;, &#x27;line&#x27;: 1, &#x27;column&#x27;: 0}'><code style='font-family: menlo, "Source Code Pro", monospace;'>└──────────────────────┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'> </code><font color='red'><a title='{&#x27;file&#x27;: &#x27;/home/ec2-user/lean_info_scrapper/_target/deps/mathlib/src/data/set/lattice.lean&#x27;, &#x27;line&#x27;: 1, &#x27;column&#x27;: 0}'><code style='font-family: menlo, "Source Code Pro", monospace;'>└──────────────┘</code></a></font>
+<code style='font-family: menlo, "Source Code Pro", monospace;'>  7  </code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'>  8  /-! # Extra lemmas about intervals</code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'>  9  </code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 10  This file contains lemmas about intervals that cannot be included into `data.set.intervals.basic`</code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 11  because this would create an `import` cycle. Namely, lemmas in this file can use definitions</code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 12  from `data.set.lattice`, including `disjoint`.</code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 13  -/</code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 14  </code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 15  universe u</code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 16  </code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 17  variables {α : Type u}</code>
+<font color='grey'><a title='full-id'><code style='font-family: menlo, "Source Code Pro", monospace;'>id   </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>          </code><font color='blue'><a title='h'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font>
+<font color='grey'><a title='type'><code style='font-family: menlo, "Source Code Pro", monospace;'>typ  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>          </code><font color='green'><a title='@has_le.le.{u} α (@preorder.to_has_le.{u} α (@partial_order.to_preorder.{u} α (@lattice.semilattice_inf.to_partial_order.{u} α (@lattice.lattice.to_semilattice_inf.{u} α (@lattice.lattice_of_decidable_linear_order.{u} α _inst_1))))) x₂ x₁'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 18  </code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 19  open lattice</code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 20  </code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 21  namespace set</code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 22  </code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 23  section decidable_linear_order</code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 24  variables [decidable_linear_order α] {a₁ a₂ b₁ b₂ : α}</code>
+<font color='grey'><a title='full-id'><code style='font-family: menlo, "Source Code Pro", monospace;'>id   </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>           </code><font color='blue'><a title='decidable_linear_order'><code style='font-family: menlo, "Source Code Pro", monospace;'>└────────────────────┘</code></a></font>
+<font color='grey'><a title='source'><code style='font-family: menlo, "Source Code Pro", monospace;'>src  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>           </code><font color='red'><a title='{&#x27;file&#x27;: &#x27;/home/ec2-user/.elan/toolchains/3.4.2/lib/lean/library/init/algebra/order.lean&#x27;, &#x27;line&#x27;: 212, &#x27;column&#x27;: 6}'><code style='font-family: menlo, "Source Code Pro", monospace;'>└────────────────────┘</code></a></font>
+<font color='grey'><a title='type'><code style='font-family: menlo, "Source Code Pro", monospace;'>typ  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>           </code><font color='green'><a title='Type u → Type u'><code style='font-family: menlo, "Source Code Pro", monospace;'>└────────────────────┘</code></a></font>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 25  </code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 26  lemma Ico_disjoint_Ico : disjoint (Ico a₁ a₂) (Ico b₁ b₂) ↔ min a₂ b₂ ≤ max a₁ b₁ :=</code>
+<font color='grey'><a title='full-id'><code style='font-family: menlo, "Source Code Pro", monospace;'>id   </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>                         </code><font color='blue'><a title='disjoint'><code style='font-family: menlo, "Source Code Pro", monospace;'>└──────┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>  </code><font color='blue'><a title='set.Ico'><code style='font-family: menlo, "Source Code Pro", monospace;'>└─┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'> </code><font color='blue'><a title='a₁'><code style='font-family: menlo, "Source Code Pro", monospace;'>└┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'> </code><font color='blue'><a title='a₂'><code style='font-family: menlo, "Source Code Pro", monospace;'>└┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>   </code><font color='blue'><a title='set.Ico'><code style='font-family: menlo, "Source Code Pro", monospace;'>└─┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'> </code><font color='blue'><a title='b₁'><code style='font-family: menlo, "Source Code Pro", monospace;'>└┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'> </code><font color='blue'><a title='b₂'><code style='font-family: menlo, "Source Code Pro", monospace;'>└┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>  </code><font color='blue'><a title='iff'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'> </code><font color='blue'><a title='min'><code style='font-family: menlo, "Source Code Pro", monospace;'>└─┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'> </code><font color='blue'><a title='a₂'><code style='font-family: menlo, "Source Code Pro", monospace;'>└┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'> </code><font color='blue'><a title='b₂'><code style='font-family: menlo, "Source Code Pro", monospace;'>└┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'> </code><font color='blue'><a title='has_le.le'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'> </code><font color='blue'><a title='max'><code style='font-family: menlo, "Source Code Pro", monospace;'>└─┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'> </code><font color='blue'><a title='a₁'><code style='font-family: menlo, "Source Code Pro", monospace;'>└┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'> </code><font color='blue'><a title='b₁'><code style='font-family: menlo, "Source Code Pro", monospace;'>└┘</code></a></font>
+<font color='grey'><a title='source'><code style='font-family: menlo, "Source Code Pro", monospace;'>src  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>                         </code><font color='red'><a title='{&#x27;file&#x27;: &#x27;/home/ec2-user/lean_info_scrapper/_target/deps/mathlib/src/data/set/lattice.lean&#x27;, &#x27;line&#x27;: 758, &#x27;column&#x27;: 4}'><code style='font-family: menlo, "Source Code Pro", monospace;'>└──────┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>  </code><font color='red'><a title='{&#x27;file&#x27;: &#x27;/home/ec2-user/lean_info_scrapper/_target/deps/mathlib/src/data/set/intervals/basic.lean&#x27;, &#x27;line&#x27;: 43, &#x27;column&#x27;: 4}'><code style='font-family: menlo, "Source Code Pro", monospace;'>└─┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>         </code><font color='red'><a title='{&#x27;file&#x27;: &#x27;/home/ec2-user/lean_info_scrapper/_target/deps/mathlib/src/data/set/intervals/basic.lean&#x27;, &#x27;line&#x27;: 43, &#x27;column&#x27;: 4}'><code style='font-family: menlo, "Source Code Pro", monospace;'>└─┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>        </code><font color='red'><a title='{&#x27;file&#x27;: &#x27;/home/ec2-user/.elan/toolchains/3.4.2/lib/lean/library/init/logic.lean&#x27;, &#x27;line&#x27;: 223, &#x27;column&#x27;: 10}'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'> </code><font color='red'><a title='{&#x27;file&#x27;: &#x27;/home/ec2-user/.elan/toolchains/3.4.2/lib/lean/library/init/algebra/functions.lean&#x27;, &#x27;line&#x27;: 11, &#x27;column&#x27;: 11}'><code style='font-family: menlo, "Source Code Pro", monospace;'>└─┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>       </code><font color='red'><a title='{&#x27;file&#x27;: &#x27;/home/ec2-user/.elan/toolchains/3.4.2/lib/lean/library/init/core.lean&#x27;, &#x27;line&#x27;: 319, &#x27;column&#x27;: 6}'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'> </code><font color='red'><a title='{&#x27;file&#x27;: &#x27;/home/ec2-user/.elan/toolchains/3.4.2/lib/lean/library/init/algebra/functions.lean&#x27;, &#x27;line&#x27;: 12, &#x27;column&#x27;: 11}'><code style='font-family: menlo, "Source Code Pro", monospace;'>└─┘</code></a></font>
+<font color='grey'><a title='type'><code style='font-family: menlo, "Source Code Pro", monospace;'>typ  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>                         </code><font color='green'><a title='Π {α : Type u} [_inst_1 : lattice.semilattice_inf_bot.{u} α], α → α → Prop'><code style='font-family: menlo, "Source Code Pro", monospace;'>└──────┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>  </code><font color='green'><a title='Π {α : Type u} [_inst_1 : preorder.{u} α], α → α → set.{u} α'><code style='font-family: menlo, "Source Code Pro", monospace;'>└─┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'> </code><font color='green'><a title='α'><code style='font-family: menlo, "Source Code Pro", monospace;'>└┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'> </code><font color='green'><a title='α'><code style='font-family: menlo, "Source Code Pro", monospace;'>└┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>   </code><font color='green'><a title='Π {α : Type u} [_inst_1 : preorder.{u} α], α → α → set.{u} α'><code style='font-family: menlo, "Source Code Pro", monospace;'>└─┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'> </code><font color='green'><a title='α'><code style='font-family: menlo, "Source Code Pro", monospace;'>└┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'> </code><font color='green'><a title='α'><code style='font-family: menlo, "Source Code Pro", monospace;'>└┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>  </code><font color='green'><a title='Prop → Prop → Prop'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'> </code><font color='green'><a title='Π {α : Type u} [_inst_1 : decidable_linear_order.{u} α], α → α → α'><code style='font-family: menlo, "Source Code Pro", monospace;'>└─┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'> </code><font color='green'><a title='α'><code style='font-family: menlo, "Source Code Pro", monospace;'>└┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'> </code><font color='green'><a title='α'><code style='font-family: menlo, "Source Code Pro", monospace;'>└┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'> </code><font color='green'><a title='Π {α : Type u} [c : has_le.{u} α], α → α → Prop'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'> </code><font color='green'><a title='Π {α : Type u} [_inst_1 : decidable_linear_order.{u} α], α → α → α'><code style='font-family: menlo, "Source Code Pro", monospace;'>└─┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'> </code><font color='green'><a title='α'><code style='font-family: menlo, "Source Code Pro", monospace;'>└┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'> </code><font color='green'><a title='α'><code style='font-family: menlo, "Source Code Pro", monospace;'>└┘</code></a></font>
+<font color='grey'><a title='doc'><code style='font-family: menlo, "Source Code Pro", monospace;'>doc  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>                         </code><font color='orange'><a title='Two elements of a lattice are disjoint if their inf is the bottom element.
+ (This generalizes disjoint sets, viewed as members of the subset lattice.)'><code style='font-family: menlo, "Source Code Pro", monospace;'>└──────┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>  </code><font color='orange'><a title='Left-closed right-open interval'><code style='font-family: menlo, "Source Code Pro", monospace;'>└─┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>         </code><font color='orange'><a title='Left-closed right-open interval'><code style='font-family: menlo, "Source Code Pro", monospace;'>└─┘</code></a></font>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 27  by simp only [set.disjoint_iff, subset_empty_iff, Ico_inter_Ico, Ico_eq_empty_iff,</code>
+<font color='grey'><a title='full-id'><code style='font-family: menlo, "Source Code Pro", monospace;'>id   </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>              </code><font color='blue'><a title='set.disjoint_iff'><code style='font-family: menlo, "Source Code Pro", monospace;'>└──────────────┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>  </code><font color='blue'><a title='set.subset_empty_iff'><code style='font-family: menlo, "Source Code Pro", monospace;'>└──────────────┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>  </code><font color='blue'><a title='set.Ico_inter_Ico'><code style='font-family: menlo, "Source Code Pro", monospace;'>└───────────┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>  </code><font color='blue'><a title='set.Ico_eq_empty_iff'><code style='font-family: menlo, "Source Code Pro", monospace;'>└──────────────┘</code></a></font>
+<font color='grey'><a title='source'><code style='font-family: menlo, "Source Code Pro", monospace;'>src  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>   </code><font color='red'><a title='{&#x27;file&#x27;: &#x27;/home/ec2-user/.elan/toolchains/3.4.2/lib/lean/library/init/meta/interactive.lean&#x27;, &#x27;line&#x27;: 1209, &#x27;column&#x27;: 9}'><code style='font-family: menlo, "Source Code Pro", monospace;'>└─────────┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'></code><font color='red'><a title='{&#x27;file&#x27;: &#x27;/home/ec2-user/lean_info_scrapper/_target/deps/mathlib/src/data/set/lattice.lean&#x27;, &#x27;line&#x27;: 794, &#x27;column&#x27;: 18}'><code style='font-family: menlo, "Source Code Pro", monospace;'>└──────────────┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'></code><font color='red'><a title='{&#x27;file&#x27;: &#x27;/home/ec2-user/.elan/toolchains/3.4.2/lib/lean/library/init/meta/interactive.lean&#x27;, &#x27;line&#x27;: 1209, &#x27;column&#x27;: 9}'><code style='font-family: menlo, "Source Code Pro", monospace;'>└┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'></code><font color='red'><a title='{&#x27;file&#x27;: &#x27;/home/ec2-user/lean_info_scrapper/_target/deps/mathlib/src/data/set/basic.lean&#x27;, &#x27;line&#x27;: 203, &#x27;column&#x27;: 8}'><code style='font-family: menlo, "Source Code Pro", monospace;'>└──────────────┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'></code><font color='red'><a title='{&#x27;file&#x27;: &#x27;/home/ec2-user/.elan/toolchains/3.4.2/lib/lean/library/init/meta/interactive.lean&#x27;, &#x27;line&#x27;: 1209, &#x27;column&#x27;: 9}'><code style='font-family: menlo, "Source Code Pro", monospace;'>└┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'></code><font color='red'><a title='{&#x27;file&#x27;: &#x27;/home/ec2-user/lean_info_scrapper/_target/deps/mathlib/src/data/set/intervals/basic.lean&#x27;, &#x27;line&#x27;: 563, &#x27;column&#x27;: 6}'><code style='font-family: menlo, "Source Code Pro", monospace;'>└───────────┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'></code><font color='red'><a title='{&#x27;file&#x27;: &#x27;/home/ec2-user/.elan/toolchains/3.4.2/lib/lean/library/init/meta/interactive.lean&#x27;, &#x27;line&#x27;: 1209, &#x27;column&#x27;: 9}'><code style='font-family: menlo, "Source Code Pro", monospace;'>└┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'></code><font color='red'><a title='{&#x27;file&#x27;: &#x27;/home/ec2-user/lean_info_scrapper/_target/deps/mathlib/src/data/set/intervals/basic.lean&#x27;, &#x27;line&#x27;: 321, &#x27;column&#x27;: 6}'><code style='font-family: menlo, "Source Code Pro", monospace;'>└──────────────┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'></code><font color='red'><a title='{&#x27;file&#x27;: &#x27;/home/ec2-user/.elan/toolchains/3.4.2/lib/lean/library/init/meta/interactive.lean&#x27;, &#x27;line&#x27;: 1209, &#x27;column&#x27;: 9}'><code style='font-family: menlo, "Source Code Pro", monospace;'>└─</code></a></font>
+<font color='grey'><a title='type'><code style='font-family: menlo, "Source Code Pro", monospace;'>typ  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>   </code><font color='green'><a title='@interactive.parse (option.{0} unit) (λ (a : option.{0} unit), @option.has_reflect unit (λ (a : unit), punit.reflect a) `(unit) a) (@optional.{0 0} lean.parser.{0} lean.parser.alternative unit (lean.parser.tk (string.str string.empty (char.of_nat (@bit1.{0} nat nat.has_one nat.has_add (@bit0.{0} nat nat.has_add (@bit0.{0} nat nat.has_add (@bit0.{0} nat nat.has_add (@bit0.{0} nat nat.has_add (@has_one.one.{0} nat nat.has_one)))))))))) → @interactive.parse bool (λ (a : bool), bool.has_reflect a) interactive.types.only_flag → @interactive.parse (list.{0} tactic.simp_arg_type) (λ (a : list.{0} tactic.simp_arg_type), @list.reflect tactic.simp_arg_type (λ (a : tactic.simp_arg_type), tactic.simp_arg_type.has_reflect a) `(tactic.simp_arg_type) a) tactic.simp_arg_list → @interactive.parse (list.{0} name) (λ (a : list.{0} name), @list.reflect name (λ (a : name), name.reflect a) `(name) a) interactive.types.with_ident_list → @interactive.parse interactive.loc (λ (a : interactive.loc), interactive.loc.has_reflect a) interactive.types.location → opt_param.{1} tactic.simp_config_ext {to_simp_config := {max_steps := simp.default_max_steps, contextual := bool.ff, lift_eq := bool.tt, canonize_instances := bool.tt, canonize_proofs := bool.ff, use_axioms := bool.tt, zeta := bool.tt, beta := bool.tt, eta := bool.tt, proj := bool.tt, iota := bool.tt, iota_eqn := bool.ff, constructor_eq := bool.tt, single_pass := bool.ff, fail_if_unchanged := bool.tt, memoize := bool.tt}, discharger := @tactic.failed unit} → tactic.{0} unit'><code style='font-family: menlo, "Source Code Pro", monospace;'>└─────────┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'></code><font color='green'><a title='∀ {α : Type ?l_1} {s t : set.{?l_1} α}, iff (@disjoint.{?l_1} (set.{?l_1} α) (@lattice.semilattice_inf_bot_of_bounded_lattice.{?l_1} (set.{?l_1} α) (@lattice.complete_lattice.to_bounded_lattice.{?l_1} (set.{?l_1} α) (@set.lattice_set.{?l_1} α))) s t) (@has_subset.subset.{?l_1} (set.{?l_1} α) (@set.has_subset.{?l_1} α) (@has_inter.inter.{?l_1} (set.{?l_1} α) (@set.has_inter.{?l_1} α) s t) (@has_emptyc.emptyc.{?l_1} (set.{?l_1} α) (@set.has_emptyc.{?l_1} α)))'><code style='font-family: menlo, "Source Code Pro", monospace;'>└──────────────┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'></code><font color='green'><a title='@interactive.parse (option.{0} unit) (λ (a : option.{0} unit), @option.has_reflect unit (λ (a : unit), punit.reflect a) `(unit) a) (@optional.{0 0} lean.parser.{0} lean.parser.alternative unit (lean.parser.tk (string.str string.empty (char.of_nat (@bit1.{0} nat nat.has_one nat.has_add (@bit0.{0} nat nat.has_add (@bit0.{0} nat nat.has_add (@bit0.{0} nat nat.has_add (@bit0.{0} nat nat.has_add (@has_one.one.{0} nat nat.has_one)))))))))) → @interactive.parse bool (λ (a : bool), bool.has_reflect a) interactive.types.only_flag → @interactive.parse (list.{0} tactic.simp_arg_type) (λ (a : list.{0} tactic.simp_arg_type), @list.reflect tactic.simp_arg_type (λ (a : tactic.simp_arg_type), tactic.simp_arg_type.has_reflect a) `(tactic.simp_arg_type) a) tactic.simp_arg_list → @interactive.parse (list.{0} name) (λ (a : list.{0} name), @list.reflect name (λ (a : name), name.reflect a) `(name) a) interactive.types.with_ident_list → @interactive.parse interactive.loc (λ (a : interactive.loc), interactive.loc.has_reflect a) interactive.types.location → opt_param.{1} tactic.simp_config_ext {to_simp_config := {max_steps := simp.default_max_steps, contextual := bool.ff, lift_eq := bool.tt, canonize_instances := bool.tt, canonize_proofs := bool.ff, use_axioms := bool.tt, zeta := bool.tt, beta := bool.tt, eta := bool.tt, proj := bool.tt, iota := bool.tt, iota_eqn := bool.ff, constructor_eq := bool.tt, single_pass := bool.ff, fail_if_unchanged := bool.tt, memoize := bool.tt}, discharger := @tactic.failed unit} → tactic.{0} unit'><code style='font-family: menlo, "Source Code Pro", monospace;'>└┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'></code><font color='green'><a title='∀ {α : Type ?l_1} {s : set.{?l_1} α}, iff (@has_subset.subset.{?l_1} (set.{?l_1} α) (@set.has_subset.{?l_1} α) s (@has_emptyc.emptyc.{?l_1} (set.{?l_1} α) (@set.has_emptyc.{?l_1} α))) (@eq.{(max (?l_1+1) 1)} (set.{?l_1} α) s (@has_emptyc.emptyc.{?l_1} (set.{?l_1} α) (@set.has_emptyc.{?l_1} α)))'><code style='font-family: menlo, "Source Code Pro", monospace;'>└──────────────┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'></code><font color='green'><a title='@interactive.parse (option.{0} unit) (λ (a : option.{0} unit), @option.has_reflect unit (λ (a : unit), punit.reflect a) `(unit) a) (@optional.{0 0} lean.parser.{0} lean.parser.alternative unit (lean.parser.tk (string.str string.empty (char.of_nat (@bit1.{0} nat nat.has_one nat.has_add (@bit0.{0} nat nat.has_add (@bit0.{0} nat nat.has_add (@bit0.{0} nat nat.has_add (@bit0.{0} nat nat.has_add (@has_one.one.{0} nat nat.has_one)))))))))) → @interactive.parse bool (λ (a : bool), bool.has_reflect a) interactive.types.only_flag → @interactive.parse (list.{0} tactic.simp_arg_type) (λ (a : list.{0} tactic.simp_arg_type), @list.reflect tactic.simp_arg_type (λ (a : tactic.simp_arg_type), tactic.simp_arg_type.has_reflect a) `(tactic.simp_arg_type) a) tactic.simp_arg_list → @interactive.parse (list.{0} name) (λ (a : list.{0} name), @list.reflect name (λ (a : name), name.reflect a) `(name) a) interactive.types.with_ident_list → @interactive.parse interactive.loc (λ (a : interactive.loc), interactive.loc.has_reflect a) interactive.types.location → opt_param.{1} tactic.simp_config_ext {to_simp_config := {max_steps := simp.default_max_steps, contextual := bool.ff, lift_eq := bool.tt, canonize_instances := bool.tt, canonize_proofs := bool.ff, use_axioms := bool.tt, zeta := bool.tt, beta := bool.tt, eta := bool.tt, proj := bool.tt, iota := bool.tt, iota_eqn := bool.ff, constructor_eq := bool.tt, single_pass := bool.ff, fail_if_unchanged := bool.tt, memoize := bool.tt}, discharger := @tactic.failed unit} → tactic.{0} unit'><code style='font-family: menlo, "Source Code Pro", monospace;'>└┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'></code><font color='green'><a title='∀ {α : Type ?l_1} [_inst_1 : lattice.lattice.{?l_1} α] [ht : is_total.{?l_1} α (@has_le.le.{?l_1} α (@preorder.to_has_le.{?l_1} α (@partial_order.to_preorder.{?l_1} α (@lattice.semilattice_inf.to_partial_order.{?l_1} α (@lattice.lattice.to_semilattice_inf.{?l_1} α _inst_1)))))] {a₁ a₂ b₁ b₂ : α}, @eq.{?l_1+1} (set.{?l_1} α) (@has_inter.inter.{?l_1} (set.{?l_1} α) (@set.has_inter.{?l_1} α) (@set.Ico.{?l_1} α (@partial_order.to_preorder.{?l_1} α (@lattice.semilattice_inf.to_partial_order.{?l_1} α (@lattice.lattice.to_semilattice_inf.{?l_1} α _inst_1))) a₁ b₁) (@set.Ico.{?l_1} α (@partial_order.to_preorder.{?l_1} α (@lattice.semilattice_inf.to_partial_order.{?l_1} α (@lattice.lattice.to_semilattice_inf.{?l_1} α _inst_1))) a₂ b₂)) (@set.Ico.{?l_1} α (@partial_order.to_preorder.{?l_1} α (@lattice.semilattice_inf.to_partial_order.{?l_1} α (@lattice.lattice.to_semilattice_inf.{?l_1} α _inst_1))) (@lattice.has_sup.sup.{?l_1} α (@lattice.semilattice_sup.to_has_sup.{?l_1} α (@lattice.lattice.to_semilattice_sup.{?l_1} α _inst_1)) a₁ a₂) (@lattice.has_inf.inf.{?l_1} α (@lattice.semilattice_inf.to_has_inf.{?l_1} α (@lattice.lattice.to_semilattice_inf.{?l_1} α _inst_1)) b₁ b₂))'><code style='font-family: menlo, "Source Code Pro", monospace;'>└───────────┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'></code><font color='green'><a title='@interactive.parse (option.{0} unit) (λ (a : option.{0} unit), @option.has_reflect unit (λ (a : unit), punit.reflect a) `(unit) a) (@optional.{0 0} lean.parser.{0} lean.parser.alternative unit (lean.parser.tk (string.str string.empty (char.of_nat (@bit1.{0} nat nat.has_one nat.has_add (@bit0.{0} nat nat.has_add (@bit0.{0} nat nat.has_add (@bit0.{0} nat nat.has_add (@bit0.{0} nat nat.has_add (@has_one.one.{0} nat nat.has_one)))))))))) → @interactive.parse bool (λ (a : bool), bool.has_reflect a) interactive.types.only_flag → @interactive.parse (list.{0} tactic.simp_arg_type) (λ (a : list.{0} tactic.simp_arg_type), @list.reflect tactic.simp_arg_type (λ (a : tactic.simp_arg_type), tactic.simp_arg_type.has_reflect a) `(tactic.simp_arg_type) a) tactic.simp_arg_list → @interactive.parse (list.{0} name) (λ (a : list.{0} name), @list.reflect name (λ (a : name), name.reflect a) `(name) a) interactive.types.with_ident_list → @interactive.parse interactive.loc (λ (a : interactive.loc), interactive.loc.has_reflect a) interactive.types.location → opt_param.{1} tactic.simp_config_ext {to_simp_config := {max_steps := simp.default_max_steps, contextual := bool.ff, lift_eq := bool.tt, canonize_instances := bool.tt, canonize_proofs := bool.ff, use_axioms := bool.tt, zeta := bool.tt, beta := bool.tt, eta := bool.tt, proj := bool.tt, iota := bool.tt, iota_eqn := bool.ff, constructor_eq := bool.tt, single_pass := bool.ff, fail_if_unchanged := bool.tt, memoize := bool.tt}, discharger := @tactic.failed unit} → tactic.{0} unit'><code style='font-family: menlo, "Source Code Pro", monospace;'>└┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'></code><font color='green'><a title='∀ {α : Type ?l_1} [_inst_1 : linear_order.{?l_1} α] {a b : α}, iff (@eq.{(max (?l_1+1) 1)} (set.{?l_1} α) (@set.Ico.{?l_1} α (@partial_order.to_preorder.{?l_1} α (@linear_order.to_partial_order.{?l_1} α _inst_1)) a b) (@has_emptyc.emptyc.{?l_1} (set.{?l_1} α) (@set.has_emptyc.{?l_1} α))) (@has_le.le.{?l_1} α (@preorder.to_has_le.{?l_1} α (@partial_order.to_preorder.{?l_1} α (@linear_order.to_partial_order.{?l_1} α _inst_1))) b a)'><code style='font-family: menlo, "Source Code Pro", monospace;'>└──────────────┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'></code><font color='green'><a title='@interactive.parse (option.{0} unit) (λ (a : option.{0} unit), @option.has_reflect unit (λ (a : unit), punit.reflect a) `(unit) a) (@optional.{0 0} lean.parser.{0} lean.parser.alternative unit (lean.parser.tk (string.str string.empty (char.of_nat (@bit1.{0} nat nat.has_one nat.has_add (@bit0.{0} nat nat.has_add (@bit0.{0} nat nat.has_add (@bit0.{0} nat nat.has_add (@bit0.{0} nat nat.has_add (@has_one.one.{0} nat nat.has_one)))))))))) → @interactive.parse bool (λ (a : bool), bool.has_reflect a) interactive.types.only_flag → @interactive.parse (list.{0} tactic.simp_arg_type) (λ (a : list.{0} tactic.simp_arg_type), @list.reflect tactic.simp_arg_type (λ (a : tactic.simp_arg_type), tactic.simp_arg_type.has_reflect a) `(tactic.simp_arg_type) a) tactic.simp_arg_list → @interactive.parse (list.{0} name) (λ (a : list.{0} name), @list.reflect name (λ (a : name), name.reflect a) `(name) a) interactive.types.with_ident_list → @interactive.parse interactive.loc (λ (a : interactive.loc), interactive.loc.has_reflect a) interactive.types.location → opt_param.{1} tactic.simp_config_ext {to_simp_config := {max_steps := simp.default_max_steps, contextual := bool.ff, lift_eq := bool.tt, canonize_instances := bool.tt, canonize_proofs := bool.ff, use_axioms := bool.tt, zeta := bool.tt, beta := bool.tt, eta := bool.tt, proj := bool.tt, iota := bool.tt, iota_eqn := bool.ff, constructor_eq := bool.tt, single_pass := bool.ff, fail_if_unchanged := bool.tt, memoize := bool.tt}, discharger := @tactic.failed unit} → tactic.{0} unit'><code style='font-family: menlo, "Source Code Pro", monospace;'>└─</code></a></font>
+<font color='grey'><a title='doc'><code style='font-family: menlo, "Source Code Pro", monospace;'>doc  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>   </code><font color='orange'><a title='The `simp` tactic uses lemmas and hypotheses to simplify the main goal target or non-dependent hypotheses. It has many variants.
+
+`simp` simplifies the main goal target using lemmas tagged with the attribute `[simp]`.
+
+`simp [h₁ h₂ ... hₙ]` simplifies the main goal target using the lemmas tagged with the attribute `[simp]` and the given `hᵢ`&#x27;s, where the `hᵢ`&#x27;s are expressions. If an `hᵢ` is a defined constant `f`, then the equational lemmas associated with `f` are used. This provides a convenient way to unfold `f`.
+
+`simp [*]` simplifies the main goal target using the lemmas tagged with the attribute `[simp]` and all hypotheses.
+
+`simp *` is a shorthand for `simp [*]`.
+
+`simp only [h₁ h₂ ... hₙ]` is like `simp [h₁ h₂ ... hₙ]` but does not use `[simp]` lemmas
+
+`simp [-id_1, ... -id_n]` simplifies the main goal target using the lemmas tagged with the attribute `[simp]`, but removes the ones named `idᵢ`.
+
+`simp at h₁ h₂ ... hₙ` simplifies the non-dependent hypotheses `h₁ : T₁` ... `hₙ : Tₙ`. The tactic fails if the target or another hypothesis depends on one of them. The token `⊢` or `|-` can be added to the list to include the target.
+
+`simp at *` simplifies all the hypotheses and the target.
+
+`simp * at *` simplifies target and all (non-dependent propositional) hypotheses using the other hypotheses.
+
+`simp with attr₁ ... attrₙ` simplifies the main goal target using the lemmas tagged with any of the attributes `[attr₁]`, ..., `[attrₙ]` or `[simp]`.'><code style='font-family: menlo, "Source Code Pro", monospace;'>└─────────┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>                </code><font color='orange'><a title='The `simp` tactic uses lemmas and hypotheses to simplify the main goal target or non-dependent hypotheses. It has many variants.
+
+`simp` simplifies the main goal target using lemmas tagged with the attribute `[simp]`.
+
+`simp [h₁ h₂ ... hₙ]` simplifies the main goal target using the lemmas tagged with the attribute `[simp]` and the given `hᵢ`&#x27;s, where the `hᵢ`&#x27;s are expressions. If an `hᵢ` is a defined constant `f`, then the equational lemmas associated with `f` are used. This provides a convenient way to unfold `f`.
+
+`simp [*]` simplifies the main goal target using the lemmas tagged with the attribute `[simp]` and all hypotheses.
+
+`simp *` is a shorthand for `simp [*]`.
+
+`simp only [h₁ h₂ ... hₙ]` is like `simp [h₁ h₂ ... hₙ]` but does not use `[simp]` lemmas
+
+`simp [-id_1, ... -id_n]` simplifies the main goal target using the lemmas tagged with the attribute `[simp]`, but removes the ones named `idᵢ`.
+
+`simp at h₁ h₂ ... hₙ` simplifies the non-dependent hypotheses `h₁ : T₁` ... `hₙ : Tₙ`. The tactic fails if the target or another hypothesis depends on one of them. The token `⊢` or `|-` can be added to the list to include the target.
+
+`simp at *` simplifies all the hypotheses and the target.
+
+`simp * at *` simplifies target and all (non-dependent propositional) hypotheses using the other hypotheses.
+
+`simp with attr₁ ... attrₙ` simplifies the main goal target using the lemmas tagged with any of the attributes `[attr₁]`, ..., `[attrₙ]` or `[simp]`.'><code style='font-family: menlo, "Source Code Pro", monospace;'>└┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>                </code><font color='orange'><a title='The `simp` tactic uses lemmas and hypotheses to simplify the main goal target or non-dependent hypotheses. It has many variants.
+
+`simp` simplifies the main goal target using lemmas tagged with the attribute `[simp]`.
+
+`simp [h₁ h₂ ... hₙ]` simplifies the main goal target using the lemmas tagged with the attribute `[simp]` and the given `hᵢ`&#x27;s, where the `hᵢ`&#x27;s are expressions. If an `hᵢ` is a defined constant `f`, then the equational lemmas associated with `f` are used. This provides a convenient way to unfold `f`.
+
+`simp [*]` simplifies the main goal target using the lemmas tagged with the attribute `[simp]` and all hypotheses.
+
+`simp *` is a shorthand for `simp [*]`.
+
+`simp only [h₁ h₂ ... hₙ]` is like `simp [h₁ h₂ ... hₙ]` but does not use `[simp]` lemmas
+
+`simp [-id_1, ... -id_n]` simplifies the main goal target using the lemmas tagged with the attribute `[simp]`, but removes the ones named `idᵢ`.
+
+`simp at h₁ h₂ ... hₙ` simplifies the non-dependent hypotheses `h₁ : T₁` ... `hₙ : Tₙ`. The tactic fails if the target or another hypothesis depends on one of them. The token `⊢` or `|-` can be added to the list to include the target.
+
+`simp at *` simplifies all the hypotheses and the target.
+
+`simp * at *` simplifies target and all (non-dependent propositional) hypotheses using the other hypotheses.
+
+`simp with attr₁ ... attrₙ` simplifies the main goal target using the lemmas tagged with any of the attributes `[attr₁]`, ..., `[attrₙ]` or `[simp]`.'><code style='font-family: menlo, "Source Code Pro", monospace;'>└┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>             </code><font color='orange'><a title='The `simp` tactic uses lemmas and hypotheses to simplify the main goal target or non-dependent hypotheses. It has many variants.
+
+`simp` simplifies the main goal target using lemmas tagged with the attribute `[simp]`.
+
+`simp [h₁ h₂ ... hₙ]` simplifies the main goal target using the lemmas tagged with the attribute `[simp]` and the given `hᵢ`&#x27;s, where the `hᵢ`&#x27;s are expressions. If an `hᵢ` is a defined constant `f`, then the equational lemmas associated with `f` are used. This provides a convenient way to unfold `f`.
+
+`simp [*]` simplifies the main goal target using the lemmas tagged with the attribute `[simp]` and all hypotheses.
+
+`simp *` is a shorthand for `simp [*]`.
+
+`simp only [h₁ h₂ ... hₙ]` is like `simp [h₁ h₂ ... hₙ]` but does not use `[simp]` lemmas
+
+`simp [-id_1, ... -id_n]` simplifies the main goal target using the lemmas tagged with the attribute `[simp]`, but removes the ones named `idᵢ`.
+
+`simp at h₁ h₂ ... hₙ` simplifies the non-dependent hypotheses `h₁ : T₁` ... `hₙ : Tₙ`. The tactic fails if the target or another hypothesis depends on one of them. The token `⊢` or `|-` can be added to the list to include the target.
+
+`simp at *` simplifies all the hypotheses and the target.
+
+`simp * at *` simplifies target and all (non-dependent propositional) hypotheses using the other hypotheses.
+
+`simp with attr₁ ... attrₙ` simplifies the main goal target using the lemmas tagged with any of the attributes `[attr₁]`, ..., `[attrₙ]` or `[simp]`.'><code style='font-family: menlo, "Source Code Pro", monospace;'>└┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>                </code><font color='orange'><a title='The `simp` tactic uses lemmas and hypotheses to simplify the main goal target or non-dependent hypotheses. It has many variants.
+
+`simp` simplifies the main goal target using lemmas tagged with the attribute `[simp]`.
+
+`simp [h₁ h₂ ... hₙ]` simplifies the main goal target using the lemmas tagged with the attribute `[simp]` and the given `hᵢ`&#x27;s, where the `hᵢ`&#x27;s are expressions. If an `hᵢ` is a defined constant `f`, then the equational lemmas associated with `f` are used. This provides a convenient way to unfold `f`.
+
+`simp [*]` simplifies the main goal target using the lemmas tagged with the attribute `[simp]` and all hypotheses.
+
+`simp *` is a shorthand for `simp [*]`.
+
+`simp only [h₁ h₂ ... hₙ]` is like `simp [h₁ h₂ ... hₙ]` but does not use `[simp]` lemmas
+
+`simp [-id_1, ... -id_n]` simplifies the main goal target using the lemmas tagged with the attribute `[simp]`, but removes the ones named `idᵢ`.
+
+`simp at h₁ h₂ ... hₙ` simplifies the non-dependent hypotheses `h₁ : T₁` ... `hₙ : Tₙ`. The tactic fails if the target or another hypothesis depends on one of them. The token `⊢` or `|-` can be added to the list to include the target.
+
+`simp at *` simplifies all the hypotheses and the target.
+
+`simp * at *` simplifies target and all (non-dependent propositional) hypotheses using the other hypotheses.
+
+`simp with attr₁ ... attrₙ` simplifies the main goal target using the lemmas tagged with any of the attributes `[attr₁]`, ..., `[attrₙ]` or `[simp]`.'><code style='font-family: menlo, "Source Code Pro", monospace;'>└─</code></a></font>
+<font color='grey'><a title='text'><code style='font-family: menlo, "Source Code Pro", monospace;'>txt  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>   </code><font color='teal'><a title='simp'><code style='font-family: menlo, "Source Code Pro", monospace;'>└─────────┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>                </code><font color='teal'><a title='simp'><code style='font-family: menlo, "Source Code Pro", monospace;'>└┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>                </code><font color='teal'><a title='simp'><code style='font-family: menlo, "Source Code Pro", monospace;'>└┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>             </code><font color='teal'><a title='simp'><code style='font-family: menlo, "Source Code Pro", monospace;'>└┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>                </code><font color='teal'><a title='simp'><code style='font-family: menlo, "Source Code Pro", monospace;'>└─</code></a></font>
+<font color='grey'><a title='tactic_params'><code style='font-family: menlo, "Source Code Pro", monospace;'>par  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>   </code><font color='grey'><a title='[&#x27;!?&#x27;, &#x27;only?&#x27;, &#x27;(* | [(* | (- id | expr)), ...]?)&#x27;, &#x27;(with id*)?&#x27;, &#x27;(at (* | (⊢ | id)*))?&#x27;, &#x27;tactic.simp_config_ext?&#x27;]'><code style='font-family: menlo, "Source Code Pro", monospace;'>└─────────┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>                </code><font color='grey'><a title='[&#x27;!?&#x27;, &#x27;only?&#x27;, &#x27;(* | [(* | (- id | expr)), ...]?)&#x27;, &#x27;(with id*)?&#x27;, &#x27;(at (* | (⊢ | id)*))?&#x27;, &#x27;tactic.simp_config_ext?&#x27;]'><code style='font-family: menlo, "Source Code Pro", monospace;'>└┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>                </code><font color='grey'><a title='[&#x27;!?&#x27;, &#x27;only?&#x27;, &#x27;(* | [(* | (- id | expr)), ...]?)&#x27;, &#x27;(with id*)?&#x27;, &#x27;(at (* | (⊢ | id)*))?&#x27;, &#x27;tactic.simp_config_ext?&#x27;]'><code style='font-family: menlo, "Source Code Pro", monospace;'>└┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>             </code><font color='grey'><a title='[&#x27;!?&#x27;, &#x27;only?&#x27;, &#x27;(* | [(* | (- id | expr)), ...]?)&#x27;, &#x27;(with id*)?&#x27;, &#x27;(at (* | (⊢ | id)*))?&#x27;, &#x27;tactic.simp_config_ext?&#x27;]'><code style='font-family: menlo, "Source Code Pro", monospace;'>└┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>                </code><font color='grey'><a title='[&#x27;!?&#x27;, &#x27;only?&#x27;, &#x27;(* | [(* | (- id | expr)), ...]?)&#x27;, &#x27;(with id*)?&#x27;, &#x27;(at (* | (⊢ | id)*))?&#x27;, &#x27;tactic.simp_config_ext?&#x27;]'><code style='font-family: menlo, "Source Code Pro", monospace;'>└─</code></a></font>
+<font color='grey'><a title='tactic_param_idx'><code style='font-family: menlo, "Source Code Pro", monospace;'>pid  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>       </code><font color='maroon'><a title='0'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'></code><font color='maroon'><a title='1'><code style='font-family: menlo, "Source Code Pro", monospace;'>└──┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'></code><font color='maroon'><a title='2'><code style='font-family: menlo, "Source Code Pro", monospace;'>└┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>                </code><font color='maroon'><a title='2'><code style='font-family: menlo, "Source Code Pro", monospace;'>└┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>                </code><font color='maroon'><a title='2'><code style='font-family: menlo, "Source Code Pro", monospace;'>└┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>             </code><font color='maroon'><a title='2'><code style='font-family: menlo, "Source Code Pro", monospace;'>└┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>                </code><font color='maroon'><a title='2'><code style='font-family: menlo, "Source Code Pro", monospace;'>└─</code></a></font>
+<font color='grey'><a title='state'><code style='font-family: menlo, "Source Code Pro", monospace;'>st   </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>  </code><font color='lime'><a title='α : Type u,
+_inst_1 : decidable_linear_order.{u} α,
+a₁ a₂ b₁ b₂ : α
+⊢ iff
+    (@disjoint.{u} (set.{u} α)
+       (@lattice.semilattice_inf_bot_of_bounded_lattice.{u} (set.{u} α)
+          (@lattice.complete_lattice.to_bounded_lattice.{u} (set.{u} α) (@set.lattice_set.{u} α)))
+       (@set.Ico.{u} α
+          (@partial_order.to_preorder.{u} α
+             (@lattice.semilattice_inf.to_partial_order.{u} α
+                (@lattice.lattice.to_semilattice_inf.{u} α
+                   (@lattice.lattice_of_decidable_linear_order.{u} α _inst_1))))
+          a₁
+          a₂)
+       (@set.Ico.{u} α
+          (@partial_order.to_preorder.{u} α
+             (@lattice.semilattice_inf.to_partial_order.{u} α
+                (@lattice.lattice.to_semilattice_inf.{u} α
+                   (@lattice.lattice_of_decidable_linear_order.{u} α _inst_1))))
+          b₁
+          b₂))
+    (@has_le.le.{u} α
+       (@preorder.to_has_le.{u} α
+          (@partial_order.to_preorder.{u} α
+             (@lattice.semilattice_inf.to_partial_order.{u} α
+                (@lattice.lattice.to_semilattice_inf.{u} α
+                   (@lattice.lattice_of_decidable_linear_order.{u} α _inst_1)))))
+       (@min.{u} α _inst_1 a₂ b₂)
+       (@max.{u} α _inst_1 a₁ b₁))'><code style='font-family: menlo, "Source Code Pro", monospace;'>└────────────────────────────────────────────────────────────────────────────────</code></a></font>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 28    inf_eq_min, sup_eq_max]</code>
+<font color='grey'><a title='full-id'><code style='font-family: menlo, "Source Code Pro", monospace;'>id   </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>  </code><font color='blue'><a title='lattice.inf_eq_min'><code style='font-family: menlo, "Source Code Pro", monospace;'>└────────┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>  </code><font color='blue'><a title='lattice.sup_eq_max'><code style='font-family: menlo, "Source Code Pro", monospace;'>└────────┘</code></a></font>
+<font color='grey'><a title='source'><code style='font-family: menlo, "Source Code Pro", monospace;'>src  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'></code><font color='red'><a title='{&#x27;file&#x27;: &#x27;/home/ec2-user/.elan/toolchains/3.4.2/lib/lean/library/init/meta/interactive.lean&#x27;, &#x27;line&#x27;: 1209, &#x27;column&#x27;: 9}'><code style='font-family: menlo, "Source Code Pro", monospace;'>─┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'></code><font color='red'><a title='{&#x27;file&#x27;: &#x27;/home/ec2-user/lean_info_scrapper/_target/deps/mathlib/src/order/lattice.lean&#x27;, &#x27;line&#x27;: 367, &#x27;column&#x27;: 8}'><code style='font-family: menlo, "Source Code Pro", monospace;'>└────────┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'></code><font color='red'><a title='{&#x27;file&#x27;: &#x27;/home/ec2-user/.elan/toolchains/3.4.2/lib/lean/library/init/meta/interactive.lean&#x27;, &#x27;line&#x27;: 1209, &#x27;column&#x27;: 9}'><code style='font-family: menlo, "Source Code Pro", monospace;'>└┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'></code><font color='red'><a title='{&#x27;file&#x27;: &#x27;/home/ec2-user/lean_info_scrapper/_target/deps/mathlib/src/order/lattice.lean&#x27;, &#x27;line&#x27;: 366, &#x27;column&#x27;: 8}'><code style='font-family: menlo, "Source Code Pro", monospace;'>└────────┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'></code><font color='red'><a title='{&#x27;file&#x27;: &#x27;/home/ec2-user/.elan/toolchains/3.4.2/lib/lean/library/init/meta/interactive.lean&#x27;, &#x27;line&#x27;: 1209, &#x27;column&#x27;: 9}'><code style='font-family: menlo, "Source Code Pro", monospace;'>└─</code></a></font>
+<font color='grey'><a title='type'><code style='font-family: menlo, "Source Code Pro", monospace;'>typ  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'></code><font color='green'><a title='@interactive.parse (option.{0} unit) (λ (a : option.{0} unit), @option.has_reflect unit (λ (a : unit), punit.reflect a) `(unit) a) (@optional.{0 0} lean.parser.{0} lean.parser.alternative unit (lean.parser.tk (string.str string.empty (char.of_nat (@bit1.{0} nat nat.has_one nat.has_add (@bit0.{0} nat nat.has_add (@bit0.{0} nat nat.has_add (@bit0.{0} nat nat.has_add (@bit0.{0} nat nat.has_add (@has_one.one.{0} nat nat.has_one)))))))))) → @interactive.parse bool (λ (a : bool), bool.has_reflect a) interactive.types.only_flag → @interactive.parse (list.{0} tactic.simp_arg_type) (λ (a : list.{0} tactic.simp_arg_type), @list.reflect tactic.simp_arg_type (λ (a : tactic.simp_arg_type), tactic.simp_arg_type.has_reflect a) `(tactic.simp_arg_type) a) tactic.simp_arg_list → @interactive.parse (list.{0} name) (λ (a : list.{0} name), @list.reflect name (λ (a : name), name.reflect a) `(name) a) interactive.types.with_ident_list → @interactive.parse interactive.loc (λ (a : interactive.loc), interactive.loc.has_reflect a) interactive.types.location → opt_param.{1} tactic.simp_config_ext {to_simp_config := {max_steps := simp.default_max_steps, contextual := bool.ff, lift_eq := bool.tt, canonize_instances := bool.tt, canonize_proofs := bool.ff, use_axioms := bool.tt, zeta := bool.tt, beta := bool.tt, eta := bool.tt, proj := bool.tt, iota := bool.tt, iota_eqn := bool.ff, constructor_eq := bool.tt, single_pass := bool.ff, fail_if_unchanged := bool.tt, memoize := bool.tt}, discharger := @tactic.failed unit} → tactic.{0} unit'><code style='font-family: menlo, "Source Code Pro", monospace;'>─┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'></code><font color='green'><a title='∀ {α : Type ?l_1} {x y : α} [_inst_1 : decidable_linear_order.{?l_1} α], @eq.{?l_1+1} α (@lattice.has_inf.inf.{?l_1} α (@lattice.semilattice_inf.to_has_inf.{?l_1} α (@lattice.lattice.to_semilattice_inf.{?l_1} α (@lattice.lattice_of_decidable_linear_order.{?l_1} α _inst_1))) x y) (@min.{?l_1} α _inst_1 x y)'><code style='font-family: menlo, "Source Code Pro", monospace;'>└────────┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'></code><font color='green'><a title='@interactive.parse (option.{0} unit) (λ (a : option.{0} unit), @option.has_reflect unit (λ (a : unit), punit.reflect a) `(unit) a) (@optional.{0 0} lean.parser.{0} lean.parser.alternative unit (lean.parser.tk (string.str string.empty (char.of_nat (@bit1.{0} nat nat.has_one nat.has_add (@bit0.{0} nat nat.has_add (@bit0.{0} nat nat.has_add (@bit0.{0} nat nat.has_add (@bit0.{0} nat nat.has_add (@has_one.one.{0} nat nat.has_one)))))))))) → @interactive.parse bool (λ (a : bool), bool.has_reflect a) interactive.types.only_flag → @interactive.parse (list.{0} tactic.simp_arg_type) (λ (a : list.{0} tactic.simp_arg_type), @list.reflect tactic.simp_arg_type (λ (a : tactic.simp_arg_type), tactic.simp_arg_type.has_reflect a) `(tactic.simp_arg_type) a) tactic.simp_arg_list → @interactive.parse (list.{0} name) (λ (a : list.{0} name), @list.reflect name (λ (a : name), name.reflect a) `(name) a) interactive.types.with_ident_list → @interactive.parse interactive.loc (λ (a : interactive.loc), interactive.loc.has_reflect a) interactive.types.location → opt_param.{1} tactic.simp_config_ext {to_simp_config := {max_steps := simp.default_max_steps, contextual := bool.ff, lift_eq := bool.tt, canonize_instances := bool.tt, canonize_proofs := bool.ff, use_axioms := bool.tt, zeta := bool.tt, beta := bool.tt, eta := bool.tt, proj := bool.tt, iota := bool.tt, iota_eqn := bool.ff, constructor_eq := bool.tt, single_pass := bool.ff, fail_if_unchanged := bool.tt, memoize := bool.tt}, discharger := @tactic.failed unit} → tactic.{0} unit'><code style='font-family: menlo, "Source Code Pro", monospace;'>└┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'></code><font color='green'><a title='∀ {α : Type ?l_1} {x y : α} [_inst_1 : decidable_linear_order.{?l_1} α], @eq.{?l_1+1} α (@lattice.has_sup.sup.{?l_1} α (@lattice.semilattice_sup.to_has_sup.{?l_1} α (@lattice.lattice.to_semilattice_sup.{?l_1} α (@lattice.lattice_of_decidable_linear_order.{?l_1} α _inst_1))) x y) (@max.{?l_1} α _inst_1 x y)'><code style='font-family: menlo, "Source Code Pro", monospace;'>└────────┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'></code><font color='green'><a title='@interactive.parse (option.{0} unit) (λ (a : option.{0} unit), @option.has_reflect unit (λ (a : unit), punit.reflect a) `(unit) a) (@optional.{0 0} lean.parser.{0} lean.parser.alternative unit (lean.parser.tk (string.str string.empty (char.of_nat (@bit1.{0} nat nat.has_one nat.has_add (@bit0.{0} nat nat.has_add (@bit0.{0} nat nat.has_add (@bit0.{0} nat nat.has_add (@bit0.{0} nat nat.has_add (@has_one.one.{0} nat nat.has_one)))))))))) → @interactive.parse bool (λ (a : bool), bool.has_reflect a) interactive.types.only_flag → @interactive.parse (list.{0} tactic.simp_arg_type) (λ (a : list.{0} tactic.simp_arg_type), @list.reflect tactic.simp_arg_type (λ (a : tactic.simp_arg_type), tactic.simp_arg_type.has_reflect a) `(tactic.simp_arg_type) a) tactic.simp_arg_list → @interactive.parse (list.{0} name) (λ (a : list.{0} name), @list.reflect name (λ (a : name), name.reflect a) `(name) a) interactive.types.with_ident_list → @interactive.parse interactive.loc (λ (a : interactive.loc), interactive.loc.has_reflect a) interactive.types.location → opt_param.{1} tactic.simp_config_ext {to_simp_config := {max_steps := simp.default_max_steps, contextual := bool.ff, lift_eq := bool.tt, canonize_instances := bool.tt, canonize_proofs := bool.ff, use_axioms := bool.tt, zeta := bool.tt, beta := bool.tt, eta := bool.tt, proj := bool.tt, iota := bool.tt, iota_eqn := bool.ff, constructor_eq := bool.tt, single_pass := bool.ff, fail_if_unchanged := bool.tt, memoize := bool.tt}, discharger := @tactic.failed unit} → tactic.{0} unit'><code style='font-family: menlo, "Source Code Pro", monospace;'>└─</code></a></font>
+<font color='grey'><a title='doc'><code style='font-family: menlo, "Source Code Pro", monospace;'>doc  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'></code><font color='orange'><a title='The `simp` tactic uses lemmas and hypotheses to simplify the main goal target or non-dependent hypotheses. It has many variants.
+
+`simp` simplifies the main goal target using lemmas tagged with the attribute `[simp]`.
+
+`simp [h₁ h₂ ... hₙ]` simplifies the main goal target using the lemmas tagged with the attribute `[simp]` and the given `hᵢ`&#x27;s, where the `hᵢ`&#x27;s are expressions. If an `hᵢ` is a defined constant `f`, then the equational lemmas associated with `f` are used. This provides a convenient way to unfold `f`.
+
+`simp [*]` simplifies the main goal target using the lemmas tagged with the attribute `[simp]` and all hypotheses.
+
+`simp *` is a shorthand for `simp [*]`.
+
+`simp only [h₁ h₂ ... hₙ]` is like `simp [h₁ h₂ ... hₙ]` but does not use `[simp]` lemmas
+
+`simp [-id_1, ... -id_n]` simplifies the main goal target using the lemmas tagged with the attribute `[simp]`, but removes the ones named `idᵢ`.
+
+`simp at h₁ h₂ ... hₙ` simplifies the non-dependent hypotheses `h₁ : T₁` ... `hₙ : Tₙ`. The tactic fails if the target or another hypothesis depends on one of them. The token `⊢` or `|-` can be added to the list to include the target.
+
+`simp at *` simplifies all the hypotheses and the target.
+
+`simp * at *` simplifies target and all (non-dependent propositional) hypotheses using the other hypotheses.
+
+`simp with attr₁ ... attrₙ` simplifies the main goal target using the lemmas tagged with any of the attributes `[attr₁]`, ..., `[attrₙ]` or `[simp]`.'><code style='font-family: menlo, "Source Code Pro", monospace;'>─┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>          </code><font color='orange'><a title='The `simp` tactic uses lemmas and hypotheses to simplify the main goal target or non-dependent hypotheses. It has many variants.
+
+`simp` simplifies the main goal target using lemmas tagged with the attribute `[simp]`.
+
+`simp [h₁ h₂ ... hₙ]` simplifies the main goal target using the lemmas tagged with the attribute `[simp]` and the given `hᵢ`&#x27;s, where the `hᵢ`&#x27;s are expressions. If an `hᵢ` is a defined constant `f`, then the equational lemmas associated with `f` are used. This provides a convenient way to unfold `f`.
+
+`simp [*]` simplifies the main goal target using the lemmas tagged with the attribute `[simp]` and all hypotheses.
+
+`simp *` is a shorthand for `simp [*]`.
+
+`simp only [h₁ h₂ ... hₙ]` is like `simp [h₁ h₂ ... hₙ]` but does not use `[simp]` lemmas
+
+`simp [-id_1, ... -id_n]` simplifies the main goal target using the lemmas tagged with the attribute `[simp]`, but removes the ones named `idᵢ`.
+
+`simp at h₁ h₂ ... hₙ` simplifies the non-dependent hypotheses `h₁ : T₁` ... `hₙ : Tₙ`. The tactic fails if the target or another hypothesis depends on one of them. The token `⊢` or `|-` can be added to the list to include the target.
+
+`simp at *` simplifies all the hypotheses and the target.
+
+`simp * at *` simplifies target and all (non-dependent propositional) hypotheses using the other hypotheses.
+
+`simp with attr₁ ... attrₙ` simplifies the main goal target using the lemmas tagged with any of the attributes `[attr₁]`, ..., `[attrₙ]` or `[simp]`.'><code style='font-family: menlo, "Source Code Pro", monospace;'>└┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>          </code><font color='orange'><a title='The `simp` tactic uses lemmas and hypotheses to simplify the main goal target or non-dependent hypotheses. It has many variants.
+
+`simp` simplifies the main goal target using lemmas tagged with the attribute `[simp]`.
+
+`simp [h₁ h₂ ... hₙ]` simplifies the main goal target using the lemmas tagged with the attribute `[simp]` and the given `hᵢ`&#x27;s, where the `hᵢ`&#x27;s are expressions. If an `hᵢ` is a defined constant `f`, then the equational lemmas associated with `f` are used. This provides a convenient way to unfold `f`.
+
+`simp [*]` simplifies the main goal target using the lemmas tagged with the attribute `[simp]` and all hypotheses.
+
+`simp *` is a shorthand for `simp [*]`.
+
+`simp only [h₁ h₂ ... hₙ]` is like `simp [h₁ h₂ ... hₙ]` but does not use `[simp]` lemmas
+
+`simp [-id_1, ... -id_n]` simplifies the main goal target using the lemmas tagged with the attribute `[simp]`, but removes the ones named `idᵢ`.
+
+`simp at h₁ h₂ ... hₙ` simplifies the non-dependent hypotheses `h₁ : T₁` ... `hₙ : Tₙ`. The tactic fails if the target or another hypothesis depends on one of them. The token `⊢` or `|-` can be added to the list to include the target.
+
+`simp at *` simplifies all the hypotheses and the target.
+
+`simp * at *` simplifies target and all (non-dependent propositional) hypotheses using the other hypotheses.
+
+`simp with attr₁ ... attrₙ` simplifies the main goal target using the lemmas tagged with any of the attributes `[attr₁]`, ..., `[attrₙ]` or `[simp]`.'><code style='font-family: menlo, "Source Code Pro", monospace;'>└─</code></a></font>
+<font color='grey'><a title='text'><code style='font-family: menlo, "Source Code Pro", monospace;'>txt  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'></code><font color='teal'><a title='simp'><code style='font-family: menlo, "Source Code Pro", monospace;'>─┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>          </code><font color='teal'><a title='simp'><code style='font-family: menlo, "Source Code Pro", monospace;'>└┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>          </code><font color='teal'><a title='simp'><code style='font-family: menlo, "Source Code Pro", monospace;'>└─</code></a></font>
+<font color='grey'><a title='tactic_params'><code style='font-family: menlo, "Source Code Pro", monospace;'>par  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'></code><font color='grey'><a title='[&#x27;!?&#x27;, &#x27;only?&#x27;, &#x27;(* | [(* | (- id | expr)), ...]?)&#x27;, &#x27;(with id*)?&#x27;, &#x27;(at (* | (⊢ | id)*))?&#x27;, &#x27;tactic.simp_config_ext?&#x27;]'><code style='font-family: menlo, "Source Code Pro", monospace;'>─┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>          </code><font color='grey'><a title='[&#x27;!?&#x27;, &#x27;only?&#x27;, &#x27;(* | [(* | (- id | expr)), ...]?)&#x27;, &#x27;(with id*)?&#x27;, &#x27;(at (* | (⊢ | id)*))?&#x27;, &#x27;tactic.simp_config_ext?&#x27;]'><code style='font-family: menlo, "Source Code Pro", monospace;'>└┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>          </code><font color='grey'><a title='[&#x27;!?&#x27;, &#x27;only?&#x27;, &#x27;(* | [(* | (- id | expr)), ...]?)&#x27;, &#x27;(with id*)?&#x27;, &#x27;(at (* | (⊢ | id)*))?&#x27;, &#x27;tactic.simp_config_ext?&#x27;]'><code style='font-family: menlo, "Source Code Pro", monospace;'>└─</code></a></font>
+<font color='grey'><a title='tactic_param_idx'><code style='font-family: menlo, "Source Code Pro", monospace;'>pid  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'></code><font color='maroon'><a title='2'><code style='font-family: menlo, "Source Code Pro", monospace;'>─┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>          </code><font color='maroon'><a title='2'><code style='font-family: menlo, "Source Code Pro", monospace;'>└┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>          </code><font color='maroon'><a title='2'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'></code><font color='maroon'><a title='3'><code style='font-family: menlo, "Source Code Pro", monospace;'>└</code></a></font>
+<font color='grey'><a title='state'><code style='font-family: menlo, "Source Code Pro", monospace;'>st   </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'></code><font color='lime'><a title='α : Type u,
+_inst_1 : decidable_linear_order.{u} α,
+a₁ a₂ b₁ b₂ : α
+⊢ iff
+    (@disjoint.{u} (set.{u} α)
+       (@lattice.semilattice_inf_bot_of_bounded_lattice.{u} (set.{u} α)
+          (@lattice.complete_lattice.to_bounded_lattice.{u} (set.{u} α) (@set.lattice_set.{u} α)))
+       (@set.Ico.{u} α
+          (@partial_order.to_preorder.{u} α
+             (@lattice.semilattice_inf.to_partial_order.{u} α
+                (@lattice.lattice.to_semilattice_inf.{u} α
+                   (@lattice.lattice_of_decidable_linear_order.{u} α _inst_1))))
+          a₁
+          a₂)
+       (@set.Ico.{u} α
+          (@partial_order.to_preorder.{u} α
+             (@lattice.semilattice_inf.to_partial_order.{u} α
+                (@lattice.lattice.to_semilattice_inf.{u} α
+                   (@lattice.lattice_of_decidable_linear_order.{u} α _inst_1))))
+          b₁
+          b₂))
+    (@has_le.le.{u} α
+       (@preorder.to_has_le.{u} α
+          (@partial_order.to_preorder.{u} α
+             (@lattice.semilattice_inf.to_partial_order.{u} α
+                (@lattice.lattice.to_semilattice_inf.{u} α
+                   (@lattice.lattice_of_decidable_linear_order.{u} α _inst_1)))))
+       (@min.{u} α _inst_1 a₂ b₂)
+       (@max.{u} α _inst_1 a₁ b₁))'><code style='font-family: menlo, "Source Code Pro", monospace;'>──────────────────────────</code></a></font>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 29  </code>
+<font color='grey'><a title='source'><code style='font-family: menlo, "Source Code Pro", monospace;'>src  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'></code><font color='red'><a title='{&#x27;file&#x27;: &#x27;/home/ec2-user/.elan/toolchains/3.4.2/lib/lean/library/init/meta/interactive.lean&#x27;, &#x27;line&#x27;: 1209, &#x27;column&#x27;: 9}'><code style='font-family: menlo, "Source Code Pro", monospace;'>┘</code></a></font>
+<font color='grey'><a title='type'><code style='font-family: menlo, "Source Code Pro", monospace;'>typ  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'></code><font color='green'><a title='@interactive.parse (option.{0} unit) (λ (a : option.{0} unit), @option.has_reflect unit (λ (a : unit), punit.reflect a) `(unit) a) (@optional.{0 0} lean.parser.{0} lean.parser.alternative unit (lean.parser.tk (string.str string.empty (char.of_nat (@bit1.{0} nat nat.has_one nat.has_add (@bit0.{0} nat nat.has_add (@bit0.{0} nat nat.has_add (@bit0.{0} nat nat.has_add (@bit0.{0} nat nat.has_add (@has_one.one.{0} nat nat.has_one)))))))))) → @interactive.parse bool (λ (a : bool), bool.has_reflect a) interactive.types.only_flag → @interactive.parse (list.{0} tactic.simp_arg_type) (λ (a : list.{0} tactic.simp_arg_type), @list.reflect tactic.simp_arg_type (λ (a : tactic.simp_arg_type), tactic.simp_arg_type.has_reflect a) `(tactic.simp_arg_type) a) tactic.simp_arg_list → @interactive.parse (list.{0} name) (λ (a : list.{0} name), @list.reflect name (λ (a : name), name.reflect a) `(name) a) interactive.types.with_ident_list → @interactive.parse interactive.loc (λ (a : interactive.loc), interactive.loc.has_reflect a) interactive.types.location → opt_param.{1} tactic.simp_config_ext {to_simp_config := {max_steps := simp.default_max_steps, contextual := bool.ff, lift_eq := bool.tt, canonize_instances := bool.tt, canonize_proofs := bool.ff, use_axioms := bool.tt, zeta := bool.tt, beta := bool.tt, eta := bool.tt, proj := bool.tt, iota := bool.tt, iota_eqn := bool.ff, constructor_eq := bool.tt, single_pass := bool.ff, fail_if_unchanged := bool.tt, memoize := bool.tt}, discharger := @tactic.failed unit} → tactic.{0} unit'><code style='font-family: menlo, "Source Code Pro", monospace;'>┘</code></a></font>
+<font color='grey'><a title='doc'><code style='font-family: menlo, "Source Code Pro", monospace;'>doc  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'></code><font color='orange'><a title='The `simp` tactic uses lemmas and hypotheses to simplify the main goal target or non-dependent hypotheses. It has many variants.
+
+`simp` simplifies the main goal target using lemmas tagged with the attribute `[simp]`.
+
+`simp [h₁ h₂ ... hₙ]` simplifies the main goal target using the lemmas tagged with the attribute `[simp]` and the given `hᵢ`&#x27;s, where the `hᵢ`&#x27;s are expressions. If an `hᵢ` is a defined constant `f`, then the equational lemmas associated with `f` are used. This provides a convenient way to unfold `f`.
+
+`simp [*]` simplifies the main goal target using the lemmas tagged with the attribute `[simp]` and all hypotheses.
+
+`simp *` is a shorthand for `simp [*]`.
+
+`simp only [h₁ h₂ ... hₙ]` is like `simp [h₁ h₂ ... hₙ]` but does not use `[simp]` lemmas
+
+`simp [-id_1, ... -id_n]` simplifies the main goal target using the lemmas tagged with the attribute `[simp]`, but removes the ones named `idᵢ`.
+
+`simp at h₁ h₂ ... hₙ` simplifies the non-dependent hypotheses `h₁ : T₁` ... `hₙ : Tₙ`. The tactic fails if the target or another hypothesis depends on one of them. The token `⊢` or `|-` can be added to the list to include the target.
+
+`simp at *` simplifies all the hypotheses and the target.
+
+`simp * at *` simplifies target and all (non-dependent propositional) hypotheses using the other hypotheses.
+
+`simp with attr₁ ... attrₙ` simplifies the main goal target using the lemmas tagged with any of the attributes `[attr₁]`, ..., `[attrₙ]` or `[simp]`.'><code style='font-family: menlo, "Source Code Pro", monospace;'>┘</code></a></font>
+<font color='grey'><a title='text'><code style='font-family: menlo, "Source Code Pro", monospace;'>txt  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'></code><font color='teal'><a title='simp'><code style='font-family: menlo, "Source Code Pro", monospace;'>┘</code></a></font>
+<font color='grey'><a title='tactic_params'><code style='font-family: menlo, "Source Code Pro", monospace;'>par  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'></code><font color='grey'><a title='[&#x27;!?&#x27;, &#x27;only?&#x27;, &#x27;(* | [(* | (- id | expr)), ...]?)&#x27;, &#x27;(with id*)?&#x27;, &#x27;(at (* | (⊢ | id)*))?&#x27;, &#x27;tactic.simp_config_ext?&#x27;]'><code style='font-family: menlo, "Source Code Pro", monospace;'>┘</code></a></font>
+<font color='grey'><a title='tactic_param_idx'><code style='font-family: menlo, "Source Code Pro", monospace;'>pid  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'></code><font color='maroon'><a title='3'><code style='font-family: menlo, "Source Code Pro", monospace;'>┘</code></a></font>
+<font color='grey'><a title='state'><code style='font-family: menlo, "Source Code Pro", monospace;'>st   </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'></code><font color='lime'><a title='α : Type u,
+_inst_1 : decidable_linear_order.{u} α,
+a₁ a₂ b₁ b₂ : α
+⊢ iff
+    (@disjoint.{u} (set.{u} α)
+       (@lattice.semilattice_inf_bot_of_bounded_lattice.{u} (set.{u} α)
+          (@lattice.complete_lattice.to_bounded_lattice.{u} (set.{u} α) (@set.lattice_set.{u} α)))
+       (@set.Ico.{u} α
+          (@partial_order.to_preorder.{u} α
+             (@lattice.semilattice_inf.to_partial_order.{u} α
+                (@lattice.lattice.to_semilattice_inf.{u} α
+                   (@lattice.lattice_of_decidable_linear_order.{u} α _inst_1))))
+          a₁
+          a₂)
+       (@set.Ico.{u} α
+          (@partial_order.to_preorder.{u} α
+             (@lattice.semilattice_inf.to_partial_order.{u} α
+                (@lattice.lattice.to_semilattice_inf.{u} α
+                   (@lattice.lattice_of_decidable_linear_order.{u} α _inst_1))))
+          b₁
+          b₂))
+    (@has_le.le.{u} α
+       (@preorder.to_has_le.{u} α
+          (@partial_order.to_preorder.{u} α
+             (@lattice.semilattice_inf.to_partial_order.{u} α
+                (@lattice.lattice.to_semilattice_inf.{u} α
+                   (@lattice.lattice_of_decidable_linear_order.{u} α _inst_1)))))
+       (@min.{u} α _inst_1 a₂ b₂)
+       (@max.{u} α _inst_1 a₁ b₁))'><code style='font-family: menlo, "Source Code Pro", monospace;'>┘</code></a></font>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 30  /-- If two half-open intervals are disjoint and the endpoint of one lies in the other,</code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 31    then it must be equal to the endpoint of the other. -/</code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 32  lemma eq_of_Ico_disjoint {x₁ x₂ y₁ y₂ : α}</code>
+<font color='grey'><a title='full-id'><code style='font-family: menlo, "Source Code Pro", monospace;'>id   </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>                                        </code><font color='blue'><a title='α'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font>
+<font color='grey'><a title='type'><code style='font-family: menlo, "Source Code Pro", monospace;'>typ  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>                                        </code><font color='green'><a title='Type u'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 33    (h : disjoint (Ico x₁ x₂) (Ico y₁ y₂)) (hx : x₁ &lt; x₂) (h2 : x₂ ∈ Ico y₁ y₂) :</code>
+<font color='grey'><a title='full-id'><code style='font-family: menlo, "Source Code Pro", monospace;'>id   </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>       </code><font color='blue'><a title='disjoint'><code style='font-family: menlo, "Source Code Pro", monospace;'>└──────┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>  </code><font color='blue'><a title='set.Ico'><code style='font-family: menlo, "Source Code Pro", monospace;'>└─┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'> </code><font color='blue'><a title='x₁'><code style='font-family: menlo, "Source Code Pro", monospace;'>└┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'> </code><font color='blue'><a title='x₂'><code style='font-family: menlo, "Source Code Pro", monospace;'>└┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>   </code><font color='blue'><a title='set.Ico'><code style='font-family: menlo, "Source Code Pro", monospace;'>└─┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'> </code><font color='blue'><a title='y₁'><code style='font-family: menlo, "Source Code Pro", monospace;'>└┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'> </code><font color='blue'><a title='y₂'><code style='font-family: menlo, "Source Code Pro", monospace;'>└┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>         </code><font color='blue'><a title='x₁'><code style='font-family: menlo, "Source Code Pro", monospace;'>└┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'> </code><font color='blue'><a title='has_lt.lt'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'> </code><font color='blue'><a title='x₂'><code style='font-family: menlo, "Source Code Pro", monospace;'>└┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>        </code><font color='blue'><a title='x₂'><code style='font-family: menlo, "Source Code Pro", monospace;'>└┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'> </code><font color='blue'><a title='has_mem.mem'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'> </code><font color='blue'><a title='set.Ico'><code style='font-family: menlo, "Source Code Pro", monospace;'>└─┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'> </code><font color='blue'><a title='y₁'><code style='font-family: menlo, "Source Code Pro", monospace;'>└┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'> </code><font color='blue'><a title='y₂'><code style='font-family: menlo, "Source Code Pro", monospace;'>└┘</code></a></font>
+<font color='grey'><a title='source'><code style='font-family: menlo, "Source Code Pro", monospace;'>src  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>       </code><font color='red'><a title='{&#x27;file&#x27;: &#x27;/home/ec2-user/lean_info_scrapper/_target/deps/mathlib/src/data/set/lattice.lean&#x27;, &#x27;line&#x27;: 758, &#x27;column&#x27;: 4}'><code style='font-family: menlo, "Source Code Pro", monospace;'>└──────┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>  </code><font color='red'><a title='{&#x27;file&#x27;: &#x27;/home/ec2-user/lean_info_scrapper/_target/deps/mathlib/src/data/set/intervals/basic.lean&#x27;, &#x27;line&#x27;: 43, &#x27;column&#x27;: 4}'><code style='font-family: menlo, "Source Code Pro", monospace;'>└─┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>         </code><font color='red'><a title='{&#x27;file&#x27;: &#x27;/home/ec2-user/lean_info_scrapper/_target/deps/mathlib/src/data/set/intervals/basic.lean&#x27;, &#x27;line&#x27;: 43, &#x27;column&#x27;: 4}'><code style='font-family: menlo, "Source Code Pro", monospace;'>└─┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>                  </code><font color='red'><a title='{&#x27;file&#x27;: &#x27;/home/ec2-user/.elan/toolchains/3.4.2/lib/lean/library/init/core.lean&#x27;, &#x27;line&#x27;: 320, &#x27;column&#x27;: 6}'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>              </code><font color='red'><a title='{&#x27;file&#x27;: &#x27;/home/ec2-user/.elan/toolchains/3.4.2/lib/lean/library/init/core.lean&#x27;, &#x27;line&#x27;: 338, &#x27;column&#x27;: 6}'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'> </code><font color='red'><a title='{&#x27;file&#x27;: &#x27;/home/ec2-user/lean_info_scrapper/_target/deps/mathlib/src/data/set/intervals/basic.lean&#x27;, &#x27;line&#x27;: 43, &#x27;column&#x27;: 4}'><code style='font-family: menlo, "Source Code Pro", monospace;'>└─┘</code></a></font>
+<font color='grey'><a title='type'><code style='font-family: menlo, "Source Code Pro", monospace;'>typ  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>       </code><font color='green'><a title='Π {α : Type u} [_inst_1 : lattice.semilattice_inf_bot.{u} α], α → α → Prop'><code style='font-family: menlo, "Source Code Pro", monospace;'>└──────┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>  </code><font color='green'><a title='Π {α : Type u} [_inst_1 : preorder.{u} α], α → α → set.{u} α'><code style='font-family: menlo, "Source Code Pro", monospace;'>└─┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'> </code><font color='green'><a title='α'><code style='font-family: menlo, "Source Code Pro", monospace;'>└┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'> </code><font color='green'><a title='α'><code style='font-family: menlo, "Source Code Pro", monospace;'>└┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>   </code><font color='green'><a title='Π {α : Type u} [_inst_1 : preorder.{u} α], α → α → set.{u} α'><code style='font-family: menlo, "Source Code Pro", monospace;'>└─┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'> </code><font color='green'><a title='α'><code style='font-family: menlo, "Source Code Pro", monospace;'>└┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'> </code><font color='green'><a title='α'><code style='font-family: menlo, "Source Code Pro", monospace;'>└┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>         </code><font color='green'><a title='α'><code style='font-family: menlo, "Source Code Pro", monospace;'>└┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'> </code><font color='green'><a title='Π {α : Type u} [c : has_lt.{u} α], α → α → Prop'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'> </code><font color='green'><a title='α'><code style='font-family: menlo, "Source Code Pro", monospace;'>└┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>        </code><font color='green'><a title='α'><code style='font-family: menlo, "Source Code Pro", monospace;'>└┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'> </code><font color='green'><a title='Π {α γ : Type u} [c : has_mem.{u u} α γ], α → γ → Prop'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'> </code><font color='green'><a title='Π {α : Type u} [_inst_1 : preorder.{u} α], α → α → set.{u} α'><code style='font-family: menlo, "Source Code Pro", monospace;'>└─┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'> </code><font color='green'><a title='α'><code style='font-family: menlo, "Source Code Pro", monospace;'>└┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'> </code><font color='green'><a title='α'><code style='font-family: menlo, "Source Code Pro", monospace;'>└┘</code></a></font>
+<font color='grey'><a title='doc'><code style='font-family: menlo, "Source Code Pro", monospace;'>doc  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>       </code><font color='orange'><a title='Two elements of a lattice are disjoint if their inf is the bottom element.
+ (This generalizes disjoint sets, viewed as members of the subset lattice.)'><code style='font-family: menlo, "Source Code Pro", monospace;'>└──────┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>  </code><font color='orange'><a title='Left-closed right-open interval'><code style='font-family: menlo, "Source Code Pro", monospace;'>└─┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>         </code><font color='orange'><a title='Left-closed right-open interval'><code style='font-family: menlo, "Source Code Pro", monospace;'>└─┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>                                   </code><font color='orange'><a title='Left-closed right-open interval'><code style='font-family: menlo, "Source Code Pro", monospace;'>└─┘</code></a></font>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 34    y₁ = x₂ :=</code>
+<font color='grey'><a title='full-id'><code style='font-family: menlo, "Source Code Pro", monospace;'>id   </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>  </code><font color='blue'><a title='y₁'><code style='font-family: menlo, "Source Code Pro", monospace;'>└┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'> </code><font color='blue'><a title='eq'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'> </code><font color='blue'><a title='x₂'><code style='font-family: menlo, "Source Code Pro", monospace;'>└┘</code></a></font>
+<font color='grey'><a title='source'><code style='font-family: menlo, "Source Code Pro", monospace;'>src  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>     </code><font color='red'><a title='{&#x27;file&#x27;: &#x27;/home/ec2-user/.elan/toolchains/3.4.2/lib/lean/library/init/core.lean&#x27;, &#x27;line&#x27;: 145, &#x27;column&#x27;: 10}'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font>
+<font color='grey'><a title='type'><code style='font-family: menlo, "Source Code Pro", monospace;'>typ  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>  </code><font color='green'><a title='α'><code style='font-family: menlo, "Source Code Pro", monospace;'>└┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'> </code><font color='green'><a title='Π {α : Type u}, α → α → Prop'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'> </code><font color='green'><a title='α'><code style='font-family: menlo, "Source Code Pro", monospace;'>└┘</code></a></font>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 35  begin</code>
+<font color='grey'><a title='state'><code style='font-family: menlo, "Source Code Pro", monospace;'>st   </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'></code><font color='lime'><a title='α : Type u,
+_inst_1 : decidable_linear_order.{u} α,
+x₁ x₂ y₁ y₂ : α,
+h :
+  @disjoint.{u} (set.{u} α)
+    (@lattice.semilattice_inf_bot_of_bounded_lattice.{u} (set.{u} α)
+       (@lattice.complete_lattice.to_bounded_lattice.{u} (set.{u} α) (@set.lattice_set.{u} α)))
+    (@set.Ico.{u} α
+       (@partial_order.to_preorder.{u} α
+          (@lattice.semilattice_inf.to_partial_order.{u} α
+             (@lattice.lattice.to_semilattice_inf.{u} α (@lattice.lattice_of_decidable_linear_order.{u} α _inst_1))))
+       x₁
+       x₂)
+    (@set.Ico.{u} α
+       (@partial_order.to_preorder.{u} α
+          (@lattice.semilattice_inf.to_partial_order.{u} α
+             (@lattice.lattice.to_semilattice_inf.{u} α (@lattice.lattice_of_decidable_linear_order.{u} α _inst_1))))
+       y₁
+       y₂),
+hx :
+  @has_lt.lt.{u} α
+    (@preorder.to_has_lt.{u} α
+       (@partial_order.to_preorder.{u} α
+          (@lattice.semilattice_inf.to_partial_order.{u} α
+             (@lattice.lattice.to_semilattice_inf.{u} α (@lattice.lattice_of_decidable_linear_order.{u} α _inst_1)))))
+    x₁
+    x₂,
+h2 :
+  @has_mem.mem.{u u} α (set.{u} α) (@set.has_mem.{u} α) x₂
+    (@set.Ico.{u} α
+       (@partial_order.to_preorder.{u} α
+          (@lattice.semilattice_inf.to_partial_order.{u} α
+             (@lattice.lattice.to_semilattice_inf.{u} α (@lattice.lattice_of_decidable_linear_order.{u} α _inst_1))))
+       y₁
+       y₂)
+⊢ @eq.{u+1} α y₁ x₂'><code style='font-family: menlo, "Source Code Pro", monospace;'>└─────</code></a></font>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 36    rw [Ico_disjoint_Ico, min_eq_left (le_of_lt h2.2), le_max_iff] at h,</code>
+<font color='grey'><a title='full-id'><code style='font-family: menlo, "Source Code Pro", monospace;'>id   </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>      </code><font color='blue'><a title='set.Ico_disjoint_Ico'><code style='font-family: menlo, "Source Code Pro", monospace;'>└──────────────┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>  </code><font color='blue'><a title='min_eq_left'><code style='font-family: menlo, "Source Code Pro", monospace;'>└─────────┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>  </code><font color='blue'><a title='le_of_lt'><code style='font-family: menlo, "Source Code Pro", monospace;'>└──────┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'> </code><font color='blue'><a title='h2'><code style='font-family: menlo, "Source Code Pro", monospace;'>└┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>     </code><font color='blue'><a title='le_max_iff'><code style='font-family: menlo, "Source Code Pro", monospace;'>└────────┘</code></a></font>
+<font color='grey'><a title='source'><code style='font-family: menlo, "Source Code Pro", monospace;'>src  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>  </code><font color='red'><a title='{&#x27;file&#x27;: &#x27;/home/ec2-user/.elan/toolchains/3.4.2/lib/lean/library/init/meta/interactive.lean&#x27;, &#x27;line&#x27;: 385, &#x27;column&#x27;: 9}'><code style='font-family: menlo, "Source Code Pro", monospace;'>└──┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'></code><font color='red'><a title='{&#x27;line&#x27;: 26, &#x27;column&#x27;: 6}'><code style='font-family: menlo, "Source Code Pro", monospace;'>└──────────────┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'></code><font color='red'><a title='{&#x27;file&#x27;: &#x27;/home/ec2-user/.elan/toolchains/3.4.2/lib/lean/library/init/meta/interactive.lean&#x27;, &#x27;line&#x27;: 385, &#x27;column&#x27;: 9}'><code style='font-family: menlo, "Source Code Pro", monospace;'>└┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'></code><font color='red'><a title='{&#x27;file&#x27;: &#x27;/home/ec2-user/.elan/toolchains/3.4.2/lib/lean/library/init/algebra/functions.lean&#x27;, &#x27;line&#x27;: 70, &#x27;column&#x27;: 6}'><code style='font-family: menlo, "Source Code Pro", monospace;'>└─────────┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'></code><font color='red'><a title='{&#x27;file&#x27;: &#x27;/home/ec2-user/.elan/toolchains/3.4.2/lib/lean/library/init/meta/interactive.lean&#x27;, &#x27;line&#x27;: 385, &#x27;column&#x27;: 9}'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'> </code><font color='red'><a title='{&#x27;file&#x27;: &#x27;/home/ec2-user/.elan/toolchains/3.4.2/lib/lean/library/init/algebra/order.lean&#x27;, &#x27;line&#x27;: 99, &#x27;column&#x27;: 6}'><code style='font-family: menlo, "Source Code Pro", monospace;'>└──────┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'></code><font color='red'><a title='{&#x27;file&#x27;: &#x27;/home/ec2-user/.elan/toolchains/3.4.2/lib/lean/library/init/meta/interactive.lean&#x27;, &#x27;line&#x27;: 385, &#x27;column&#x27;: 9}'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>  </code><font color='red'><a title='{&#x27;file&#x27;: &#x27;/home/ec2-user/.elan/toolchains/3.4.2/lib/lean/library/init/meta/interactive.lean&#x27;, &#x27;line&#x27;: 385, &#x27;column&#x27;: 9}'><code style='font-family: menlo, "Source Code Pro", monospace;'>└───┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'></code><font color='red'><a title='{&#x27;file&#x27;: &#x27;/home/ec2-user/lean_info_scrapper/_target/deps/mathlib/src/algebra/order_functions.lean&#x27;, &#x27;line&#x27;: 100, &#x27;column&#x27;: 14}'><code style='font-family: menlo, "Source Code Pro", monospace;'>└────────┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'></code><font color='red'><a title='{&#x27;file&#x27;: &#x27;/home/ec2-user/.elan/toolchains/3.4.2/lib/lean/library/init/meta/interactive.lean&#x27;, &#x27;line&#x27;: 385, &#x27;column&#x27;: 9}'><code style='font-family: menlo, "Source Code Pro", monospace;'>└────┘</code></a></font>
+<font color='grey'><a title='type'><code style='font-family: menlo, "Source Code Pro", monospace;'>typ  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>  </code><font color='green'><a title='@interactive.parse tactic.interactive.rw_rules_t (λ (a : tactic.interactive.rw_rules_t), tactic.interactive.rw_rules_t.has_reflect a) tactic.interactive.rw_rules → @interactive.parse interactive.loc (λ (a : interactive.loc), interactive.loc.has_reflect a) interactive.types.location → opt_param.{1} tactic.rewrite_cfg {to_apply_cfg := {md := tactic.transparency.reducible, approx := bool.tt, new_goals := tactic.new_goals.non_dep_first, instances := bool.tt, auto_param := bool.tt, opt_param := bool.tt, unify := bool.tt}, symm := bool.ff, occs := occurrences.all} → tactic.{0} unit'><code style='font-family: menlo, "Source Code Pro", monospace;'>└──┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'></code><font color='green'><a title='∀ {α : Type u} [_inst_1 : decidable_linear_order.{u} α] {a₁ a₂ b₁ b₂ : α}, iff (@disjoint.{u} (set.{u} α) (@lattice.semilattice_inf_bot_of_bounded_lattice.{u} (set.{u} α) (@lattice.complete_lattice.to_bounded_lattice.{u} (set.{u} α) (@set.lattice_set.{u} α))) (@set.Ico.{u} α (@partial_order.to_preorder.{u} α (@lattice.semilattice_inf.to_partial_order.{u} α (@lattice.lattice.to_semilattice_inf.{u} α (@lattice.lattice_of_decidable_linear_order.{u} α _inst_1)))) a₁ a₂) (@set.Ico.{u} α (@partial_order.to_preorder.{u} α (@lattice.semilattice_inf.to_partial_order.{u} α (@lattice.lattice.to_semilattice_inf.{u} α (@lattice.lattice_of_decidable_linear_order.{u} α _inst_1)))) b₁ b₂)) (@has_le.le.{u} α (@preorder.to_has_le.{u} α (@partial_order.to_preorder.{u} α (@lattice.semilattice_inf.to_partial_order.{u} α (@lattice.lattice.to_semilattice_inf.{u} α (@lattice.lattice_of_decidable_linear_order.{u} α _inst_1))))) (@min.{u} α _inst_1 a₂ b₂) (@max.{u} α _inst_1 a₁ b₁))'><code style='font-family: menlo, "Source Code Pro", monospace;'>└──────────────┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'></code><font color='green'><a title='@interactive.parse tactic.interactive.rw_rules_t (λ (a : tactic.interactive.rw_rules_t), tactic.interactive.rw_rules_t.has_reflect a) tactic.interactive.rw_rules → @interactive.parse interactive.loc (λ (a : interactive.loc), interactive.loc.has_reflect a) interactive.types.location → opt_param.{1} tactic.rewrite_cfg {to_apply_cfg := {md := tactic.transparency.reducible, approx := bool.tt, new_goals := tactic.new_goals.non_dep_first, instances := bool.tt, auto_param := bool.tt, opt_param := bool.tt, unify := bool.tt}, symm := bool.ff, occs := occurrences.all} → tactic.{0} unit'><code style='font-family: menlo, "Source Code Pro", monospace;'>└┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'></code><font color='green'><a title='∀ {α : Type u} [_inst_1 : decidable_linear_order.{u} α] {a b : α}, @has_le.le.{u} α (@preorder.to_has_le.{u} α (@partial_order.to_preorder.{u} α (@linear_order.to_partial_order.{u} α (@decidable_linear_order.to_linear_order.{u} α _inst_1)))) a b → @eq.{u+1} α (@min.{u} α _inst_1 a b) a'><code style='font-family: menlo, "Source Code Pro", monospace;'>└─────────┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'></code><font color='green'><a title='@interactive.parse tactic.interactive.rw_rules_t (λ (a : tactic.interactive.rw_rules_t), tactic.interactive.rw_rules_t.has_reflect a) tactic.interactive.rw_rules → @interactive.parse interactive.loc (λ (a : interactive.loc), interactive.loc.has_reflect a) interactive.types.location → opt_param.{1} tactic.rewrite_cfg {to_apply_cfg := {md := tactic.transparency.reducible, approx := bool.tt, new_goals := tactic.new_goals.non_dep_first, instances := bool.tt, auto_param := bool.tt, opt_param := bool.tt, unify := bool.tt}, symm := bool.ff, occs := occurrences.all} → tactic.{0} unit'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'> </code><font color='green'><a title='∀ {α : Type u} [_inst_1 : preorder.{u} α] {a b : α}, @has_lt.lt.{u} α (@preorder.to_has_lt.{u} α _inst_1) a b → @has_le.le.{u} α (@preorder.to_has_le.{u} α _inst_1) a b'><code style='font-family: menlo, "Source Code Pro", monospace;'>└──────┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'></code><font color='green'><a title='@interactive.parse tactic.interactive.rw_rules_t (λ (a : tactic.interactive.rw_rules_t), tactic.interactive.rw_rules_t.has_reflect a) tactic.interactive.rw_rules → @interactive.parse interactive.loc (λ (a : interactive.loc), interactive.loc.has_reflect a) interactive.types.location → opt_param.{1} tactic.rewrite_cfg {to_apply_cfg := {md := tactic.transparency.reducible, approx := bool.tt, new_goals := tactic.new_goals.non_dep_first, instances := bool.tt, auto_param := bool.tt, opt_param := bool.tt, unify := bool.tt}, symm := bool.ff, occs := occurrences.all} → tactic.{0} unit'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'></code><font color='green'><a title='@has_mem.mem.{u u} α (set.{u} α) (@set.has_mem.{u} α) x₂ (@set.Ico.{u} α (@partial_order.to_preorder.{u} α (@lattice.semilattice_inf.to_partial_order.{u} α (@lattice.lattice.to_semilattice_inf.{u} α (@lattice.lattice_of_decidable_linear_order.{u} α _inst_1)))) y₁ y₂)'><code style='font-family: menlo, "Source Code Pro", monospace;'>└┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'></code><font color='green'><a title='@interactive.parse tactic.interactive.rw_rules_t (λ (a : tactic.interactive.rw_rules_t), tactic.interactive.rw_rules_t.has_reflect a) tactic.interactive.rw_rules → @interactive.parse interactive.loc (λ (a : interactive.loc), interactive.loc.has_reflect a) interactive.types.location → opt_param.{1} tactic.rewrite_cfg {to_apply_cfg := {md := tactic.transparency.reducible, approx := bool.tt, new_goals := tactic.new_goals.non_dep_first, instances := bool.tt, auto_param := bool.tt, opt_param := bool.tt, unify := bool.tt}, symm := bool.ff, occs := occurrences.all} → tactic.{0} unit'><code style='font-family: menlo, "Source Code Pro", monospace;'>└───┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'></code><font color='green'><a title='∀ {α : Type u} [_inst_1 : decidable_linear_order.{u} α] {a b c : α}, iff (@has_le.le.{u} α (@preorder.to_has_le.{u} α (@partial_order.to_preorder.{u} α (@lattice.semilattice_inf.to_partial_order.{u} α (@lattice.lattice.to_semilattice_inf.{u} α (@lattice.lattice_of_decidable_linear_order.{u} α _inst_1))))) a (@max.{u} α _inst_1 b c)) (or (@has_le.le.{u} α (@preorder.to_has_le.{u} α (@partial_order.to_preorder.{u} α (@lattice.semilattice_inf.to_partial_order.{u} α (@lattice.lattice.to_semilattice_inf.{u} α (@lattice.lattice_of_decidable_linear_order.{u} α _inst_1))))) a b) (@has_le.le.{u} α (@preorder.to_has_le.{u} α (@partial_order.to_preorder.{u} α (@lattice.semilattice_inf.to_partial_order.{u} α (@lattice.lattice.to_semilattice_inf.{u} α (@lattice.lattice_of_decidable_linear_order.{u} α _inst_1))))) a c))'><code style='font-family: menlo, "Source Code Pro", monospace;'>└────────┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'></code><font color='green'><a title='@interactive.parse tactic.interactive.rw_rules_t (λ (a : tactic.interactive.rw_rules_t), tactic.interactive.rw_rules_t.has_reflect a) tactic.interactive.rw_rules → @interactive.parse interactive.loc (λ (a : interactive.loc), interactive.loc.has_reflect a) interactive.types.location → opt_param.{1} tactic.rewrite_cfg {to_apply_cfg := {md := tactic.transparency.reducible, approx := bool.tt, new_goals := tactic.new_goals.non_dep_first, instances := bool.tt, auto_param := bool.tt, opt_param := bool.tt, unify := bool.tt}, symm := bool.ff, occs := occurrences.all} → tactic.{0} unit'><code style='font-family: menlo, "Source Code Pro", monospace;'>└────┘</code></a></font>
+<font color='grey'><a title='doc'><code style='font-family: menlo, "Source Code Pro", monospace;'>doc  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>  </code><font color='orange'><a title='An abbreviation for `rewrite`.'><code style='font-family: menlo, "Source Code Pro", monospace;'>└──┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>                </code><font color='orange'><a title='An abbreviation for `rewrite`.'><code style='font-family: menlo, "Source Code Pro", monospace;'>└┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>           </code><font color='orange'><a title='An abbreviation for `rewrite`.'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>         </code><font color='orange'><a title='An abbreviation for `rewrite`.'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>  </code><font color='orange'><a title='An abbreviation for `rewrite`.'><code style='font-family: menlo, "Source Code Pro", monospace;'>└───┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>          </code><font color='orange'><a title='An abbreviation for `rewrite`.'><code style='font-family: menlo, "Source Code Pro", monospace;'>└────┘</code></a></font>
+<font color='grey'><a title='text'><code style='font-family: menlo, "Source Code Pro", monospace;'>txt  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>  </code><font color='teal'><a title='rw'><code style='font-family: menlo, "Source Code Pro", monospace;'>└──┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>                </code><font color='teal'><a title='rw'><code style='font-family: menlo, "Source Code Pro", monospace;'>└┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>           </code><font color='teal'><a title='rw'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>         </code><font color='teal'><a title='rw'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>  </code><font color='teal'><a title='rw'><code style='font-family: menlo, "Source Code Pro", monospace;'>└───┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>          </code><font color='teal'><a title='rw'><code style='font-family: menlo, "Source Code Pro", monospace;'>└────┘</code></a></font>
+<font color='grey'><a title='tactic_params'><code style='font-family: menlo, "Source Code Pro", monospace;'>par  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>  </code><font color='grey'><a title='[&#x27;([ (←? expr), ... ] | ←? expr)&#x27;, &#x27;(at (* | (⊢ | id)*))?&#x27;, &#x27;tactic.rewrite_cfg?&#x27;]'><code style='font-family: menlo, "Source Code Pro", monospace;'>└──┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>                </code><font color='grey'><a title='[&#x27;([ (←? expr), ... ] | ←? expr)&#x27;, &#x27;(at (* | (⊢ | id)*))?&#x27;, &#x27;tactic.rewrite_cfg?&#x27;]'><code style='font-family: menlo, "Source Code Pro", monospace;'>└┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>           </code><font color='grey'><a title='[&#x27;([ (←? expr), ... ] | ←? expr)&#x27;, &#x27;(at (* | (⊢ | id)*))?&#x27;, &#x27;tactic.rewrite_cfg?&#x27;]'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>         </code><font color='grey'><a title='[&#x27;([ (←? expr), ... ] | ←? expr)&#x27;, &#x27;(at (* | (⊢ | id)*))?&#x27;, &#x27;tactic.rewrite_cfg?&#x27;]'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>  </code><font color='grey'><a title='[&#x27;([ (←? expr), ... ] | ←? expr)&#x27;, &#x27;(at (* | (⊢ | id)*))?&#x27;, &#x27;tactic.rewrite_cfg?&#x27;]'><code style='font-family: menlo, "Source Code Pro", monospace;'>└───┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>          </code><font color='grey'><a title='[&#x27;([ (←? expr), ... ] | ←? expr)&#x27;, &#x27;(at (* | (⊢ | id)*))?&#x27;, &#x27;tactic.rewrite_cfg?&#x27;]'><code style='font-family: menlo, "Source Code Pro", monospace;'>└────┘</code></a></font>
+<font color='grey'><a title='tactic_param_idx'><code style='font-family: menlo, "Source Code Pro", monospace;'>pid  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>    </code><font color='maroon'><a title='0'><code style='font-family: menlo, "Source Code Pro", monospace;'>└┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>                </code><font color='maroon'><a title='0'><code style='font-family: menlo, "Source Code Pro", monospace;'>└┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>           </code><font color='maroon'><a title='0'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>         </code><font color='maroon'><a title='0'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>  </code><font color='maroon'><a title='0'><code style='font-family: menlo, "Source Code Pro", monospace;'>└───┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>          </code><font color='maroon'><a title='0'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'></code><font color='maroon'><a title='1'><code style='font-family: menlo, "Source Code Pro", monospace;'>└───┘</code></a></font>
+<font color='grey'><a title='state'><code style='font-family: menlo, "Source Code Pro", monospace;'>st   </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'></code><font color='lime'><a title='α : Type u,
+_inst_1 : decidable_linear_order.{u} α,
+x₁ x₂ y₁ y₂ : α,
+h :
+  @disjoint.{u} (set.{u} α)
+    (@lattice.semilattice_inf_bot_of_bounded_lattice.{u} (set.{u} α)
+       (@lattice.complete_lattice.to_bounded_lattice.{u} (set.{u} α) (@set.lattice_set.{u} α)))
+    (@set.Ico.{u} α
+       (@partial_order.to_preorder.{u} α
+          (@lattice.semilattice_inf.to_partial_order.{u} α
+             (@lattice.lattice.to_semilattice_inf.{u} α (@lattice.lattice_of_decidable_linear_order.{u} α _inst_1))))
+       x₁
+       x₂)
+    (@set.Ico.{u} α
+       (@partial_order.to_preorder.{u} α
+          (@lattice.semilattice_inf.to_partial_order.{u} α
+             (@lattice.lattice.to_semilattice_inf.{u} α (@lattice.lattice_of_decidable_linear_order.{u} α _inst_1))))
+       y₁
+       y₂),
+hx :
+  @has_lt.lt.{u} α
+    (@preorder.to_has_lt.{u} α
+       (@partial_order.to_preorder.{u} α
+          (@lattice.semilattice_inf.to_partial_order.{u} α
+             (@lattice.lattice.to_semilattice_inf.{u} α (@lattice.lattice_of_decidable_linear_order.{u} α _inst_1)))))
+    x₁
+    x₂,
+h2 :
+  @has_mem.mem.{u u} α (set.{u} α) (@set.has_mem.{u} α) x₂
+    (@set.Ico.{u} α
+       (@partial_order.to_preorder.{u} α
+          (@lattice.semilattice_inf.to_partial_order.{u} α
+             (@lattice.lattice.to_semilattice_inf.{u} α (@lattice.lattice_of_decidable_linear_order.{u} α _inst_1))))
+       y₁
+       y₂)
+⊢ @eq.{u+1} α y₁ x₂'><code style='font-family: menlo, "Source Code Pro", monospace;'>─────────────────────┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'></code><font color='lime'><a title='α : Type u,
+_inst_1 : decidable_linear_order.{u} α,
+x₁ x₂ y₁ y₂ : α,
+hx :
+  @has_lt.lt.{u} α
+    (@preorder.to_has_lt.{u} α
+       (@partial_order.to_preorder.{u} α
+          (@lattice.semilattice_inf.to_partial_order.{u} α
+             (@lattice.lattice.to_semilattice_inf.{u} α (@lattice.lattice_of_decidable_linear_order.{u} α _inst_1)))))
+    x₁
+    x₂,
+h2 :
+  @has_mem.mem.{u u} α (set.{u} α) (@set.has_mem.{u} α) x₂
+    (@set.Ico.{u} α
+       (@partial_order.to_preorder.{u} α
+          (@lattice.semilattice_inf.to_partial_order.{u} α
+             (@lattice.lattice.to_semilattice_inf.{u} α (@lattice.lattice_of_decidable_linear_order.{u} α _inst_1))))
+       y₁
+       y₂),
+h :
+  @has_le.le.{u} α
+    (@preorder.to_has_le.{u} α
+       (@partial_order.to_preorder.{u} α
+          (@lattice.semilattice_inf.to_partial_order.{u} α
+             (@lattice.lattice.to_semilattice_inf.{u} α (@lattice.lattice_of_decidable_linear_order.{u} α _inst_1)))))
+    (@min.{u} α _inst_1 x₂ y₂)
+    (@max.{u} α _inst_1 x₁ y₁)
+⊢ @eq.{u+1} α y₁ x₂'><code style='font-family: menlo, "Source Code Pro", monospace;'>└───────────────────────────┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'></code><font color='lime'><a title='α : Type u,
+_inst_1 : decidable_linear_order.{u} α,
+x₁ x₂ y₁ y₂ : α,
+hx :
+  @has_lt.lt.{u} α
+    (@preorder.to_has_lt.{u} α
+       (@partial_order.to_preorder.{u} α
+          (@lattice.semilattice_inf.to_partial_order.{u} α
+             (@lattice.lattice.to_semilattice_inf.{u} α (@lattice.lattice_of_decidable_linear_order.{u} α _inst_1)))))
+    x₁
+    x₂,
+h2 :
+  @has_mem.mem.{u u} α (set.{u} α) (@set.has_mem.{u} α) x₂
+    (@set.Ico.{u} α
+       (@partial_order.to_preorder.{u} α
+          (@lattice.semilattice_inf.to_partial_order.{u} α
+             (@lattice.lattice.to_semilattice_inf.{u} α (@lattice.lattice_of_decidable_linear_order.{u} α _inst_1))))
+       y₁
+       y₂),
+h :
+  @has_le.le.{u} α
+    (@preorder.to_has_le.{u} α
+       (@partial_order.to_preorder.{u} α
+          (@lattice.semilattice_inf.to_partial_order.{u} α
+             (@lattice.lattice.to_semilattice_inf.{u} α (@lattice.lattice_of_decidable_linear_order.{u} α _inst_1)))))
+    x₂
+    (@max.{u} α _inst_1 x₁ y₁)
+⊢ @eq.{u+1} α y₁ x₂'><code style='font-family: menlo, "Source Code Pro", monospace;'>└──────────┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'></code><font color='lime'><a title='α : Type u,
+_inst_1 : decidable_linear_order.{u} α,
+x₁ x₂ y₁ y₂ : α,
+hx :
+  @has_lt.lt.{u} α
+    (@preorder.to_has_lt.{u} α
+       (@partial_order.to_preorder.{u} α
+          (@lattice.semilattice_inf.to_partial_order.{u} α
+             (@lattice.lattice.to_semilattice_inf.{u} α (@lattice.lattice_of_decidable_linear_order.{u} α _inst_1)))))
+    x₁
+    x₂,
+h2 :
+  @has_mem.mem.{u u} α (set.{u} α) (@set.has_mem.{u} α) x₂
+    (@set.Ico.{u} α
+       (@partial_order.to_preorder.{u} α
+          (@lattice.semilattice_inf.to_partial_order.{u} α
+             (@lattice.lattice.to_semilattice_inf.{u} α (@lattice.lattice_of_decidable_linear_order.{u} α _inst_1))))
+       y₁
+       y₂),
+h :
+  or
+    (@has_le.le.{u} α
+       (@preorder.to_has_le.{u} α
+          (@partial_order.to_preorder.{u} α
+             (@lattice.semilattice_inf.to_partial_order.{u} α
+                (@lattice.lattice.to_semilattice_inf.{u} α
+                   (@lattice.lattice_of_decidable_linear_order.{u} α _inst_1)))))
+       x₂
+       x₁)
+    (@has_le.le.{u} α
+       (@preorder.to_has_le.{u} α
+          (@partial_order.to_preorder.{u} α
+             (@lattice.semilattice_inf.to_partial_order.{u} α
+                (@lattice.lattice.to_semilattice_inf.{u} α
+                   (@lattice.lattice_of_decidable_linear_order.{u} α _inst_1)))))
+       x₂
+       y₁)
+⊢ @eq.{u+1} α y₁ x₂'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'></code><font color='lime'><a title='α : Type u,
+_inst_1 : decidable_linear_order.{u} α,
+x₁ x₂ y₁ y₂ : α,
+h :
+  @disjoint.{u} (set.{u} α)
+    (@lattice.semilattice_inf_bot_of_bounded_lattice.{u} (set.{u} α)
+       (@lattice.complete_lattice.to_bounded_lattice.{u} (set.{u} α) (@set.lattice_set.{u} α)))
+    (@set.Ico.{u} α
+       (@partial_order.to_preorder.{u} α
+          (@lattice.semilattice_inf.to_partial_order.{u} α
+             (@lattice.lattice.to_semilattice_inf.{u} α (@lattice.lattice_of_decidable_linear_order.{u} α _inst_1))))
+       x₁
+       x₂)
+    (@set.Ico.{u} α
+       (@partial_order.to_preorder.{u} α
+          (@lattice.semilattice_inf.to_partial_order.{u} α
+             (@lattice.lattice.to_semilattice_inf.{u} α (@lattice.lattice_of_decidable_linear_order.{u} α _inst_1))))
+       y₁
+       y₂),
+hx :
+  @has_lt.lt.{u} α
+    (@preorder.to_has_lt.{u} α
+       (@partial_order.to_preorder.{u} α
+          (@lattice.semilattice_inf.to_partial_order.{u} α
+             (@lattice.lattice.to_semilattice_inf.{u} α (@lattice.lattice_of_decidable_linear_order.{u} α _inst_1)))))
+    x₁
+    x₂,
+h2 :
+  @has_mem.mem.{u u} α (set.{u} α) (@set.has_mem.{u} α) x₂
+    (@set.Ico.{u} α
+       (@partial_order.to_preorder.{u} α
+          (@lattice.semilattice_inf.to_partial_order.{u} α
+             (@lattice.lattice.to_semilattice_inf.{u} α (@lattice.lattice_of_decidable_linear_order.{u} α _inst_1))))
+       y₁
+       y₂)
+⊢ @eq.{u+1} α y₁ x₂'><code style='font-family: menlo, "Source Code Pro", monospace;'>└───┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'></code><font color='lime'><a title='α : Type u,
+_inst_1 : decidable_linear_order.{u} α,
+x₁ x₂ y₁ y₂ : α,
+hx :
+  @has_lt.lt.{u} α
+    (@preorder.to_has_lt.{u} α
+       (@partial_order.to_preorder.{u} α
+          (@lattice.semilattice_inf.to_partial_order.{u} α
+             (@lattice.lattice.to_semilattice_inf.{u} α (@lattice.lattice_of_decidable_linear_order.{u} α _inst_1)))))
+    x₁
+    x₂,
+h2 :
+  @has_mem.mem.{u u} α (set.{u} α) (@set.has_mem.{u} α) x₂
+    (@set.Ico.{u} α
+       (@partial_order.to_preorder.{u} α
+          (@lattice.semilattice_inf.to_partial_order.{u} α
+             (@lattice.lattice.to_semilattice_inf.{u} α (@lattice.lattice_of_decidable_linear_order.{u} α _inst_1))))
+       y₁
+       y₂),
+h :
+  or
+    (@has_le.le.{u} α
+       (@preorder.to_has_le.{u} α
+          (@partial_order.to_preorder.{u} α
+             (@lattice.semilattice_inf.to_partial_order.{u} α
+                (@lattice.lattice.to_semilattice_inf.{u} α
+                   (@lattice.lattice_of_decidable_linear_order.{u} α _inst_1)))))
+       x₂
+       x₁)
+    (@has_le.le.{u} α
+       (@preorder.to_has_le.{u} α
+          (@partial_order.to_preorder.{u} α
+             (@lattice.semilattice_inf.to_partial_order.{u} α
+                (@lattice.lattice.to_semilattice_inf.{u} α
+                   (@lattice.lattice_of_decidable_linear_order.{u} α _inst_1)))))
+       x₂
+       y₁)
+⊢ @eq.{u+1} α y₁ x₂'><code style='font-family: menlo, "Source Code Pro", monospace;'>└─</code></a></font>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 37    apply le_antisymm h2.1,</code>
+<font color='grey'><a title='full-id'><code style='font-family: menlo, "Source Code Pro", monospace;'>id   </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>        </code><font color='blue'><a title='le_antisymm'><code style='font-family: menlo, "Source Code Pro", monospace;'>└─────────┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'> </code><font color='blue'><a title='h2'><code style='font-family: menlo, "Source Code Pro", monospace;'>└┘</code></a></font>
+<font color='grey'><a title='source'><code style='font-family: menlo, "Source Code Pro", monospace;'>src  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>  </code><font color='red'><a title='{&#x27;file&#x27;: &#x27;/home/ec2-user/.elan/toolchains/3.4.2/lib/lean/library/init/meta/interactive.lean&#x27;, &#x27;line&#x27;: 182, &#x27;column&#x27;: 9}'><code style='font-family: menlo, "Source Code Pro", monospace;'>└────┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'></code><font color='red'><a title='{&#x27;file&#x27;: &#x27;/home/ec2-user/.elan/toolchains/3.4.2/lib/lean/library/init/algebra/order.lean&#x27;, &#x27;line&#x27;: 45, &#x27;column&#x27;: 6}'><code style='font-family: menlo, "Source Code Pro", monospace;'>└─────────┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'></code><font color='red'><a title='{&#x27;file&#x27;: &#x27;/home/ec2-user/.elan/toolchains/3.4.2/lib/lean/library/init/meta/interactive.lean&#x27;, &#x27;line&#x27;: 182, &#x27;column&#x27;: 9}'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>  </code><font color='red'><a title='{&#x27;file&#x27;: &#x27;/home/ec2-user/.elan/toolchains/3.4.2/lib/lean/library/init/meta/interactive.lean&#x27;, &#x27;line&#x27;: 182, &#x27;column&#x27;: 9}'><code style='font-family: menlo, "Source Code Pro", monospace;'>└┘</code></a></font>
+<font color='grey'><a title='type'><code style='font-family: menlo, "Source Code Pro", monospace;'>typ  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>  </code><font color='green'><a title='@interactive.parse pexpr (λ (a : pexpr), @expr.reflect bool.ff a) interactive.types.texpr → tactic.{0} unit'><code style='font-family: menlo, "Source Code Pro", monospace;'>└────┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'></code><font color='green'><a title='∀ {α : Type u} [_inst_1 : partial_order.{u} α] {a b : α}, @has_le.le.{u} α (@preorder.to_has_le.{u} α (@partial_order.to_preorder.{u} α _inst_1)) a b → @has_le.le.{u} α (@preorder.to_has_le.{u} α (@partial_order.to_preorder.{u} α _inst_1)) b a → @eq.{u+1} α a b'><code style='font-family: menlo, "Source Code Pro", monospace;'>└─────────┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'></code><font color='green'><a title='@interactive.parse pexpr (λ (a : pexpr), @expr.reflect bool.ff a) interactive.types.texpr → tactic.{0} unit'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'></code><font color='green'><a title='@has_mem.mem.{u u} α (set.{u} α) (@set.has_mem.{u} α) x₂ (@set.Ico.{u} α (@partial_order.to_preorder.{u} α (@lattice.semilattice_inf.to_partial_order.{u} α (@lattice.lattice.to_semilattice_inf.{u} α (@lattice.lattice_of_decidable_linear_order.{u} α _inst_1)))) y₁ y₂)'><code style='font-family: menlo, "Source Code Pro", monospace;'>└┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'></code><font color='green'><a title='@interactive.parse pexpr (λ (a : pexpr), @expr.reflect bool.ff a) interactive.types.texpr → tactic.{0} unit'><code style='font-family: menlo, "Source Code Pro", monospace;'>└┘</code></a></font>
+<font color='grey'><a title='doc'><code style='font-family: menlo, "Source Code Pro", monospace;'>doc  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>  </code><font color='orange'><a title='The `apply` tactic tries to match the current goal against the conclusion of the type of term. The argument term should be a term well-formed in the local context of the main goal. If it succeeds, then the tactic returns as many subgoals as the number of premises that have not been fixed by type inference or type class resolution. Non-dependent premises are added before dependent ones.
+
+The `apply` tactic uses higher-order pattern matching, type class resolution, and first-order unification with dependent types.'><code style='font-family: menlo, "Source Code Pro", monospace;'>└────┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>           </code><font color='orange'><a title='The `apply` tactic tries to match the current goal against the conclusion of the type of term. The argument term should be a term well-formed in the local context of the main goal. If it succeeds, then the tactic returns as many subgoals as the number of premises that have not been fixed by type inference or type class resolution. Non-dependent premises are added before dependent ones.
+
+The `apply` tactic uses higher-order pattern matching, type class resolution, and first-order unification with dependent types.'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>  </code><font color='orange'><a title='The `apply` tactic tries to match the current goal against the conclusion of the type of term. The argument term should be a term well-formed in the local context of the main goal. If it succeeds, then the tactic returns as many subgoals as the number of premises that have not been fixed by type inference or type class resolution. Non-dependent premises are added before dependent ones.
+
+The `apply` tactic uses higher-order pattern matching, type class resolution, and first-order unification with dependent types.'><code style='font-family: menlo, "Source Code Pro", monospace;'>└┘</code></a></font>
+<font color='grey'><a title='text'><code style='font-family: menlo, "Source Code Pro", monospace;'>txt  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>  </code><font color='teal'><a title='apply'><code style='font-family: menlo, "Source Code Pro", monospace;'>└────┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>           </code><font color='teal'><a title='apply'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>  </code><font color='teal'><a title='apply'><code style='font-family: menlo, "Source Code Pro", monospace;'>└┘</code></a></font>
+<font color='grey'><a title='tactic_params'><code style='font-family: menlo, "Source Code Pro", monospace;'>par  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>  </code><font color='grey'><a title='[&#x27;expr&#x27;]'><code style='font-family: menlo, "Source Code Pro", monospace;'>└────┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>           </code><font color='grey'><a title='[&#x27;expr&#x27;]'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>  </code><font color='grey'><a title='[&#x27;expr&#x27;]'><code style='font-family: menlo, "Source Code Pro", monospace;'>└┘</code></a></font>
+<font color='grey'><a title='tactic_param_idx'><code style='font-family: menlo, "Source Code Pro", monospace;'>pid  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>       </code><font color='maroon'><a title='0'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>           </code><font color='maroon'><a title='0'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>  </code><font color='maroon'><a title='1'><code style='font-family: menlo, "Source Code Pro", monospace;'>└┘</code></a></font>
+<font color='grey'><a title='state'><code style='font-family: menlo, "Source Code Pro", monospace;'>st   </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'></code><font color='lime'><a title='α : Type u,
+_inst_1 : decidable_linear_order.{u} α,
+x₁ x₂ y₁ y₂ : α,
+hx :
+  @has_lt.lt.{u} α
+    (@preorder.to_has_lt.{u} α
+       (@partial_order.to_preorder.{u} α
+          (@lattice.semilattice_inf.to_partial_order.{u} α
+             (@lattice.lattice.to_semilattice_inf.{u} α (@lattice.lattice_of_decidable_linear_order.{u} α _inst_1)))))
+    x₁
+    x₂,
+h2 :
+  @has_mem.mem.{u u} α (set.{u} α) (@set.has_mem.{u} α) x₂
+    (@set.Ico.{u} α
+       (@partial_order.to_preorder.{u} α
+          (@lattice.semilattice_inf.to_partial_order.{u} α
+             (@lattice.lattice.to_semilattice_inf.{u} α (@lattice.lattice_of_decidable_linear_order.{u} α _inst_1))))
+       y₁
+       y₂),
+h :
+  or
+    (@has_le.le.{u} α
+       (@preorder.to_has_le.{u} α
+          (@partial_order.to_preorder.{u} α
+             (@lattice.semilattice_inf.to_partial_order.{u} α
+                (@lattice.lattice.to_semilattice_inf.{u} α
+                   (@lattice.lattice_of_decidable_linear_order.{u} α _inst_1)))))
+       x₂
+       x₁)
+    (@has_le.le.{u} α
+       (@preorder.to_has_le.{u} α
+          (@partial_order.to_preorder.{u} α
+             (@lattice.semilattice_inf.to_partial_order.{u} α
+                (@lattice.lattice.to_semilattice_inf.{u} α
+                   (@lattice.lattice_of_decidable_linear_order.{u} α _inst_1)))))
+       x₂
+       y₁)
+⊢ @eq.{u+1} α y₁ x₂'><code style='font-family: menlo, "Source Code Pro", monospace;'>───────────────────────┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'></code><font color='lime'><a title='α : Type u,
+_inst_1 : decidable_linear_order.{u} α,
+x₁ x₂ y₁ y₂ : α,
+hx :
+  @has_lt.lt.{u} α
+    (@preorder.to_has_lt.{u} α
+       (@partial_order.to_preorder.{u} α
+          (@lattice.semilattice_inf.to_partial_order.{u} α
+             (@lattice.lattice.to_semilattice_inf.{u} α (@lattice.lattice_of_decidable_linear_order.{u} α _inst_1)))))
+    x₁
+    x₂,
+h2 :
+  @has_mem.mem.{u u} α (set.{u} α) (@set.has_mem.{u} α) x₂
+    (@set.Ico.{u} α
+       (@partial_order.to_preorder.{u} α
+          (@lattice.semilattice_inf.to_partial_order.{u} α
+             (@lattice.lattice.to_semilattice_inf.{u} α (@lattice.lattice_of_decidable_linear_order.{u} α _inst_1))))
+       y₁
+       y₂),
+h :
+  or
+    (@has_le.le.{u} α
+       (@preorder.to_has_le.{u} α
+          (@partial_order.to_preorder.{u} α
+             (@lattice.semilattice_inf.to_partial_order.{u} α
+                (@lattice.lattice.to_semilattice_inf.{u} α
+                   (@lattice.lattice_of_decidable_linear_order.{u} α _inst_1)))))
+       x₂
+       x₁)
+    (@has_le.le.{u} α
+       (@preorder.to_has_le.{u} α
+          (@partial_order.to_preorder.{u} α
+             (@lattice.semilattice_inf.to_partial_order.{u} α
+                (@lattice.lattice.to_semilattice_inf.{u} α
+                   (@lattice.lattice_of_decidable_linear_order.{u} α _inst_1)))))
+       x₂
+       y₁)
+⊢ @has_le.le.{u} α
+    (@preorder.to_has_le.{u} α
+       (@partial_order.to_preorder.{u} α
+          (@lattice.semilattice_inf.to_partial_order.{u} α
+             (@lattice.lattice.to_semilattice_inf.{u} α (@lattice.lattice_of_decidable_linear_order.{u} α _inst_1)))))
+    x₂
+    y₁'><code style='font-family: menlo, "Source Code Pro", monospace;'>└─</code></a></font>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 38    exact h.elim (λ h, absurd hx (not_lt_of_le h)) id</code>
+<font color='grey'><a title='full-id'><code style='font-family: menlo, "Source Code Pro", monospace;'>id   </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>        </code><font color='blue'><a title='h'><code style='font-family: menlo, "Source Code Pro", monospace;'>└────┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>       </code><font color='blue'><a title='absurd'><code style='font-family: menlo, "Source Code Pro", monospace;'>└────┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'> </code><font color='blue'><a title='hx'><code style='font-family: menlo, "Source Code Pro", monospace;'>└┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>  </code><font color='blue'><a title='not_lt_of_le'><code style='font-family: menlo, "Source Code Pro", monospace;'>└──────────┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>     </code><font color='blue'><a title='id'><code style='font-family: menlo, "Source Code Pro", monospace;'>└┘</code></a></font>
+<font color='grey'><a title='source'><code style='font-family: menlo, "Source Code Pro", monospace;'>src  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>  </code><font color='red'><a title='{&#x27;file&#x27;: &#x27;/home/ec2-user/.elan/toolchains/3.4.2/lib/lean/library/init/meta/interactive.lean&#x27;, &#x27;line&#x27;: 266, &#x27;column&#x27;: 9}'><code style='font-family: menlo, "Source Code Pro", monospace;'>└────┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'></code><font color='red'><a title='{&#x27;file&#x27;: &#x27;/home/ec2-user/.elan/toolchains/3.4.2/lib/lean/library/init/logic.lean&#x27;, &#x27;line&#x27;: 202, &#x27;column&#x27;: 8}'><code style='font-family: menlo, "Source Code Pro", monospace;'>└────┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'></code><font color='red'><a title='{&#x27;file&#x27;: &#x27;/home/ec2-user/.elan/toolchains/3.4.2/lib/lean/library/init/meta/interactive.lean&#x27;, &#x27;line&#x27;: 266, &#x27;column&#x27;: 9}'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>  </code><font color='red'><a title='{&#x27;file&#x27;: &#x27;/home/ec2-user/.elan/toolchains/3.4.2/lib/lean/library/init/meta/interactive.lean&#x27;, &#x27;line&#x27;: 266, &#x27;column&#x27;: 9}'><code style='font-family: menlo, "Source Code Pro", monospace;'>└──┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'></code><font color='red'><a title='{&#x27;file&#x27;: &#x27;/home/ec2-user/.elan/toolchains/3.4.2/lib/lean/library/init/logic.lean&#x27;, &#x27;line&#x27;: 28, &#x27;column&#x27;: 14}'><code style='font-family: menlo, "Source Code Pro", monospace;'>└────┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'></code><font color='red'><a title='{&#x27;file&#x27;: &#x27;/home/ec2-user/.elan/toolchains/3.4.2/lib/lean/library/init/meta/interactive.lean&#x27;, &#x27;line&#x27;: 266, &#x27;column&#x27;: 9}'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>  </code><font color='red'><a title='{&#x27;file&#x27;: &#x27;/home/ec2-user/.elan/toolchains/3.4.2/lib/lean/library/init/meta/interactive.lean&#x27;, &#x27;line&#x27;: 266, &#x27;column&#x27;: 9}'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'> </code><font color='red'><a title='{&#x27;file&#x27;: &#x27;/home/ec2-user/lean_info_scrapper/_target/deps/mathlib/src/algebra/order.lean&#x27;, &#x27;line&#x27;: 16, &#x27;column&#x27;: 6}'><code style='font-family: menlo, "Source Code Pro", monospace;'>└──────────┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'></code><font color='red'><a title='{&#x27;file&#x27;: &#x27;/home/ec2-user/.elan/toolchains/3.4.2/lib/lean/library/init/meta/interactive.lean&#x27;, &#x27;line&#x27;: 266, &#x27;column&#x27;: 9}'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'> </code><font color='red'><a title='{&#x27;file&#x27;: &#x27;/home/ec2-user/.elan/toolchains/3.4.2/lib/lean/library/init/meta/interactive.lean&#x27;, &#x27;line&#x27;: 266, &#x27;column&#x27;: 9}'><code style='font-family: menlo, "Source Code Pro", monospace;'>└─┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'></code><font color='red'><a title='{&#x27;file&#x27;: &#x27;/home/ec2-user/.elan/toolchains/3.4.2/lib/lean/library/init/logic.lean&#x27;, &#x27;line&#x27;: 14, &#x27;column&#x27;: 14}'><code style='font-family: menlo, "Source Code Pro", monospace;'>└┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'></code><font color='red'><a title='{&#x27;file&#x27;: &#x27;/home/ec2-user/.elan/toolchains/3.4.2/lib/lean/library/init/meta/interactive.lean&#x27;, &#x27;line&#x27;: 266, &#x27;column&#x27;: 9}'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font>
+<font color='grey'><a title='type'><code style='font-family: menlo, "Source Code Pro", monospace;'>typ  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>  </code><font color='green'><a title='@interactive.parse pexpr (λ (a : pexpr), @expr.reflect bool.ff a) interactive.types.texpr → tactic.{0} unit'><code style='font-family: menlo, "Source Code Pro", monospace;'>└────┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'></code><font color='green'><a title='or (@has_le.le.{u} α (@preorder.to_has_le.{u} α (@partial_order.to_preorder.{u} α (@lattice.semilattice_inf.to_partial_order.{u} α (@lattice.lattice.to_semilattice_inf.{u} α (@lattice.lattice_of_decidable_linear_order.{u} α _inst_1))))) x₂ x₁) (@has_le.le.{u} α (@preorder.to_has_le.{u} α (@partial_order.to_preorder.{u} α (@lattice.semilattice_inf.to_partial_order.{u} α (@lattice.lattice.to_semilattice_inf.{u} α (@lattice.lattice_of_decidable_linear_order.{u} α _inst_1))))) x₂ y₁)'><code style='font-family: menlo, "Source Code Pro", monospace;'>└────┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'></code><font color='green'><a title='@interactive.parse pexpr (λ (a : pexpr), @expr.reflect bool.ff a) interactive.types.texpr → tactic.{0} unit'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>  </code><font color='green'><a title='@interactive.parse pexpr (λ (a : pexpr), @expr.reflect bool.ff a) interactive.types.texpr → tactic.{0} unit'><code style='font-family: menlo, "Source Code Pro", monospace;'>└──┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'></code><font color='green'><a title='∀ {a b : Prop}, a → not a → b'><code style='font-family: menlo, "Source Code Pro", monospace;'>└────┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'></code><font color='green'><a title='@interactive.parse pexpr (λ (a : pexpr), @expr.reflect bool.ff a) interactive.types.texpr → tactic.{0} unit'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'></code><font color='green'><a title='@has_lt.lt.{u} α (@preorder.to_has_lt.{u} α (@partial_order.to_preorder.{u} α (@lattice.semilattice_inf.to_partial_order.{u} α (@lattice.lattice.to_semilattice_inf.{u} α (@lattice.lattice_of_decidable_linear_order.{u} α _inst_1))))) x₁ x₂'><code style='font-family: menlo, "Source Code Pro", monospace;'>└┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'></code><font color='green'><a title='@interactive.parse pexpr (λ (a : pexpr), @expr.reflect bool.ff a) interactive.types.texpr → tactic.{0} unit'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'> </code><font color='green'><a title='∀ {α : Type u} [_inst_1 : preorder.{u} α] {a b : α}, @has_le.le.{u} α (@preorder.to_has_le.{u} α _inst_1) a b → not (@has_lt.lt.{u} α (@preorder.to_has_lt.{u} α _inst_1) b a)'><code style='font-family: menlo, "Source Code Pro", monospace;'>└──────────┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'></code><font color='green'><a title='@interactive.parse pexpr (λ (a : pexpr), @expr.reflect bool.ff a) interactive.types.texpr → tactic.{0} unit'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'> </code><font color='green'><a title='@interactive.parse pexpr (λ (a : pexpr), @expr.reflect bool.ff a) interactive.types.texpr → tactic.{0} unit'><code style='font-family: menlo, "Source Code Pro", monospace;'>└─┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'></code><font color='green'><a title='∀ {α : Prop}, α → α'><code style='font-family: menlo, "Source Code Pro", monospace;'>└┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'></code><font color='green'><a title='@interactive.parse pexpr (λ (a : pexpr), @expr.reflect bool.ff a) interactive.types.texpr → tactic.{0} unit'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font>
+<font color='grey'><a title='doc'><code style='font-family: menlo, "Source Code Pro", monospace;'>doc  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>  </code><font color='orange'><a title='This tactic provides an exact proof term to solve the main goal. If `t` is the goal and `p` is a term of type `u` then `exact p` succeeds if and only if `t` and `u` can be unified.'><code style='font-family: menlo, "Source Code Pro", monospace;'>└────┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>      </code><font color='orange'><a title='This tactic provides an exact proof term to solve the main goal. If `t` is the goal and `p` is a term of type `u` then `exact p` succeeds if and only if `t` and `u` can be unified.'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>  </code><font color='orange'><a title='This tactic provides an exact proof term to solve the main goal. If `t` is the goal and `p` is a term of type `u` then `exact p` succeeds if and only if `t` and `u` can be unified.'><code style='font-family: menlo, "Source Code Pro", monospace;'>└──┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>      </code><font color='orange'><a title='This tactic provides an exact proof term to solve the main goal. If `t` is the goal and `p` is a term of type `u` then `exact p` succeeds if and only if `t` and `u` can be unified.'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>  </code><font color='orange'><a title='This tactic provides an exact proof term to solve the main goal. If `t` is the goal and `p` is a term of type `u` then `exact p` succeeds if and only if `t` and `u` can be unified.'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>             </code><font color='orange'><a title='This tactic provides an exact proof term to solve the main goal. If `t` is the goal and `p` is a term of type `u` then `exact p` succeeds if and only if `t` and `u` can be unified.'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'> </code><font color='orange'><a title='This tactic provides an exact proof term to solve the main goal. If `t` is the goal and `p` is a term of type `u` then `exact p` succeeds if and only if `t` and `u` can be unified.'><code style='font-family: menlo, "Source Code Pro", monospace;'>└─┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>  </code><font color='orange'><a title='This tactic provides an exact proof term to solve the main goal. If `t` is the goal and `p` is a term of type `u` then `exact p` succeeds if and only if `t` and `u` can be unified.'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font>
+<font color='grey'><a title='text'><code style='font-family: menlo, "Source Code Pro", monospace;'>txt  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>  </code><font color='teal'><a title='exact'><code style='font-family: menlo, "Source Code Pro", monospace;'>└────┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>      </code><font color='teal'><a title='exact'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>  </code><font color='teal'><a title='exact'><code style='font-family: menlo, "Source Code Pro", monospace;'>└──┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>      </code><font color='teal'><a title='exact'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>  </code><font color='teal'><a title='exact'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>             </code><font color='teal'><a title='exact'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'> </code><font color='teal'><a title='exact'><code style='font-family: menlo, "Source Code Pro", monospace;'>└─┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>  </code><font color='teal'><a title='exact'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font>
+<font color='grey'><a title='tactic_params'><code style='font-family: menlo, "Source Code Pro", monospace;'>par  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>  </code><font color='grey'><a title='[&#x27;expr&#x27;]'><code style='font-family: menlo, "Source Code Pro", monospace;'>└────┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>      </code><font color='grey'><a title='[&#x27;expr&#x27;]'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>  </code><font color='grey'><a title='[&#x27;expr&#x27;]'><code style='font-family: menlo, "Source Code Pro", monospace;'>└──┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>      </code><font color='grey'><a title='[&#x27;expr&#x27;]'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>  </code><font color='grey'><a title='[&#x27;expr&#x27;]'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>             </code><font color='grey'><a title='[&#x27;expr&#x27;]'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'> </code><font color='grey'><a title='[&#x27;expr&#x27;]'><code style='font-family: menlo, "Source Code Pro", monospace;'>└─┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>  </code><font color='grey'><a title='[&#x27;expr&#x27;]'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font>
+<font color='grey'><a title='tactic_param_idx'><code style='font-family: menlo, "Source Code Pro", monospace;'>pid  </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>       </code><font color='maroon'><a title='0'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>      </code><font color='maroon'><a title='0'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>  </code><font color='maroon'><a title='0'><code style='font-family: menlo, "Source Code Pro", monospace;'>└──┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>      </code><font color='maroon'><a title='0'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>  </code><font color='maroon'><a title='0'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>             </code><font color='maroon'><a title='0'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'> </code><font color='maroon'><a title='0'><code style='font-family: menlo, "Source Code Pro", monospace;'>└─┘</code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'>  </code><font color='maroon'><a title='1'><code style='font-family: menlo, "Source Code Pro", monospace;'>┴</code></a></font>
+<font color='grey'><a title='state'><code style='font-family: menlo, "Source Code Pro", monospace;'>st   </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'></code><font color='lime'><a title='α : Type u,
+_inst_1 : decidable_linear_order.{u} α,
+x₁ x₂ y₁ y₂ : α,
+hx :
+  @has_lt.lt.{u} α
+    (@preorder.to_has_lt.{u} α
+       (@partial_order.to_preorder.{u} α
+          (@lattice.semilattice_inf.to_partial_order.{u} α
+             (@lattice.lattice.to_semilattice_inf.{u} α (@lattice.lattice_of_decidable_linear_order.{u} α _inst_1)))))
+    x₁
+    x₂,
+h2 :
+  @has_mem.mem.{u u} α (set.{u} α) (@set.has_mem.{u} α) x₂
+    (@set.Ico.{u} α
+       (@partial_order.to_preorder.{u} α
+          (@lattice.semilattice_inf.to_partial_order.{u} α
+             (@lattice.lattice.to_semilattice_inf.{u} α (@lattice.lattice_of_decidable_linear_order.{u} α _inst_1))))
+       y₁
+       y₂),
+h :
+  or
+    (@has_le.le.{u} α
+       (@preorder.to_has_le.{u} α
+          (@partial_order.to_preorder.{u} α
+             (@lattice.semilattice_inf.to_partial_order.{u} α
+                (@lattice.lattice.to_semilattice_inf.{u} α
+                   (@lattice.lattice_of_decidable_linear_order.{u} α _inst_1)))))
+       x₂
+       x₁)
+    (@has_le.le.{u} α
+       (@preorder.to_has_le.{u} α
+          (@partial_order.to_preorder.{u} α
+             (@lattice.semilattice_inf.to_partial_order.{u} α
+                (@lattice.lattice.to_semilattice_inf.{u} α
+                   (@lattice.lattice_of_decidable_linear_order.{u} α _inst_1)))))
+       x₂
+       y₁)
+⊢ @has_le.le.{u} α
+    (@preorder.to_has_le.{u} α
+       (@partial_order.to_preorder.{u} α
+          (@lattice.semilattice_inf.to_partial_order.{u} α
+             (@lattice.lattice.to_semilattice_inf.{u} α (@lattice.lattice_of_decidable_linear_order.{u} α _inst_1)))))
+    x₂
+    y₁'><code style='font-family: menlo, "Source Code Pro", monospace;'>───────────────────────────────────────────────────┘</code></a></font>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 39  end</code>
+<font color='grey'><a title='state'><code style='font-family: menlo, "Source Code Pro", monospace;'>st   </code></a></font><code style='font-family: menlo, "Source Code Pro", monospace;'></code><font color='lime'><a title='no goals'><code style='font-family: menlo, "Source Code Pro", monospace;'>└─┘</code></a></font>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 40  </code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 41  end decidable_linear_order</code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 42  </code>
+<code style='font-family: menlo, "Source Code Pro", monospace;'> 43  end set</code></pre>
+</body>
